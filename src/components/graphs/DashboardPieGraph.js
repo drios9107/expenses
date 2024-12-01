@@ -5,12 +5,8 @@ import { useDashboard } from "@/hooks";
 ChartJS.register(...registerables, CategoryScale);
 
 
-const DashboardPieGraph = ({ currentMonth, currentYear }) => {
-    const { getDashboard, labels, dataset1 } = useDashboard();
-
-    useEffect(() => {
-        getDashboard({ currentMonth, currentYear });
-    }, [currentMonth, currentYear, getDashboard])
+const DashboardPieGraph = ({ }) => {
+    const { labels, dataset1 } = useDashboard();
 
     const data = useMemo(() => ({
         labels,

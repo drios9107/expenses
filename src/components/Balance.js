@@ -1,13 +1,16 @@
 import { useDashboard } from '@/hooks';
 import { Box, Typography } from '@mui/material'
-import React, { useEffect } from 'react'
+import { usePathname } from 'next/navigation';
+import { useEffect } from 'react';
 
 const Balance = ({ }) => {
-    const { balance, getBalance } = useDashboard();
+    const { balance, getBalanceData } = useDashboard();
+    const pathname = usePathname();
 
     useEffect(() => {
-        getBalance();
-    }, [getBalance]);
+        console.log(pathname)
+        getBalanceData();
+    }, [getBalanceData, pathname]);
 
     return <Box sx={styles.balance}>
         <Typography sx={{ fontWeight: 600 }}>Balance: </Typography>

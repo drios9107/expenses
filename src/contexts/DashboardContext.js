@@ -6,7 +6,11 @@ import { createContext, useCallback, useState } from "react";
 const defaultProvider = {
   balance: 0,
   setBalance: () => Number,
-  getBalance: () => Number,
+  lastIncome: 0,
+  setLastIncome: () => Number,
+  lastIncomeDate: 0,
+  setLastIncomeDate: () => Number,
+  getBalanceData: () => Number,
   isLoading: false,
   labels: [],
   setLabels: () => [],
@@ -23,6 +27,8 @@ const DashboardProvider = ({ children }) => {
   const [labels, setLabels] = useState(defaultProvider.labels);
   const [dataset1, setDataset1] = useState(defaultProvider.dataset1);
   const [balance, setBalance] = useState(defaultProvider.balance);
+  const [lastIncome, setLastIncome] = useState(defaultProvider.lastIncome);
+  const [lastIncomeDate, setLastIncomeDate] = useState(defaultProvider.lastIncomeDate);
 
   const getDashboard = useCallback(params => {
     setIsLoading(true);
@@ -36,10 +42,16 @@ const DashboardProvider = ({ children }) => {
       .finally(() => setIsLoading(false))
   }, [toastError])
 
-  const getBalance = useCallback(() => {
+  const getBalanceData = useCallback(() => {
     setIsLoading(true);
     axios.get(`${process.env.NEXT_PUBLIC_BACKEND}/balance`)
-      .then(({ data }) => setBalance(data?.data))
+      .then(({ data }) => {
+        setBalance(data?.balance)
+        if (data?.lastIncome)
+          setLastIncome(data.lastIncome)
+        if (data?.lastIncomeDate)
+          setLastIncomeDate(data.lastIncomeDate)
+      })
       .catch(error => toastError(error?.data?.message))
       .finally(() => setIsLoading(false))
   }, [toastError])
@@ -47,7 +59,9 @@ const DashboardProvider = ({ children }) => {
   const values = {
     balance,
     setBalance,
-    getBalance,
+    lastIncome,
+    lastIncomeDate,
+    getBalanceData,
     isLoading,
     setIsLoading,
     getDashboard,
