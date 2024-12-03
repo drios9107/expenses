@@ -2,24 +2,24 @@ import { Delete, ModeEditOutline } from "@mui/icons-material";
 import { Box, IconButton, Tooltip } from "@mui/material";
 import { Eye } from "mdi-material-ui";
 
-const ActionColumn = ({ onDetails = () => { }, onUpdate = () => { }, onDelete = () => { }, actionsContainerExtraclasses = {}, children }) => {
+const ActionColumn = ({ iconColor = '#000000', onDetails = () => { }, onUpdate = () => { }, onDelete = () => { }, actionsContainerExtraclasses = {}, children }) => {
     return (
-        <Box color={"GrayText"} justifyContent={'center'} sx={[styles.actionsContainer, actionsContainerExtraclasses]}>
+        <Box justifyContent={'center'} sx={[styles.actionsContainer, actionsContainerExtraclasses]}>
             <Tooltip title={"Details"}>
                 <IconButton onClick={onDetails}>
-                    <Eye color="#7e7e7e" sx={{ height: "20px", width: "20px" }} />
+                    <Eye color={iconColor} sx={{ height: "20px", width: "20px" }} />
                 </IconButton>
             </Tooltip>
 
             <Tooltip title={"Edit"}>
                 <IconButton onClick={onUpdate}>
-                    <ModeEditOutline color="#7e7e7e" sx={{ height: "20px", width: "20px" }} />
+                    <ModeEditOutline color={iconColor} sx={{ height: "20px", width: "20px" }} />
                 </IconButton>
             </Tooltip>
 
             <Tooltip title={"Delete"}>
                 <IconButton onClick={onDelete}>
-                    <Delete color="#7e7e7e" sx={{ height: "20px", width: "20px" }} />
+                    <Delete color={iconColor} sx={{ height: "20px", width: "20px" }} />
                 </IconButton>
             </Tooltip>
             {children}

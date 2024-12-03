@@ -1,7 +1,7 @@
 'use client';;
 // ** React Imports
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { IconButton, Tooltip, Typography } from "@mui/material";
+import { IconButton, Tooltip } from "@mui/material";
 import ColumnHeader from "@/components/ColumnHeader";
 import ActionColumn from "@/components/ActionColumn";
 import Loader from "@/components/Loader";
@@ -10,6 +10,7 @@ import Details from "@/components/crud/transaction/Details";
 import { Add, Check, DoNotDisturb, NoteAlt, NoteAltOutlined } from "@mui/icons-material";
 import Form from "@/components/crud/transaction/Form";
 import DeleteModal from "@/components/DeleteModal";
+import GreyTypography from "@/components/GreyTypography";
 import moment from "moment";
 import { typeList } from "@/components/crud/transaction/Form";
 import { useCategory, useSubCategory, useRecurrentTransaction } from "@/hooks";
@@ -55,7 +56,7 @@ const RecurrentTransaction = () => {
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Category'} />,
         renderCell: ({ row }) => <Tooltip title={row?.description}>
-            <Typography variant='body1'>{getCategory(row)}</Typography>
+            <GreyTypography>{getCategory(row)}</GreyTypography>
         </Tooltip>,
         valueGetter: ({ row }) => getCategory(row)
     },
@@ -65,7 +66,7 @@ const RecurrentTransaction = () => {
         field: "subCategory",
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Subcategory'} />,
-        renderCell: ({ row }) => <Typography variant='body1'>{getSubCategory(row)}</Typography>,
+        renderCell: ({ row }) => <GreyTypography>{getSubCategory(row)}</GreyTypography>,
         valueGetter: ({ row }) => getSubCategory(row)
     },
     {
@@ -74,7 +75,7 @@ const RecurrentTransaction = () => {
         field: "date",
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Date'} />,
-        renderCell: ({ row }) => <Typography variant='body1'>{moment(row?.date).format('YYYY-MM-DD')}</Typography>,
+        renderCell: ({ row }) => <GreyTypography>{moment(row?.date).format('YYYY-MM-DD')}</GreyTypography>,
         valueGetter: ({ row }) => moment(row?.date).format('YYYY-MM-DD')
     },
     {
@@ -82,7 +83,7 @@ const RecurrentTransaction = () => {
         field: "amount",
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Amount'} />,
-        renderCell: ({ row }) => <Typography variant='body1'>{row?.amount}</Typography>,
+        renderCell: ({ row }) => <GreyTypography>{row?.amount}</GreyTypography>,
         valueGetter: ({ row }) => row?.amount
     },
     {
@@ -90,7 +91,7 @@ const RecurrentTransaction = () => {
         field: "type",
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Type'} />,
-        renderCell: ({ row }) => <Typography variant='body1'>{getType(row)}</Typography>,
+        renderCell: ({ row }) => <GreyTypography>{getType(row)}</GreyTypography>,
         valueGetter: ({ row }) => getType(row)
     },
     {
@@ -98,7 +99,7 @@ const RecurrentTransaction = () => {
         field: "isExpense",
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Is Expense?'} />,
-        renderCell: ({ row }) => <Typography variant='body1' sx={{ width: '100%', textAlign: 'center' }}>{row?.isExpense ? <Check /> : <DoNotDisturb />}</Typography>,
+        renderCell: ({ row }) => <GreyTypography sx={{ width: '100%', textAlign: 'center' }}>{row?.isExpense ? <Check /> : <DoNotDisturb />}</GreyTypography>,
     },
     {
         minWidth: 180,

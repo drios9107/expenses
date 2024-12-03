@@ -1,18 +1,20 @@
 'use client';;
 // ** React Imports
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { IconButton, Tooltip, Typography } from "@mui/material";
+import { IconButton, Tooltip } from "@mui/material";
 import ColumnHeader from "@/components/ColumnHeader";
 import ActionColumn from "@/components/ActionColumn";
 import Loader from "@/components/Loader";
 import DataList from "@/components/DataList";
 import Details from "@/components/crud/transaction/Details";
-import { Add, Check, DoNotDisturb, NoteAlt, NoteAltOutlined } from "@mui/icons-material";
+import { Add, Check, DoNotDisturb } from "@mui/icons-material";
 import Form from "@/components/crud/transaction/Form";
 import DeleteModal from "@/components/DeleteModal";
+import GreyTypography from "@/components/GreyTypography";
 import moment from "moment";
 import { typeList } from "@/components/crud/transaction/Form";
 import { useCategory, useSubCategory, useTransaction } from "@/hooks";
+import { getLineColor } from "@/utils/helpers";
 
 const Transaction = () => {
     const [open, setOpen] = useState(false);
@@ -55,7 +57,7 @@ const Transaction = () => {
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Category'} />,
         renderCell: ({ row }) => <Tooltip title={row?.description}>
-            <Typography variant='body1'>{getCategory(row)}</Typography>
+            <GreyTypography color={getLineColor(row)}>{getCategory(row)}</GreyTypography>
         </Tooltip>,
         valueGetter: ({ row }) => getCategory(row)
     },
@@ -65,7 +67,7 @@ const Transaction = () => {
         field: "subCategory",
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Subcategory'} />,
-        renderCell: ({ row }) => <Typography variant='body1'>{getSubCategory(row)}</Typography>,
+        renderCell: ({ row }) => <GreyTypography color={getLineColor(row)}>{getSubCategory(row)}</GreyTypography>,
         valueGetter: ({ row }) => getSubCategory(row)
     },
     {
@@ -74,7 +76,7 @@ const Transaction = () => {
         field: "date",
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Date'} />,
-        renderCell: ({ row }) => <Typography variant='body1'>{moment(row?.date).format('YYYY-MM-DD')}</Typography>,
+        renderCell: ({ row }) => <GreyTypography color={getLineColor(row)}>{moment(row?.date).format('YYYY-MM-DD')}</GreyTypography>,
         valueGetter: ({ row }) => moment(row?.date).format('YYYY-MM-DD')
     },
     {
@@ -82,7 +84,7 @@ const Transaction = () => {
         field: "amount",
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Amount'} />,
-        renderCell: ({ row }) => <Typography variant='body1'>{row?.amount}</Typography>,
+        renderCell: ({ row }) => <GreyTypography color={getLineColor(row)}>{row?.amount}</GreyTypography>,
         valueGetter: ({ row }) => row?.amount
     },
     {
@@ -90,7 +92,7 @@ const Transaction = () => {
         field: "type",
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Type'} />,
-        renderCell: ({ row }) => <Typography variant='body1'>{getType(row)}</Typography>,
+        renderCell: ({ row }) => <GreyTypography color={getLineColor(row)}>{getType(row)}</GreyTypography>,
         valueGetter: ({ row }) => getType(row)
     },
     {
@@ -98,14 +100,14 @@ const Transaction = () => {
         field: "isExpense",
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Is Expense?'} />,
-        renderCell: ({ row }) => <Typography variant='body1' sx={{ width: '100%', textAlign: 'center' }}>{row?.isExpense ? <Check /> : <DoNotDisturb />}</Typography>,
+        renderCell: ({ row }) => <GreyTypography sx={{ width: '100%', textAlign: 'center' }} color={getLineColor(row)}>{row?.isExpense ? <Check sx={styles.icon} /> : <DoNotDisturb sx={styles.icon} />}</GreyTypography>,
     },
     {
         minWidth: 110,
         field: "isRecurrent",
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Is Recurrent?'} />,
-        renderCell: ({ row }) => <Typography variant='body1' sx={{ width: '100%', textAlign: 'center' }}>{row?.isRecurrent ? <Check /> : <DoNotDisturb />}</Typography>,
+        renderCell: ({ row }) => <GreyTypography sx={{ width: '100%', textAlign: 'center' }} color={getLineColor(row)}>{row?.isRecurrent ? <Check sx={styles.icon} /> : <DoNotDisturb sx={styles.icon} />}</GreyTypography>,
     },
     {
         minWidth: 180,
@@ -115,10 +117,10 @@ const Transaction = () => {
         headerAlign: 'center',
         renderHeader: () => <Tooltip title={"Create"}>
             <IconButton onClick={() => setOpen(true)}>
-                <Add color="#7e7e7e" sx={{ height: "20px", width: "20px" }} />
+                <Add sx={styles.icon} />
             </IconButton>
         </Tooltip>,
-        renderCell: ({ row }) => <ActionColumn
+        renderCell: ({ row }) => <ActionColumn iconColor={getLineColor(row)}
             onDetails={() => setItemToView(row)}
             onUpdate={() => { setItemToUpdate(row), setOpen(true) }}
             onDelete={() => setItemToDelete(row)}
@@ -145,3 +147,8 @@ const Transaction = () => {
 };
 
 export default Transaction;
+
+
+const styles = {
+    icon: { height: "20px", width: "20px" }
+}

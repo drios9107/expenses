@@ -12,10 +12,16 @@ const defaultProvider = {
   setLastIncomeDate: () => Number,
   getBalanceData: () => Number,
   isLoading: false,
-  labels: [],
-  setLabels: () => [],
-  dataset1: [],
-  setDataset1: () => [],
+  categoryLabels: [],
+  setCategoryLabels: () => [],
+  categoryValues: [],
+  setCategoryValues: () => [],
+
+  subCategoryLabels: [],
+  setSubCategoryLabels: () => [],
+  subCategoryValues: [],
+  setSubCategoryValues: () => [],
+
   setIsLoading: () => Boolean,
   getDashboard: () => { }
 };
@@ -24,8 +30,10 @@ const DashboardContext = createContext(defaultProvider);
 const DashboardProvider = ({ children }) => {
   const { toastInfo, toastError } = useToast();
   const [isLoading, setIsLoading] = useState(defaultProvider.isLoading);
-  const [labels, setLabels] = useState(defaultProvider.labels);
-  const [dataset1, setDataset1] = useState(defaultProvider.dataset1);
+  const [categoryLabels, setCategoryLabels] = useState(defaultProvider.categoryLabels);
+  const [categoryValues, setCategoryValues] = useState(defaultProvider.categoryValues);
+  const [subCategoryLabels, setSubCategoryLabels] = useState(defaultProvider.subCategoryLabels);
+  const [subCategoryValues, setSubCategoryValues] = useState(defaultProvider.subCategoryValues);
   const [balance, setBalance] = useState(defaultProvider.balance);
   const [lastIncome, setLastIncome] = useState(defaultProvider.lastIncome);
   const [lastIncomeDate, setLastIncomeDate] = useState(defaultProvider.lastIncomeDate);
@@ -35,8 +43,11 @@ const DashboardProvider = ({ children }) => {
     axios.post(`${process.env.NEXT_PUBLIC_BACKEND}/dashboard`, params)
       .then(({ data }) => {
         // console.log('****data', data?.data)
-        setLabels(data?.data?.labels);
-        setDataset1(data?.data?.values);
+        setCategoryLabels(data?.categoryData?.labels);
+        setCategoryValues(data?.categoryData?.values);
+
+        setSubCategoryLabels(data?.subCategoryData?.labels);
+        setSubCategoryValues(data?.subCategoryData?.values);
       })
       .catch(error => toastError(error?.data?.message))
       .finally(() => setIsLoading(false))
@@ -65,10 +76,16 @@ const DashboardProvider = ({ children }) => {
     isLoading,
     setIsLoading,
     getDashboard,
-    labels,
-    setLabels,
-    dataset1,
-    setDataset1,
+
+    categoryLabels,
+    setCategoryLabels,
+    categoryValues,
+    setCategoryValues,
+
+    subCategoryLabels,
+    setSubCategoryLabels,
+    subCategoryValues,
+    setSubCategoryValues,
   };
 
   return (

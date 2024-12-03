@@ -10,6 +10,7 @@ import Details from "@/components/crud/category/Details";
 import { Add } from "@mui/icons-material";
 import Form from "@/components/crud/category/Form";
 import DeleteModal from "@/components/DeleteModal";
+import GreyTypography from "@/components/GreyTypography";
 import { useCategory } from "@/hooks";
 
 const Category = () => {
@@ -36,7 +37,7 @@ const Category = () => {
         field: "name",
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Name'} />,
-        renderCell: ({ row }) => <Typography variant='body1'>{row?.name}</Typography>
+        renderCell: ({ row }) => <GreyTypography>{row?.name}</GreyTypography>
     },
     {
         minWidth: 180,

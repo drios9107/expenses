@@ -6,22 +6,25 @@ ChartJS.register(...registerables, CategoryScale);
 
 
 const DashboardPieGraph = ({ }) => {
-    const { labels, dataset1 } = useDashboard();
+    const { categoryLabels, categoryValues } = useDashboard();
 
     const data = useMemo(() => ({
-        labels,
+        labels: categoryLabels,
         datasets: [{
-            data: dataset1,
-            backgroundColor: dataset1.map(i => `#${Math.random().toString(16).slice(-6)}`),
+            data: categoryValues,
+            backgroundColor: categoryValues.map(i => `#${Math.random().toString(16).slice(-6)}`),
             borderWidth: 0,
         }],
-    }), [dataset1, labels]);
+    }), [categoryValues, categoryLabels]);
 
     const options = useMemo(() => ({
         maintainAspectRatio: true,
         responsive: true,
-        label: { display: true },
         plugins: {
+            title: {
+                text: 'Relation between categories',
+                display: true
+            },
             legend: {
                 display: true,
                 position: 'right'

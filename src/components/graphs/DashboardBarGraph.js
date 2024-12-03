@@ -6,28 +6,29 @@ ChartJS.register(...registerables, CategoryScale);
 
 
 const DashboardBarGraph = ({ }) => {
-    const { labels, dataset1 } = useDashboard();
+    const { subCategoryLabels: subCategoryLabels, subCategoryValues } = useDashboard();
 
     const data = useMemo(() => ({
-        labels,
+        labels: subCategoryLabels,
         datasets: [{
-            label: 'Category',
-            data: dataset1,
+            label: 'Top 10 expenses this month',
+            data: subCategoryValues,
             backgroundColor: 'rgba(88 212 64 / 0.75)',
         }]
-    }), [dataset1, labels]);
+    }), [subCategoryValues, subCategoryLabels]);
 
     const options = useMemo(() => ({
         type: 'bar',
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    display: false,
-                    position: 'top',
-                },
+        responsive: true,
+        plugins: {
+            legend: {
+                display: false,
+            },
+            title: {
+                display: true,
+                text: 'Biggest expenses by category'
             }
-        },
+        }
     }), [])
 
     return <Bar data={data} options={options} />
