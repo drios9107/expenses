@@ -11,6 +11,7 @@ import MenuLink from './MenuLink';
 import { DashboardProvider } from '@/contexts/DashboardContext';
 import { RecurrentTransactionProvider } from '@/contexts/RecurrentTransactionContext';
 import Balance from './Balance';
+import NextTopLoader from 'nextjs-toploader';
 
 
 const Layout = ({ children }) => {
@@ -22,6 +23,7 @@ const Layout = ({ children }) => {
                 <SubCategoryProvider>
                     <TransactionProvider>
                         <RecurrentTransactionProvider>
+                            <NextTopLoader showSpinner={false} />
                             <Box sx={styles.container}>
                                 <Paper sx={styles.topSection}>
                                     <Link href={'/'}>Home</Link>
