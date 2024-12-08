@@ -7,10 +7,10 @@ import DataList from "@/components/DataList";
 import Details from "@/components/crud/transaction/Details";
 import Form from "@/components/crud/transaction/Form";
 import DeleteModal from "@/components/DeleteModal";
-import GreyTypography from "@/components/GreyTypography";
 import moment from "moment";
 import { useCategory, useSubCategory, useTransaction } from "@/hooks";
 import { getLineColor } from "@/utils/helpers";
+import { Typography } from "@mui/material";
 
 const CurrentMonth = () => {
     const [open, setOpen] = useState(false);
@@ -48,7 +48,7 @@ const CurrentMonth = () => {
         field: "category",
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Category'} />,
-        renderCell: ({ row }) => <GreyTypography color={getLineColor(row)}>{getCategory(row)}</GreyTypography>,
+        renderCell: ({ row }) => <Typography variant='body1' color={getLineColor(row)}>{getCategory(row)}</Typography>,
         valueGetter: ({ row }) => getCategory(row)
     },
     {
@@ -57,7 +57,7 @@ const CurrentMonth = () => {
         field: "subCategory",
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Subcategory'} />,
-        renderCell: ({ row }) => <GreyTypography color={getLineColor(row)}>{getSubCategory(row)}</GreyTypography>,
+        renderCell: ({ row }) => <Typography variant='body1' color={getLineColor(row)}>{getSubCategory(row)}</Typography>,
         valueGetter: ({ row }) => getSubCategory(row)
     },
     {
@@ -66,7 +66,7 @@ const CurrentMonth = () => {
         field: "date",
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Date'} />,
-        renderCell: ({ row }) => <GreyTypography color={getLineColor(row)}>{moment(row?.date).format('YYYY-MM-DD')}</GreyTypography>,
+        renderCell: ({ row }) => <Typography variant='body1' color={getLineColor(row)}>{moment(row?.date).format('YYYY-MM-DD')}</Typography>,
         valueGetter: ({ row }) => moment(row?.date).format('YYYY-MM-DD')
     },
     {
@@ -74,7 +74,7 @@ const CurrentMonth = () => {
         field: "amount",
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Amount'} />,
-        renderCell: ({ row }) => <GreyTypography color={getLineColor(row)}>{row?.amount}</GreyTypography>,
+        renderCell: ({ row }) => <Typography variant='body1' color={getLineColor(row)}>{row?.amount}</Typography>,
         valueGetter: ({ row }) => row?.amount
     }], [getCategory, getSubCategory])
 

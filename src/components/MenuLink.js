@@ -1,15 +1,14 @@
 import { IconButton, MenuItem, useMediaQuery } from '@mui/material'
 import Link from 'next/link'
-import React from 'react'
 
-const MenuLink = ({ href, title = '' }) => {
+const MenuLink = ({ href, title = '', children }) => {
     const isMobile = useMediaQuery("@media (max-width:500px)");
 
     return <Link href={href}>
         {isMobile ?
-            <IconButton>{title.substring(0, 1)}</IconButton> :
-            <MenuItem>
-                {title}
+            <IconButton>{children}</IconButton> :
+            <MenuItem sx={{ display: 'flex', flexDirection: 'row', gap: '10px', alignItems: 'center' }}>
+                {children}{title}
             </MenuItem>}
     </Link>
 }

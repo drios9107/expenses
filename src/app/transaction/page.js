@@ -1,7 +1,7 @@
 'use client';;
 // ** React Imports
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { IconButton, Tooltip } from "@mui/material";
+import { IconButton, Tooltip, Typography } from "@mui/material";
 import ColumnHeader from "@/components/ColumnHeader";
 import ActionColumn from "@/components/ActionColumn";
 import Loader from "@/components/Loader";
@@ -10,7 +10,6 @@ import Details from "@/components/crud/transaction/Details";
 import { Add, Check, DoNotDisturb } from "@mui/icons-material";
 import Form from "@/components/crud/transaction/Form";
 import DeleteModal from "@/components/DeleteModal";
-import GreyTypography from "@/components/GreyTypography";
 import moment from "moment";
 import { typeList } from "@/components/crud/transaction/Form";
 import { useCategory, useSubCategory, useTransaction } from "@/hooks";
@@ -57,7 +56,7 @@ const Transaction = () => {
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Category'} />,
         renderCell: ({ row }) => <Tooltip title={row?.description}>
-            <GreyTypography color={getLineColor(row)}>{getCategory(row)}</GreyTypography>
+            <Typography variant='body1' color={getLineColor(row)}>{getCategory(row)}</Typography>
         </Tooltip>,
         valueGetter: ({ row }) => getCategory(row)
     },
@@ -67,7 +66,7 @@ const Transaction = () => {
         field: "subCategory",
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Subcategory'} />,
-        renderCell: ({ row }) => <GreyTypography color={getLineColor(row)}>{getSubCategory(row)}</GreyTypography>,
+        renderCell: ({ row }) => <Typography variant='body1' color={getLineColor(row)}>{getSubCategory(row)}</Typography>,
         valueGetter: ({ row }) => getSubCategory(row)
     },
     {
@@ -76,7 +75,7 @@ const Transaction = () => {
         field: "date",
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Date'} />,
-        renderCell: ({ row }) => <GreyTypography color={getLineColor(row)}>{moment(row?.date).format('YYYY-MM-DD')}</GreyTypography>,
+        renderCell: ({ row }) => <Typography variant='body1' color={getLineColor(row)}>{moment(row?.date).format('YYYY-MM-DD')}</Typography>,
         valueGetter: ({ row }) => moment(row?.date).format('YYYY-MM-DD')
     },
     {
@@ -85,7 +84,7 @@ const Transaction = () => {
         field: "amount",
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Amount'} />,
-        renderCell: ({ row }) => <GreyTypography color={getLineColor(row)}>{row?.amount}</GreyTypography>,
+        renderCell: ({ row }) => <Typography variant='body1' color={getLineColor(row)}>{row?.amount}</Typography>,
         valueGetter: ({ row }) => row?.amount
     },
     {
@@ -94,7 +93,7 @@ const Transaction = () => {
         field: "type",
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Type'} />,
-        renderCell: ({ row }) => <GreyTypography color={getLineColor(row)}>{getType(row)}</GreyTypography>,
+        renderCell: ({ row }) => <Typography variant='body1' color={getLineColor(row)}>{getType(row)}</Typography>,
         valueGetter: ({ row }) => getType(row)
     },
     {
@@ -103,7 +102,7 @@ const Transaction = () => {
         field: "isExpense",
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Is Expense?'} />,
-        renderCell: ({ row }) => <GreyTypography sx={{ width: '100%', textAlign: 'center' }} color={getLineColor(row)}>{row?.isExpense ? <Check sx={styles.icon} /> : <DoNotDisturb sx={styles.icon} />}</GreyTypography>,
+        renderCell: ({ row }) => <Typography sx={{ width: '100%', textAlign: 'center' }} color={getLineColor(row)}>{row?.isExpense ? <Check sx={styles.icon} /> : <DoNotDisturb sx={styles.icon} />}</Typography>,
     },
     {
         flex: 1,
@@ -111,7 +110,7 @@ const Transaction = () => {
         field: "isRecurrent",
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Is Recurrent?'} />,
-        renderCell: ({ row }) => <GreyTypography sx={{ width: '100%', textAlign: 'center' }} color={getLineColor(row)}>{row?.isRecurrent ? <Check sx={styles.icon} /> : <DoNotDisturb sx={styles.icon} />}</GreyTypography>,
+        renderCell: ({ row }) => <Typography sx={{ width: '100%', textAlign: 'center' }} color={getLineColor(row)}>{row?.isRecurrent ? <Check sx={styles.icon} /> : <DoNotDisturb sx={styles.icon} />}</Typography>,
     },
     {
         minWidth: 180,

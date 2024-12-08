@@ -1,7 +1,7 @@
 'use client';;
 // ** React Imports
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { IconButton, Tooltip } from "@mui/material";
+import { IconButton, Tooltip, Typography } from "@mui/material";
 import ColumnHeader from "@/components/ColumnHeader";
 import ActionColumn from "@/components/ActionColumn";
 import Loader from "@/components/Loader";
@@ -10,7 +10,6 @@ import Details from "@/components/crud/subcategory/Details";
 import { Add } from "@mui/icons-material";
 import Form from "@/components/crud/subcategory/Form";
 import DeleteModal from "@/components/DeleteModal";
-import GreyTypography from "@/components/GreyTypography";
 import { useCategory, useSubCategory } from "@/hooks";
 
 const Subcategory = () => {
@@ -43,7 +42,7 @@ const Subcategory = () => {
         field: "name",
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Name'} />,
-        renderCell: ({ row }) => <GreyTypography>{row?.name}</GreyTypography>
+        renderCell: ({ row }) => <Typography>{row?.name}</Typography>
     },
     {
         flex: 0.4,
@@ -51,7 +50,7 @@ const Subcategory = () => {
         field: "category",
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Category'} />,
-        renderCell: ({ row }) => <GreyTypography>{getCategory(row)}</GreyTypography>,
+        renderCell: ({ row }) => <Typography>{getCategory(row)}</Typography>,
         valueGetter: ({ row }) => getCategory(row)
     },
     {
