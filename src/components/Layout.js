@@ -2,7 +2,7 @@ import { Box, Divider, Paper, Typography, useMediaQuery } from '@mui/material';
 import Link from 'next/link';
 import MenuLink from './MenuLink';
 import Balance from './Balance';
-import { CalendarMonth, Category, CurrencyExchange, Payments } from '@mui/icons-material';
+import { CalendarMonth, Category, CurrencyExchange, Home, Payments } from '@mui/icons-material';
 import { ToyBrick } from 'mdi-material-ui';
 import { useMemo } from 'react';
 
@@ -34,7 +34,7 @@ const Layout = ({ children }) => {
 
     return <Box sx={[styles.container, conditionalContainerStyles]}>
         <Paper sx={[styles.topSection, conditionalTopSectionStyles]}>
-            <Link href={'/'}>Home</Link>
+            <Link href={'/'} style={{ display: 'flex', flexDirection: 'row', gap: '5px', alignItems: 'center' }}><Home sx={styles.iconMenu} />Home</Link>
             <Balance />
         </Paper>
         <Box sx={[styles.middleSection, conditionalMiddleSectionStyles]}>
