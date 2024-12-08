@@ -49,7 +49,7 @@ const DataList = ({ model = 'category', title = '', rows = [], columns, datagrid
 export default DataList
 
 const styles = {
-    container: { display: 'flex', flexDirection: 'column', gap: '10px', width: '100%', p: '25px', borderRadius: '16px' },
+    container: { display: 'flex', flexDirection: 'column', gap: '10px', width: '100%', maxWidth: 'calc(100vw - 75px)', p: '25px', borderRadius: '16px' },
     topSection: { display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
     datagrid: { border: 0, minHeight: '300px', '& .MuiDataGrid-cell': { display: 'flex', alignItems: 'center' } },
 }

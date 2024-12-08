@@ -4,10 +4,10 @@ import Link from 'next/link'
 const MenuLink = ({ href, title = '', children }) => {
     const isMobile = useMediaQuery("@media (max-width:500px)");
 
-    return <Link href={href}>
+    return <Link href={href} >
         {isMobile ?
             <IconButton>{children}</IconButton> :
-            <MenuItem sx={{ display: 'flex', flexDirection: 'row', gap: '10px', alignItems: 'center' }}>
+            <MenuItem sx={{ alignSelf: 'center', display: 'flex', flexDirection: 'row', gap: '10px', alignItems: 'center' }}>
                 {children}{title}
             </MenuItem>}
     </Link>
