@@ -66,8 +66,15 @@ const Form = ({ item, onClose = () => { } }) => {
 
     const categoryWatcher = watch('category');
     const isRecurrentWatcher = watch('isRecurrent');
+    const isExpenseWatcher = watch('isExpense');
     const frequencyWatcher = watch('frequency');
     const dateWatcher = watch('date');
+
+    const getCategories = useMemo(() => {
+        return isExpenseWatcher ?
+            categories.filter(i => i?.name !== 'Ingresos') :
+            categories.filter(i => i?.name === 'Ingresos');
+    }, [categories, isExpenseWatcher])
 
     const getSubCategories = useMemo(() => {
         return subCategories.filter(i => i.category === categoryWatcher)
@@ -114,7 +121,7 @@ const Form = ({ item, onClose = () => { } }) => {
                     errors={errors}
                     fieldName={'category'}
                     options={{ label: 'Category', disabled: item?.isRecurrent }}
-                    list={categories}
+                    list={getCategories}
                 />
             </Box>
             <Box sx={styles.container}>

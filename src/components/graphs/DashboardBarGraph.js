@@ -11,7 +11,6 @@ const DashboardBarGraph = ({ }) => {
     const data = useMemo(() => ({
         labels: subCategoryLabels,
         datasets: [{
-            label: 'Top 10 expenses this month',
             data: subCategoryValues,
             backgroundColor: 'rgba(88 212 64 / 0.75)',
         }]

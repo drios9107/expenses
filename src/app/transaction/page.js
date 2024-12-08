@@ -52,7 +52,7 @@ const Transaction = () => {
 
     const columns = useMemo(() => [{
         flex: 2,
-        minWidth: 200,
+        minWidth: 150,
         field: "category",
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Category'} />,
@@ -63,7 +63,7 @@ const Transaction = () => {
     },
     {
         flex: 1.5,
-        minWidth: 200,
+        minWidth: 150,
         field: "subCategory",
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Subcategory'} />,
@@ -80,6 +80,7 @@ const Transaction = () => {
         valueGetter: ({ row }) => moment(row?.date).format('YYYY-MM-DD')
     },
     {
+        flex: 1,
         minWidth: 100,
         field: "amount",
         sortable: true,
@@ -88,6 +89,7 @@ const Transaction = () => {
         valueGetter: ({ row }) => row?.amount
     },
     {
+        flex: 1,
         minWidth: 80,
         field: "type",
         sortable: true,
@@ -96,13 +98,15 @@ const Transaction = () => {
         valueGetter: ({ row }) => getType(row)
     },
     {
-        minWidth: 60,
+        flex: 1,
+        minWidth: 110,
         field: "isExpense",
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Is Expense?'} />,
         renderCell: ({ row }) => <GreyTypography sx={{ width: '100%', textAlign: 'center' }} color={getLineColor(row)}>{row?.isExpense ? <Check sx={styles.icon} /> : <DoNotDisturb sx={styles.icon} />}</GreyTypography>,
     },
     {
+        flex: 1,
         minWidth: 110,
         field: "isRecurrent",
         sortable: true,
