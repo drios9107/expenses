@@ -6,6 +6,8 @@ import { createContext, useCallback, useState } from "react";
 const defaultProvider = {
   balance: 0,
   setBalance: () => Number,
+  monthExpenses: 0,
+  setMonthExpenses: () => Number,
   lastIncome: 0,
   setLastIncome: () => Number,
   lastIncomeDate: 0,
@@ -37,17 +39,26 @@ const DashboardProvider = ({ children }) => {
   const [balance, setBalance] = useState(defaultProvider.balance);
   const [lastIncome, setLastIncome] = useState(defaultProvider.lastIncome);
   const [lastIncomeDate, setLastIncomeDate] = useState(defaultProvider.lastIncomeDate);
+  const [monthExpenses, setMonthExpenses] = useState(defaultProvider.monthExpenses);
 
   const getDashboard = useCallback(params => {
     setIsLoading(true);
     axios.post(`${process.env.NEXT_PUBLIC_BACKEND}/dashboard`, params)
       .then(({ data }) => {
         // console.log('****data', data?.data)
-        setCategoryLabels(data?.categoryData?.labels);
-        setCategoryValues(data?.categoryData?.values);
+        if (data?.categoryData) {
+          setCategoryLabels(data.categoryData?.labels);
+          setCategoryValues(data.categoryData?.values);
+        }
 
-        setSubCategoryLabels(data?.subCategoryData?.labels);
-        setSubCategoryValues(data?.subCategoryData?.values);
+        if (data?.subCategoryData) {
+          setSubCategoryLabels(data.subCategoryData?.labels);
+          setSubCategoryValues(data.subCategoryData?.values);
+        }
+
+        if (data?.monthExpenses)
+          setMonthExpenses(data.monthExpenses)
+
       })
       .catch(error => toastError(error?.data?.message))
       .finally(() => setIsLoading(false))
@@ -70,6 +81,8 @@ const DashboardProvider = ({ children }) => {
   const values = {
     balance,
     setBalance,
+    monthExpenses,
+    setMonthExpenses,
     lastIncome,
     lastIncomeDate,
     getBalanceData,

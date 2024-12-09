@@ -1,4 +1,5 @@
 'use client';;
+import ExpensesCard from "@/components/ExpensesCard";
 import DashboardBarGraph from "@/components/graphs/DashboardBarGraph";
 import DashboardPieGraph from "@/components/graphs/DashboardPieGraph";
 import IncomeCard from "@/components/IncomeCard";
@@ -61,7 +62,7 @@ export default function Home() {
         />
         <Button variant='contained' onClick={() => runTransactions()}>Refresh</Button>
       </Box>
-      <Card sx={{ width: '200px' }} />
+      <ExpensesCard />
     </Paper>
     <Box sx={[styles.graphContainer, conditionalGraphContainerStyles]}>
       <Paper sx={[styles.graph, conditionalGraphStyles]}>
