@@ -51,7 +51,7 @@ const Subcategory = () => {
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Category'} />,
         renderCell: ({ row }) => <Typography>{getCategory(row)}</Typography>,
-        valueGetter: ({ row }) => getCategory(row)
+        valueGetter: (uid, row) => getCategory(row)
     },
     {
         minWidth: 180,

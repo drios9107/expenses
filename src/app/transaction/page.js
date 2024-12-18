@@ -58,7 +58,7 @@ const Transaction = () => {
         renderCell: ({ row }) => <Tooltip title={row?.description}>
             <Typography variant='body1' color={getLineColor(row)}>{getCategory(row)}</Typography>
         </Tooltip>,
-        valueGetter: ({ row }) => getCategory(row)
+        valueGetter: (uid, row) => getCategory(row)
     },
     {
         flex: 1.5,
@@ -67,7 +67,7 @@ const Transaction = () => {
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Subcategory'} />,
         renderCell: ({ row }) => <Typography variant='body1' color={getLineColor(row)}>{getSubCategory(row)}</Typography>,
-        valueGetter: ({ row }) => getSubCategory(row)
+        valueGetter: (uid, row) => getSubCategory(row)
     },
     {
         flex: 1,
@@ -76,7 +76,7 @@ const Transaction = () => {
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Date'} />,
         renderCell: ({ row }) => <Typography variant='body1' color={getLineColor(row)}>{moment(row?.date).format('YYYY-MM-DD')}</Typography>,
-        valueGetter: ({ row }) => moment(row?.date).format('YYYY-MM-DD')
+        valueGetter: (uid, row) => moment(row?.date).format('YYYY-MM-DD')
     },
     {
         flex: 1,
@@ -85,7 +85,7 @@ const Transaction = () => {
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Amount'} />,
         renderCell: ({ row }) => <Typography variant='body1' color={getLineColor(row)}>{row?.amount}</Typography>,
-        valueGetter: ({ row }) => row?.amount
+        valueGetter: (uid, row) => row?.amount
     },
     {
         flex: 1,
@@ -94,7 +94,7 @@ const Transaction = () => {
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Type'} />,
         renderCell: ({ row }) => <Typography variant='body1' color={getLineColor(row)}>{getType(row)}</Typography>,
-        valueGetter: ({ row }) => getType(row)
+        valueGetter: (uid, row) => getType(row)
     },
     {
         flex: 1,

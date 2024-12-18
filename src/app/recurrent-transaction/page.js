@@ -57,7 +57,7 @@ const RecurrentTransaction = () => {
         renderCell: ({ row }) => <Tooltip title={row?.description}>
             <Typography variant='body1'>{getCategory(row)}</Typography>
         </Tooltip>,
-        valueGetter: ({ row }) => getCategory(row)
+        valueGetter: (uid, row) => getCategory(row)
     },
     {
         flex: 1.5,
@@ -66,7 +66,7 @@ const RecurrentTransaction = () => {
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Subcategory'} />,
         renderCell: ({ row }) => <Typography variant='body1'>{getSubCategory(row)}</Typography>,
-        valueGetter: ({ row }) => getSubCategory(row)
+        valueGetter: (uid, row) => getSubCategory(row)
     },
     {
         flex: 1,
@@ -75,7 +75,7 @@ const RecurrentTransaction = () => {
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Date'} />,
         renderCell: ({ row }) => <Typography variant='body1'>{moment(row?.date).format('YYYY-MM-DD')}</Typography>,
-        valueGetter: ({ row }) => moment(row?.date).format('YYYY-MM-DD')
+        valueGetter: (uid, row) => moment(row?.date).format('YYYY-MM-DD')
     },
     {
         minWidth: 100,
@@ -83,7 +83,7 @@ const RecurrentTransaction = () => {
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Amount'} />,
         renderCell: ({ row }) => <Typography variant='body1'>{row?.amount}</Typography>,
-        valueGetter: ({ row }) => row?.amount
+        valueGetter: (uid, row) => row?.amount
     },
     {
         minWidth: 80,
@@ -91,7 +91,7 @@ const RecurrentTransaction = () => {
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Type'} />,
         renderCell: ({ row }) => <Typography variant='body1'>{getType(row)}</Typography>,
-        valueGetter: ({ row }) => getType(row)
+        valueGetter: (uid, row) => getType(row)
     },
     {
         minWidth: 60,

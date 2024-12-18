@@ -49,7 +49,7 @@ const CurrentMonth = () => {
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Category'} />,
         renderCell: ({ row }) => <Typography variant='body1' color={getLineColor(row)}>{getCategory(row)}</Typography>,
-        valueGetter: ({ row }) => getCategory(row)
+        valueGetter: (uid, row) => getCategory(row)
     },
     {
         flex: 1.5,
@@ -58,7 +58,7 @@ const CurrentMonth = () => {
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Subcategory'} />,
         renderCell: ({ row }) => <Typography variant='body1' color={getLineColor(row)}>{getSubCategory(row)}</Typography>,
-        valueGetter: ({ row }) => getSubCategory(row)
+        valueGetter: (uid, row) => getSubCategory(row)
     },
     {
         flex: 1,
@@ -67,7 +67,7 @@ const CurrentMonth = () => {
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Date'} />,
         renderCell: ({ row }) => <Typography variant='body1' color={getLineColor(row)}>{moment(row?.date).format('YYYY-MM-DD')}</Typography>,
-        valueGetter: ({ row }) => moment(row?.date).format('YYYY-MM-DD')
+        valueGetter: (uid, row) => moment(row?.date).format('YYYY-MM-DD')
     },
     {
         minWidth: 100,
@@ -75,7 +75,7 @@ const CurrentMonth = () => {
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Amount'} />,
         renderCell: ({ row }) => <Typography variant='body1' color={getLineColor(row)}>{row?.amount}</Typography>,
-        valueGetter: ({ row }) => row?.amount
+        valueGetter: (uid, row) => row?.amount
     }], [getCategory, getSubCategory])
 
     const getTransactionsList = useMemo(() => {

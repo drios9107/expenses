@@ -25,7 +25,7 @@ const Layout = ({ children }) => {
     }, [isMobile])
 
     const conditionalMenuStyles = useMemo(() => {
-        return isMobile ? { width: 'fit-content', py: '10px' } : { width: '220px', py: '25px' }
+        return isMobile ? { py: '10px' } : { py: '25px' }
     }, [isMobile])
 
     const conditionalFooterSectionStyles = useMemo(() => {
@@ -71,9 +71,9 @@ export default Layout
 const styles = {
     container: { display: 'flex', flexDirection: 'column', width: '100%', backgroundColor: 'gainsboro', minHeight: '100vh' },
     topSection: { backgroundColor: '#fff', minHeight: '60px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', },
-    middleSection: { gap: '25px', display: 'flex', flexDirection: 'row', width: '100%', flex: 1, justifyContent: 'space-between' },
-    menu: { backgroundColor: '#fff', borderRadius: '16px', width: '200px', minHeight: '250px', maxHeight: 'calc(100vh - 170px)', height: 'fit-content', display: 'flex', flexDirection: 'column' },
+    middleSection: { display: 'flex', flexDirection: 'row', width: '100%', flex: 1 },
+    menu: { backgroundColor: '#fff', borderRadius: '16px', width: 'fit-content', minHeight: '250px', maxHeight: 'calc(100vh - 170px)', height: 'fit-content', display: 'flex', flexDirection: 'column' },
     iconMenu: { color: '#00000099', height: "20px", width: "20px" },
-    bodySection: { flex: 1 },
+    bodySection: { flex: 7 },
     footerSection: { backgroundColor: '#fff', minHeight: '60px', display: 'flex', justifyContent: 'flex-start', alignItems: 'center' },
 }
