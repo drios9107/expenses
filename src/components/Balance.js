@@ -14,7 +14,7 @@ const Balance = ({ }) => {
 
     return <Box sx={styles.balance}>
         <Typography sx={{ fontWeight: 600 }}>Balance: </Typography>
-        <Typography>{balance ?? '0'}$</Typography>
+        <Typography sx={styles.value}>{balance ?? '0'}$</Typography>
     </Box>
 }
 
@@ -23,4 +23,5 @@ export default Balance
 
 const styles = {
     balance: { display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' },
+    value: { textShadow: '1px 2px 3px lightskyblue' }
 }
