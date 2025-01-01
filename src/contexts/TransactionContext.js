@@ -50,8 +50,8 @@ const TransactionProvider = ({ children }) => {
     setIsLoading(true);
     axios.post(`${process.env.NEXT_PUBLIC_BACKEND}/transactions`, preparedData)
       .then(({ data }) => {
-        console.log('***submit', data?.data)
         setTransactions([...transactions, data?.data])
+        setIsSaved(true);
       })
       .catch(error => toastError(error?.data?.message))
       .finally(() => setIsLoading(false))
@@ -61,11 +61,11 @@ const TransactionProvider = ({ children }) => {
     setIsLoading(true);
     axios.put(`${process.env.NEXT_PUBLIC_BACKEND}/transactions/${preparedData?._id}`, preparedData)
       .then(({ data }) => {
-        console.log('***submit', data?.data)
         const index = transactions.findIndex(i => i._id === preparedData?._id)
         const result = [...transactions];
         result[index] = data?.data;
         setTransactions(result);
+        setIsSaved(true);
       })
       .catch(error => toastError(error?.data?.message))
       .finally(() => setIsLoading(false))
@@ -75,8 +75,8 @@ const TransactionProvider = ({ children }) => {
     setIsLoading(true);
     axios.delete(`${process.env.NEXT_PUBLIC_BACKEND}/transactions/${id}`)
       .then(({ data }) => {
-        console.log('***delete', data?.id)
         setTransactions(transactions.filter(i => i?._id !== id))
+        setIsDeleted(true);
       })
       .catch(error => toastError(error?.data?.message))
       .finally(() => setIsLoading(false))

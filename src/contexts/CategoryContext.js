@@ -50,8 +50,8 @@ const CategoryProvider = ({ children }) => {
     setIsLoading(true);
     axios.post(`${process.env.NEXT_PUBLIC_BACKEND}/categories`, preparedData)
       .then(({ data }) => {
-        console.log('***submit', data?.data)
         setCategories([...categories, data?.data])
+        setIsSaved(true);
       })
       .catch(error => toastError(error?.data?.message))
       .finally(() => setIsLoading(false))
@@ -61,11 +61,11 @@ const CategoryProvider = ({ children }) => {
     setIsLoading(true);
     axios.put(`${process.env.NEXT_PUBLIC_BACKEND}/categories/${preparedData?._id}`, preparedData)
       .then(({ data }) => {
-        console.log('***submit', data?.data)
         const index = categories.findIndex(i => i._id === preparedData?._id)
         const result = [...categories];
         result[index] = data?.data;
         setCategories(result);
+        setIsSaved(true);
       })
       .catch(error => toastError(error?.data?.message))
       .finally(() => setIsLoading(false))
@@ -75,8 +75,8 @@ const CategoryProvider = ({ children }) => {
     setIsLoading(true);
     axios.delete(`${process.env.NEXT_PUBLIC_BACKEND}/categories/${id}`)
       .then(({ data }) => {
-        console.log('***delete', data?.id)
         setCategories(categories.filter(i => i?._id !== id))
+        setIsDeleted(true);
       })
       .catch(error => toastError(error?.data?.message))
       .finally(() => setIsLoading(false))

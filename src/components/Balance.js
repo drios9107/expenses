@@ -8,7 +8,6 @@ const Balance = ({ }) => {
     const pathname = usePathname();
 
     useEffect(() => {
-        console.log(pathname)
         getBalanceData();
     }, [getBalanceData, pathname]);
 

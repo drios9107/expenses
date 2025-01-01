@@ -65,8 +65,8 @@ const RecurrentTransactionProvider = ({ children }) => {
     setIsLoading(true);
     axios.post(`${process.env.NEXT_PUBLIC_BACKEND}/recurrent-transactions`, preparedData)
       .then(({ data }) => {
-        console.log('***submit', data?.data)
         setRecurrentTransactions([...recurrentTransactions, data?.data])
+        setIsSaved(true);
       })
       .catch(error => toastError(error?.data?.message))
       .finally(() => setIsLoading(false))
@@ -76,11 +76,11 @@ const RecurrentTransactionProvider = ({ children }) => {
     setIsLoading(true);
     axios.put(`${process.env.NEXT_PUBLIC_BACKEND}/recurrent-transactions/${preparedData?._id}`, preparedData)
       .then(({ data }) => {
-        console.log('***submit', data?.data)
         const index = recurrentTransactions.findIndex(i => i._id === preparedData?._id)
         const result = [...recurrentTransactions];
         result[index] = data?.data;
         setRecurrentTransactions(result);
+        setIsSaved(true);
       })
       .catch(error => toastError(error?.data?.message))
       .finally(() => setIsLoading(false))
@@ -90,8 +90,8 @@ const RecurrentTransactionProvider = ({ children }) => {
     setIsLoading(true);
     axios.delete(`${process.env.NEXT_PUBLIC_BACKEND}/recurrent-transactions/${id}`)
       .then(({ data }) => {
-        console.log('***delete', data?.id)
         setRecurrentTransactions(recurrentTransactions.filter(i => i?._id !== id))
+        setIsDeleted(true);
       })
       .catch(error => toastError(error?.data?.message))
       .finally(() => setIsLoading(false))

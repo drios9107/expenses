@@ -45,7 +45,6 @@ const DashboardProvider = ({ children }) => {
     setIsLoading(true);
     axios.post(`${process.env.NEXT_PUBLIC_BACKEND}/dashboard`, params)
       .then(({ data }) => {
-        // console.log('****data', data?.data)
         if (data?.categoryData) {
           setCategoryLabels(data.categoryData?.labels);
           setCategoryValues(data.categoryData?.values);

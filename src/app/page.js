@@ -15,6 +15,9 @@ export default function Home() {
   const { runTransactions } = useRecurrentTransaction()
   const isMobile = useMediaQuery("@media (max-width:500px)");
 
+  const [isHover1, setIsHover1] = useState(false);
+  const [isHover2, setIsHover2] = useState(false);
+
   const [currentMonth, setCurrentMonth] = useState(moment().month())
   const [currentYear, setCurrentYear] = useState(moment().year())
 
@@ -65,10 +68,10 @@ export default function Home() {
       <ExpensesCard />
     </Paper>
     <Box sx={[styles.graphContainer, conditionalGraphContainerStyles]}>
-      <Paper sx={[styles.graph, conditionalGraphStyles]}>
+      <Paper sx={[styles.graph, conditionalGraphStyles]} elevation={isHover1 ? 3 : 1} onMouseEnter={() => setIsHover1(true)} onMouseLeave={() => setIsHover1(false)}>
         <DashboardBarGraph currentMonth={currentMonth} currentYear={currentYear} />
       </Paper>
-      <Paper sx={[styles.graph, conditionalGraphStyles]}>
+      <Paper sx={[styles.graph, conditionalGraphStyles]} elevation={isHover2 ? 3 : 1} onMouseEnter={() => setIsHover2(true)} onMouseLeave={() => setIsHover2(false)}>
         <DashboardPieGraph currentMonth={currentMonth} currentYear={currentYear} />
       </Paper>
     </Box>
