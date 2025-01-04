@@ -3,12 +3,22 @@ import Link from 'next/link';
 import MenuLink from './MenuLink';
 import Balance from './Balance';
 import { CalendarMonth, Category, CurrencyExchange, Home, Payments } from '@mui/icons-material';
-import { ToyBrick } from 'mdi-material-ui';
-import { useMemo } from 'react';
+import { DoorOpen, ToyBrick } from 'mdi-material-ui';
+import { useEffect, useMemo } from 'react';
+import { signOut, useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import GuestLayout from './GuestLayout';
 
 
 const Layout = ({ children }) => {
     const isMobile = useMediaQuery("@media (max-width:500px)");
+    const { data } = useSession()
+    const { replace } = useRouter()
+
+    useEffect(() => {
+        if (!data)
+            replace('/login')
+    }, [data, replace])
 
     const conditionalContainerStyles = useMemo(() => {
         return isMobile ? { gap: '10px', px: '10px' } : { gap: '25px', px: '25px' }
@@ -32,10 +42,18 @@ const Layout = ({ children }) => {
         return isMobile ? { borderTopRightRadius: '8px', borderTopLeftRadius: '8px', px: '10px' } : { borderTopRightRadius: '16px', borderTopLeftRadius: '16px', px: '25px' }
     }, [isMobile])
 
+    if (!data)
+        return <GuestLayout>
+            {children}
+        </GuestLayout>
+
     return <Box sx={[styles.container, conditionalContainerStyles]}>
         <Paper sx={[styles.topSection, conditionalTopSectionStyles]}>
             <Link href={'/'} style={{ display: 'flex', flexDirection: 'row', gap: '5px', alignItems: 'center' }}><Home sx={styles.iconMenu} />Home</Link>
-            <Balance />
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
+                <Balance />
+                <DoorOpen sx={[styles.iconMenu, { cursor: 'pointer' }]} onClick={() => signOut()} />
+            </Box>
         </Paper>
         <Box sx={[styles.middleSection, conditionalMiddleSectionStyles]}>
             <Paper sx={[styles.menu, conditionalMenuStyles]}>
