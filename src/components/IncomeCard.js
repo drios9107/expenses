@@ -22,6 +22,6 @@ const IncomeCard = ({ }) => {
 export default IncomeCard
 
 const styles = {
-    container: { width: '200px', height: '80px', px: '16px', display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', gap: '15px', backgroundColor: '#D6E6FF' },
+    container: { width: '200px', height: '80px', px: '16px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: '15px', backgroundColor: '#D6E6FF' },
     row: { display: 'flex', flexDirection: 'column', gap: '5px' },
 }
