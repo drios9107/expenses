@@ -21,7 +21,8 @@ export const authOptions = {
             console.log('***data', { user, account, profile, email, credentials });
             return (user?.email === 'david.rios@alphalabs.uy' && account?.provider === 'github')
         }
-    }
+    },
+    secret: process.env.NEXT_PUBLIC_NEXTAUTH_SECRET,
 }
 
 const handler = NextAuth(authOptions);
