@@ -105,7 +105,7 @@ const Form = ({ item, onClose = () => { } }) => {
         if (preparedData?.isRecurrent)
             item ?
                 updateRecurrentTransaction(preparedData) :
-                createRecurrentTransaction(preparedData)
+                createRecurrentTransaction({ ...preparedData, isActive: true })
         else
             item ?
                 updateTransaction(preparedData) :

@@ -13,14 +13,16 @@ import DeleteModal from "@/components/DeleteModal";
 import moment from "moment";
 import { typeList } from "@/components/crud/transaction/Form";
 import { useCategory, useSubCategory, useRecurrentTransaction } from "@/hooks";
+import { PowerOn, PowerOff } from "mdi-material-ui";
 
 const RecurrentTransaction = () => {
     const [open, setOpen] = useState(false);
     const [itemToDelete, setItemToDelete] = useState();
+    const [itemToToogleActivation, setItemToToogleActivation] = useState();
     const [itemToUpdate, setItemToUpdate] = useState();
     const [itemToView, setItemToView] = useState();
 
-    const { isLoading, recurrentTransactions, getRecurrentTransactions, deleteRecurrentTransaction } = useRecurrentTransaction();
+    const { isLoading, recurrentTransactions, getRecurrentTransactions, deleteRecurrentTransaction, updateRecurrentTransaction } = useRecurrentTransaction();
     const { isLoading: isLoadingCategories, categories, getCategories } = useCategory()
     const { isLoading: isLoadingSubCategories, subCategories, getSubCategories } = useSubCategory()
 
@@ -35,6 +37,11 @@ const RecurrentTransaction = () => {
         deleteRecurrentTransaction(itemToDelete?._id);
         setItemToDelete();
     }, [deleteRecurrentTransaction, itemToDelete?._id])
+
+    const onToogleActivation = useCallback(() => {
+        updateRecurrentTransaction({ ...itemToToogleActivation, isActive: !itemToToogleActivation?.isActive });
+        setItemToToogleActivation();
+    }, [updateRecurrentTransaction, itemToToogleActivation])
 
     const getType = useCallback(row => {
         return typeList.find(i => i._id === row?.type)?.name
@@ -115,7 +122,15 @@ const RecurrentTransaction = () => {
             onDetails={() => setItemToView(row)}
             onUpdate={() => { setItemToUpdate(row), setOpen(true) }}
             onDelete={() => setItemToDelete(row)}
-        />
+        >
+            <Tooltip title={row?.isActive ? "Disable" : "Enable"}>
+                <IconButton onClick={() => setItemToToogleActivation(row)}>
+                    {row?.isActive ?
+                        <PowerOff color={'#000000'} sx={{ height: "20px", width: "20px" }} /> :
+                        <PowerOn color={'#000000'} sx={{ height: "20px", width: "20px" }} />}
+                </IconButton>
+            </Tooltip>
+        </ActionColumn>
     }], [getCategory, getSubCategory, getType])
 
 
@@ -133,6 +148,7 @@ const RecurrentTransaction = () => {
             {open && <Form item={itemToUpdate} onClose={() => { setOpen(false); setItemToUpdate() }} />}
             {itemToView && <Details item={itemToView} onClose={() => setItemToView()} />}
             {itemToDelete && <DeleteModal onClose={() => setItemToDelete()} onClick={onDelete} />}
+            {itemToToogleActivation && <DeleteModal title="Change status" text='Are you sure you want to change the status?' onClose={() => setItemToToogleActivation()} onClick={onToogleActivation} />}
             {(isLoading || isLoadingCategories || isLoadingSubCategories) && <Loader isLoading />}
         </>
     );

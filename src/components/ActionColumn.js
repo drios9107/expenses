@@ -2,26 +2,26 @@ import { Delete, ModeEditOutline } from "@mui/icons-material";
 import { Box, IconButton, Tooltip } from "@mui/material";
 import { Eye } from "mdi-material-ui";
 
-const ActionColumn = ({ iconColor = '#000000', onDetails = () => { }, onUpdate = () => { }, onDelete = () => { }, actionsContainerExtraclasses = {}, children }) => {
+const ActionColumn = ({ iconColor = '#000000', onDetails, onUpdate, onDelete, actionsContainerExtraclasses = {}, children }) => {
     return (
         <Box justifyContent={'center'} sx={[styles.actionsContainer, actionsContainerExtraclasses]}>
-            <Tooltip title={"Details"}>
+            {onDetails && <Tooltip title={"Details"}>
                 <IconButton onClick={onDetails}>
                     <Eye color={iconColor} sx={{ height: "20px", width: "20px" }} />
                 </IconButton>
-            </Tooltip>
+            </Tooltip>}
 
-            <Tooltip title={"Edit"}>
+            {onUpdate && <Tooltip title={"Edit"}>
                 <IconButton onClick={onUpdate}>
                     <ModeEditOutline color={iconColor} sx={{ height: "20px", width: "20px" }} />
                 </IconButton>
-            </Tooltip>
+            </Tooltip>}
 
-            <Tooltip title={"Delete"}>
+            {onDelete && <Tooltip title={"Delete"}>
                 <IconButton onClick={onDelete}>
                     <Delete color={iconColor} sx={{ height: "20px", width: "20px" }} />
                 </IconButton>
-            </Tooltip>
+            </Tooltip>}
             {children}
         </Box>
     );
