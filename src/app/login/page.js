@@ -1,9 +1,8 @@
 'use client';
 import MuiTextfield from "@/components/inputs/MuiTextField";
-import { messages } from "@/utils/messages";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { GitHub, Google } from "@mui/icons-material";
-import { Box, Button, Divider, IconButton, Paper, Typography, useMediaQuery } from "@mui/material";
+import { GitHub } from "@mui/icons-material";
+import { Box, Button, Divider, IconButton, Paper, Typography } from "@mui/material";
 import { signIn } from "next-auth/react";
 import { useCallback } from "react";
 import { useForm } from "react-hook-form";
@@ -20,8 +19,6 @@ const schema = yup.object().shape({
 });
 
 const Login = () => {
-    // const isMobile = useMediaQuery("@media (max-width:500px)");
-
     const { control, handleSubmit, formState: { errors, isDirty, isValid }, watch
     } = useForm({ defaultValues, mode: "onBlur", resolver: yupResolver(schema) });
 
@@ -52,7 +49,7 @@ const Login = () => {
         <Divider sx={{ width: '100%' }} />
 
         <Box sx={styles.providersContainer}>
-            <IconButton onClick={callProvider('github')}><GitHub color="info" /> </IconButton>
+            <IconButton onClick={() => callProvider('github')}><GitHub color="info" /> </IconButton>
             {/* <IconButton onClick={callProvider('google')}><Google color="info" /> </IconButton> */}
         </Box>
     </Paper>

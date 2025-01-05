@@ -1,4 +1,4 @@
-'use client';;
+'use client';
 import { CategoryProvider } from '@/contexts/CategoryContext';
 import { SubCategoryProvider } from '@/contexts/SubCategoryContext';
 import { TransactionProvider } from '@/contexts/TransactionContext';

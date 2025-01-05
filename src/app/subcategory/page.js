@@ -1,4 +1,4 @@
-'use client';;
+'use client';
 // ** React Imports
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { IconButton, Tooltip, Typography } from "@mui/material";
