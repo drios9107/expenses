@@ -8,7 +8,7 @@ import { es } from 'date-fns/locale';
 import { DashboardProvider } from '@/contexts/DashboardContext';
 import { RecurrentTransactionProvider } from '@/contexts/RecurrentTransactionContext';
 import NextTopLoader from 'nextjs-toploader';
-import Layout from './Layout';
+import Layout from './UserLayout/Layout';
 import { SessionProvider } from 'next-auth/react';
 
 const App = ({ children }) => {
