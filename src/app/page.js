@@ -72,10 +72,10 @@ export default function Home() {
     </Paper>
     <Box sx={[styles.graphContainer, conditionalGraphContainerStyles]}>
       <Paper sx={[styles.graph, conditionalGraphStyles]} elevation={isHover1 ? 3 : 1} onMouseEnter={() => setIsHover1(true)} onMouseLeave={() => setIsHover1(false)}>
-        <DashboardBarGraph currentMonth={currentMonth} currentYear={currentYear} />
+        <DashboardBarGraph />
       </Paper>
       <Paper sx={[styles.graph, conditionalGraphStyles]} elevation={isHover2 ? 3 : 1} onMouseEnter={() => setIsHover2(true)} onMouseLeave={() => setIsHover2(false)}>
-        <DashboardPieGraph currentMonth={currentMonth} currentYear={currentYear} />
+        <DashboardPieGraph />
       </Paper>
     </Box>
   </Box>

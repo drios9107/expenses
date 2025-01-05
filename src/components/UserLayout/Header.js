@@ -10,11 +10,16 @@ const Header = () => {
     const { conditionalTopSectionStyles } = useLayoutStyles();
 
     return <Paper sx={[styles.topSection, conditionalTopSectionStyles]}>
-        <Link href={'/'} style={{ display: 'flex', flexDirection: 'row', gap: '5px', alignItems: 'center' }}><Home sx={styles.iconMenu} />Home</Link>
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
-            <Balance />
-            <Logout sx={[styles.iconMenu, { cursor: 'pointer' }]} onClick={() => signOut()} />
+        <Box sx={styles.opacity}>
+            <Link href={'/'} style={styles.link}><Home sx={styles.iconMenu} />Home</Link>
         </Box>
+        <Box sx={styles.rightSection}>
+            <Balance />
+            <Box sx={[styles.opacity, { cursor: 'pointer', display: 'flex', alignItems: 'center' }]}>
+                <Logout sx={styles.iconMenu} onClick={() => signOut()} />
+            </Box>
+        </Box>
+
     </Paper>
 }
 
@@ -22,5 +27,8 @@ export default Header
 
 const styles = {
     topSection: { backgroundColor: '#fff', minHeight: '60px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', },
+    opacity: { '& :hover': { opacity: 0.7 } },
     iconMenu: { color: '#00000099', height: "20px", width: "20px" },
+    link: { display: 'flex', flexDirection: 'row', gap: '5px', alignItems: 'center' },
+    rightSection: { display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' },
 }
