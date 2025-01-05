@@ -1,11 +1,12 @@
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { Chart as ChartJS, CategoryScale, registerables } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { useDashboard } from "@/hooks";
+import { Typography } from "@mui/material";
 ChartJS.register(...registerables, CategoryScale);
 
 
-const DashboardBarGraph = ({ }) => {
+const DashboardBarGraph = () => {
     const { subCategoryLabels: subCategoryLabels, subCategoryValues } = useDashboard();
 
     const data = useMemo(() => ({
@@ -29,6 +30,9 @@ const DashboardBarGraph = ({ }) => {
             }
         }
     }), [])
+
+    if (subCategoryValues.length === 0)
+        return <Typography variant="subtitle2">There is no data to show</Typography>
 
     return <Bar data={data} options={options} />
 }
