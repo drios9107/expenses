@@ -6,5 +6,9 @@ const getLineColor = (row, normalColor = 'textSecondary') => {
     return 'success'
 };
 
+const publicRoutes = [
+    '/login'
+]
 
-export { getLineColor }
+
+export { getLineColor, publicRoutes }
