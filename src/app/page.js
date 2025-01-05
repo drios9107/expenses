@@ -1,12 +1,12 @@
-'use client';;
+'use client';
+import DashboardSkeleton from "@/components/DashboardSkeleton";
 import ExpensesCard from "@/components/ExpensesCard";
 import DashboardBarGraph from "@/components/graphs/DashboardBarGraph";
 import DashboardPieGraph from "@/components/graphs/DashboardPieGraph";
 import IncomeCard from "@/components/IncomeCard";
-import Loader from "@/components/Loader";
 import MonthNavigator from "@/components/MonthNavigator";
 import { useDashboard, useRecurrentTransaction } from "@/hooks";
-import { Box, Button, Card, Paper, useMediaQuery } from "@mui/material";
+import { Box, Button, Paper, useMediaQuery } from "@mui/material";
 import moment from "moment";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
@@ -53,6 +53,9 @@ export default function Home() {
       setCurrentMonth(currentMonth + 1)
   }, [currentMonth, currentYear])
 
+  if (isLoading)
+    return <DashboardSkeleton />
+
   return <Box sx={{ display: 'flex', flexDirection: 'column', gap: isMobile ? '10px' : '25px' }}>
     <Paper sx={[styles.container, conditionalContainerStyles]}>
       <IncomeCard />
@@ -75,7 +78,6 @@ export default function Home() {
         <DashboardPieGraph currentMonth={currentMonth} currentYear={currentYear} />
       </Paper>
     </Box>
-    {isLoading && <Loader isLoading />}
   </Box>
 }
 
