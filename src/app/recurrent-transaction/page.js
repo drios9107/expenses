@@ -7,7 +7,7 @@ import ActionColumn from "@/components/ActionColumn";
 import Loader from "@/components/Loader";
 import DataList from "@/components/DataList";
 import Details from "@/components/crud/transaction/Details";
-import { Add, Check, DoNotDisturb, NoteAlt, NoteAltOutlined } from "@mui/icons-material";
+import { Add, Check, DoNotDisturb } from "@mui/icons-material";
 import Form from "@/components/crud/transaction/Form";
 import DeleteModal from "@/components/DeleteModal";
 import moment from "moment";

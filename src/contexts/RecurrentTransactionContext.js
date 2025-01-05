@@ -56,10 +56,11 @@ const RecurrentTransactionProvider = ({ children }) => {
       .then(({ data }) => {
         getTransactions();
         setBalance(data?.balance);
+        toastInfo(messages.finishedRecurrence)
       })
       .catch(error => toastError(error?.data?.message))
       .finally(() => setIsLoading(false))
-  }, [getTransactions, setBalance, toastError])
+  }, [getTransactions, setBalance, toastError, toastInfo])
 
   const createRecurrentTransaction = useCallback(preparedData => {
     setIsLoading(true);

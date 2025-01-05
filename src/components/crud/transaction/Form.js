@@ -146,7 +146,7 @@ const Form = ({ item, onClose = () => { } }) => {
                     control={control}
                     errors={errors}
                     fieldName={'amount'}
-                    options={{ label: 'Amount', type: 'number', disabled: item?.isRecurrent, slotProps: { htmlInput: { min: 0 } } }}
+                    options={{ label: 'Amount', type: 'number', slotProps: { htmlInput: { min: 0 } } }}
                 />
                 <MuiSingleSelectField
                     control={control}
