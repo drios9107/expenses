@@ -3,7 +3,7 @@ import { Box, Typography } from '@mui/material'
 import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 
-const Balance = ({ }) => {
+const Balance = () => {
     const { balance, getBalanceData } = useDashboard();
     const pathname = usePathname();
 

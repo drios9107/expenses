@@ -3,7 +3,7 @@ import { Box, Card, Typography } from '@mui/material'
 import moment from 'moment'
 import React, { useState } from 'react'
 
-const ExpensesCard = ({ }) => {
+const ExpensesCard = () => {
     const { monthExpenses = 0 } = useDashboard();
     const [isHover, setIsHover] = useState(false)
 
