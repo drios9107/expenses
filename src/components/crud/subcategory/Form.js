@@ -5,9 +5,8 @@ import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useCallback } from 'react';
-import { useCategory, useSubCategory } from '@/hooks'
+import { useList, useSubCategory } from '@/hooks';
 import MuiSingleSelectField from '@/components/inputs/MuiSingleSelectField'
-
 
 
 const schema = yup.object().shape({
@@ -18,7 +17,7 @@ const schema = yup.object().shape({
 const defaultValues = { name: "" }
 
 const Form = ({ item, onClose = () => { } }) => {
-    const { categories } = useCategory();
+    const { categories } = useList();
     const { isLoading, createSubCategory, updateSubCategory } = useSubCategory();
 
     const { control, handleSubmit, formState: { errors, isDirty, isValid }

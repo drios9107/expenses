@@ -8,7 +8,7 @@ import Details from "@/components/crud/transaction/Details";
 import Form from "@/components/crud/transaction/Form";
 import DeleteModal from "@/components/DeleteModal";
 import moment from "moment";
-import { useCategory, useSubCategory, useTransaction } from "@/hooks";
+import { useCategory, useList, useSubCategory, useTransaction } from "@/hooks";
 import { getLineColor } from "@/utils/helpers";
 import { Typography } from "@mui/material";
 
@@ -18,9 +18,12 @@ const CurrentMonth = () => {
     const [itemToUpdate, setItemToUpdate] = useState();
     const [itemToView, setItemToView] = useState();
 
-    const { isLoading, transactions, getTransactions, deleteTransaction } = useTransaction();
-    const { isLoading: isLoadingCategories, categories, getCategories } = useCategory()
-    const { isLoading: isLoadingSubCategories, subCategories, getSubCategories } = useSubCategory()
+    const { isLoading, getTransactions, deleteTransaction } = useTransaction();
+    const { isLoading: isLoadingCategories, getCategories } = useCategory()
+    const { isLoading: isLoadingSubCategories, getSubCategories } = useSubCategory()
+
+    const { categories, subCategories, transactions } = useList();
+
 
     useEffect(() => {
         getTransactions();

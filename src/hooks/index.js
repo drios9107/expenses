@@ -1,15 +1,14 @@
-import { CategoryContext } from "@/contexts/CategoryContext";
 import { DashboardContext } from "@/contexts/DashboardContext";
-import { SubCategoryContext } from "@/contexts/SubCategoryContext";
-import { TransactionContext } from "@/contexts/TransactionContext";
-import { RecurrentTransactionContext } from "@/contexts/RecurrentTransactionContext";
 import { useContext } from "react";
+import useCategory from "./useCategory";
+import useSubCategory from "./useSubCategory";
+import useRecurrentTransaction from "./useRecurrentTransaction";
+import useTransaction from "./useTransaction";
+import useDashboard from "./useDashboard";
+import { ListContext } from "@/contexts/ListContext";
 
-const useCategory = () => useContext(CategoryContext);
-const useSubCategory = () => useContext(SubCategoryContext);
-const useTransaction = () => useContext(TransactionContext);
-const useRecurrentTransaction = () => useContext(RecurrentTransactionContext);
-const useDashboard = () => useContext(DashboardContext);
+const useList = () => useContext(ListContext);
+const useDashboardContext = () => useContext(DashboardContext);
 
 
-export { useCategory, useSubCategory, useRecurrentTransaction, useTransaction, useDashboard };
+export { useCategory, useSubCategory, useRecurrentTransaction, useTransaction, useDashboard, useDashboardContext, useList };

@@ -1,13 +1,13 @@
 import { Chart as ChartJS, CategoryScale, registerables } from "chart.js";
 import { useMemo } from "react";
 import { Doughnut } from "react-chartjs-2";
-import { useDashboard } from "@/hooks";
+import { useDashboardContext } from "@/hooks";
 import { Typography } from "@mui/material";
 ChartJS.register(...registerables, CategoryScale);
 
 
 const DashboardPieGraph = () => {
-    const { categoryLabels, categoryValues } = useDashboard();
+    const { categoryLabels, categoryValues } = useDashboardContext();
 
     const data = useMemo(() => ({
         labels: categoryLabels,

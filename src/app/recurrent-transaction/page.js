@@ -12,7 +12,7 @@ import Form from "@/components/crud/transaction/Form";
 import DeleteModal from "@/components/DeleteModal";
 import moment from "moment";
 import { typeList } from "@/components/crud/transaction/Form";
-import { useCategory, useSubCategory, useRecurrentTransaction } from "@/hooks";
+import { useCategory, useSubCategory, useRecurrentTransaction, useList } from "@/hooks";
 import { PowerOn, PowerOff } from "mdi-material-ui";
 
 const RecurrentTransaction = () => {
@@ -22,9 +22,11 @@ const RecurrentTransaction = () => {
     const [itemToUpdate, setItemToUpdate] = useState();
     const [itemToView, setItemToView] = useState();
 
-    const { isLoading, recurrentTransactions, getRecurrentTransactions, deleteRecurrentTransaction, updateRecurrentTransaction } = useRecurrentTransaction();
-    const { isLoading: isLoadingCategories, categories, getCategories } = useCategory()
-    const { isLoading: isLoadingSubCategories, subCategories, getSubCategories } = useSubCategory()
+    const { isLoading, getRecurrentTransactions, deleteRecurrentTransaction, updateRecurrentTransaction } = useRecurrentTransaction();
+    const { isLoading: isLoadingCategories, getCategories } = useCategory()
+    const { isLoading: isLoadingSubCategories, getSubCategories } = useSubCategory()
+    const { categories, subCategories, recurrentTransactions } = useList();
+
 
     useEffect(() => {
         getRecurrentTransactions();

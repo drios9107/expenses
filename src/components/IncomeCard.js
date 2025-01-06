@@ -1,10 +1,10 @@
-import { useDashboard } from '@/hooks';
+import { useDashboardContext } from '@/hooks';
 import { Box, Card, Typography } from '@mui/material'
 import moment from 'moment'
-import React, { useState } from 'react'
+import { useState } from 'react';
 
 const IncomeCard = () => {
-    const { lastIncome = 0, lastIncomeDate } = useDashboard();
+    const { lastIncome = 0, lastIncomeDate } = useDashboardContext();
     const [isHover, setIsHover] = useState(false)
 
     return <Card sx={styles.container} elevation={isHover ? 3 : 1} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>

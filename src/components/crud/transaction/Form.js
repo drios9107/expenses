@@ -1,6 +1,6 @@
 import MuiTextfield from '@/components/inputs/MuiTextField'
 import SimpleModal from '@/components/SimpleModal'
-import { Badge, Box, Button, IconButton, Typography } from '@mui/material'
+import { Box, Button } from '@mui/material';
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -9,11 +9,11 @@ import MuiDatePicker from '@/components/inputs/MuiDatePicker'
 import moment from 'moment'
 import MuiSingleSelectField from '@/components/inputs/MuiSingleSelectField'
 import MuiSwitch from '@/components/inputs/MuiSwitch'
-import { useCategory, useRecurrentTransaction, useSubCategory, useTransaction } from '@/hooks'
+import { useList, useRecurrentTransaction, useTransaction } from '@/hooks';
 import BoxRow from '@/components/BoxRow'
 import WeekDayList from '@/components/WeekDayList'
 import MonthDayList from '@/components/MonthDayList'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation';
 
 const schema = yup.object().shape({
     category: yup.string().required("This field is required"),
@@ -52,8 +52,7 @@ const Form = ({ item, onClose = () => { } }) => {
     const pathName = usePathname()
     const { isLoading, updateTransaction, createTransaction } = useTransaction();
     const { isLoading: isLoadingRecurrentTransaction, updateRecurrentTransaction, createRecurrentTransaction } = useRecurrentTransaction();
-    const { categories } = useCategory();
-    const { subCategories } = useSubCategory();
+    const { categories, subCategories } = useList();
 
     const [daysWeek, setDaysWeek] = useState([]);
     const [daysMonth, setDaysMonth] = useState([]);

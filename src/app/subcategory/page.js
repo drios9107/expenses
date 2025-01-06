@@ -10,7 +10,7 @@ import Details from "@/components/crud/subcategory/Details";
 import { Add } from "@mui/icons-material";
 import Form from "@/components/crud/subcategory/Form";
 import DeleteModal from "@/components/DeleteModal";
-import { useCategory, useSubCategory } from "@/hooks";
+import { useCategory, useList, useSubCategory } from "@/hooks";
 
 const Subcategory = () => {
     const [open, setOpen] = useState(false);
@@ -18,8 +18,9 @@ const Subcategory = () => {
     const [itemToUpdate, setItemToUpdate] = useState();
     const [itemToView, setItemToView] = useState();
 
-    const { isLoading: isLoadingCategories, getCategories, categories } = useCategory();
-    const { isLoading, getSubCategories, subCategories, deleteSubCategory } = useSubCategory();
+    const { isLoading: isLoadingCategories, getCategories } = useCategory();
+    const { isLoading, getSubCategories, deleteSubCategory } = useSubCategory();
+    const { categories, subCategories } = useList();
 
     useEffect(() => {
         getCategories();

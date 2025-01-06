@@ -1,13 +1,13 @@
 import { useMemo } from "react";
 import { Chart as ChartJS, CategoryScale, registerables } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import { useDashboard } from "@/hooks";
+import { useDashboardContext } from "@/hooks";
 import { Typography } from "@mui/material";
 ChartJS.register(...registerables, CategoryScale);
 
 
 const DashboardBarGraph = () => {
-    const { subCategoryLabels: subCategoryLabels, subCategoryValues } = useDashboard();
+    const { subCategoryLabels: subCategoryLabels, subCategoryValues } = useDashboardContext();
 
     const data = useMemo(() => ({
         labels: subCategoryLabels,

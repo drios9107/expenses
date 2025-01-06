@@ -1,10 +1,11 @@
-import { useDashboard } from '@/hooks';
+import { useDashboard, useDashboardContext } from '@/hooks';
 import { Box, Typography } from '@mui/material'
 import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 
 const Balance = () => {
-    const { balance, getBalanceData } = useDashboard();
+    const { getBalanceData } = useDashboard()
+    const { balance } = useDashboardContext();
     const pathname = usePathname();
 
     useEffect(() => {

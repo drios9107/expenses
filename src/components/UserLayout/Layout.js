@@ -14,7 +14,7 @@ const Layout = ({ children }) => {
     const { status } = useSession()
     const { replace } = useRouter()
     const pathname = usePathname();
-    const { conditionalContainerStyles, conditionalMiddleSectionStyles, conditionalMenuStyles } = useLayoutStyles()
+    const { conditionalContainerStyles } = useLayoutStyles()
 
     useEffect(() => {
         if (status !== 'loading') {
