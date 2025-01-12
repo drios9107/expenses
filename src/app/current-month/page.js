@@ -18,15 +18,15 @@ const CurrentMonth = () => {
     const [itemToUpdate, setItemToUpdate] = useState();
     const [itemToView, setItemToView] = useState();
 
-    const { isLoading, getTransactions, deleteTransaction } = useTransaction();
+    const { isLoading, getCurrentMonthTransactions, deleteTransaction } = useTransaction();
     const { isLoading: isLoadingCategories, getCategories } = useCategory()
     const { isLoading: isLoadingSubCategories, getSubCategories } = useSubCategory()
 
-    const { categories, subCategories, transactions } = useList();
+    const { categories, subCategories, currentMonthTransactions } = useList();
 
 
     useEffect(() => {
-        getTransactions();
+        getCurrentMonthTransactions();
         getCategories();
         getSubCategories();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -86,8 +86,8 @@ const CurrentMonth = () => {
         const amountDays = moment().daysInMonth();
         const lastDay = moment().set({ D: amountDays, h: 23, m: 59, s: 59 });
 
-        return transactions.filter(i => i?.type === 'cup' && moment(i.date).isSameOrAfter(firstDay) && moment(i.date).isBefore(lastDay))
-    }, [transactions])
+        return currentMonthTransactions.filter(i => i?.type === 'cup' && moment(i.date).isSameOrAfter(firstDay) && moment(i.date).isBefore(lastDay))
+    }, [currentMonthTransactions])
 
     return <>
         <DataList

@@ -5,7 +5,7 @@ import axios from "axios";
 import { useList } from ".";
 
 const useTransaction = () => {
-    const { transactions, setTransactions } = useList();
+    const { transactions, setTransactions, setCurrentMonthTransactions, currentMonthTransactions } = useList();
 
     const { toastInfo, toastError } = useToast();
     const [isLoading, setIsLoading] = useState(false);
@@ -22,6 +22,14 @@ const useTransaction = () => {
             setIsDeleted(false);
         }
     }, [isDeleted, isSaved, toastInfo]);
+
+    const getCurrentMonthTransactions = useCallback(() => {
+        setIsLoading(true);
+        axios.get(`${process.env.NEXT_PUBLIC_BACKEND}/transactions/currentMonth`)
+            .then(({ data }) => setCurrentMonthTransactions(data?.data ?? []))
+            .catch(error => toastError(error?.data?.message))
+            .finally(() => setIsLoading(false))
+    }, [setCurrentMonthTransactions, toastError])
 
     const getTransactions = useCallback(() => {
         setIsLoading(true);
@@ -71,6 +79,7 @@ const useTransaction = () => {
     return {
         isLoading,
         setIsLoading,
+        getCurrentMonthTransactions,
         getTransactions,
         createTransaction,
         updateTransaction,
