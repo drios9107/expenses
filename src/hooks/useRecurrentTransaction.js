@@ -8,7 +8,7 @@ import { useDashboardContext, useList } from ".";
 const useRecurrentTransaction = () => {
     const { recurrentTransactions, setRecurrentTransactions } = useList();
     const { getTransactions } = useTransaction();
-    const { setBalance } = useDashboardContext();
+    const { setBalance, setBalanceMLC, setBalanceUSD, setBalanceUSDT } = useDashboardContext();
 
     const { toastInfo, toastError } = useToast();
     const [isLoading, setIsLoading] = useState(false);
@@ -39,12 +39,19 @@ const useRecurrentTransaction = () => {
         axios.get(`${process.env.NEXT_PUBLIC_BACKEND}/recurrent-transactions/runRecurrence`)
             .then(({ data }) => {
                 getTransactions();
-                setBalance(data?.balance);
+                if (data?.balance)
+                    setBalance(data?.balance);
+                if (data?.balanceMLC)
+                    setBalanceMLC(data?.balanceMLC)
+                if (data?.balanceUSD)
+                    setBalanceUSD(data?.balanceUSD)
+                if (data?.balanceUSDT)
+                    setBalanceUSDT(data?.balanceUSDT)
                 toastInfo(messages.finishedRecurrence)
             })
             .catch(error => toastError(error?.data?.message))
             .finally(() => setIsLoading(false))
-    }, [getTransactions, setBalance, toastError, toastInfo])
+    }, [getTransactions, setBalance, setBalanceMLC, setBalanceUSD, setBalanceUSDT, toastError, toastInfo])
 
     const createRecurrentTransaction = useCallback(preparedData => {
         setIsLoading(true);

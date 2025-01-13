@@ -4,8 +4,8 @@ import axios from "axios";
 import { useDashboardContext } from ".";
 
 const useDashboard = () => {
-    const { setCategoryLabels, setCategoryValues, setSubCategoryLabels, setSubCategoryValues,
-        setMonthExpenses, setBalance, setLastIncome, setLastIncomeDate } = useDashboardContext();
+    const { setCategoryLabels, setCategoryValues, setSubCategoryLabels, setSubCategoryValues, setMonthExpenses,
+        setBalance, setBalanceMLC, setBalanceUSD, setBalanceUSDT, setLastIncome, setLastIncomeDate } = useDashboardContext();
 
     const { toastError } = useToast();
     const [isLoading, setIsLoading] = useState(false);
@@ -36,7 +36,14 @@ const useDashboard = () => {
         setIsLoading(true);
         axios.get(`${process.env.NEXT_PUBLIC_BACKEND}/balance`)
             .then(({ data }) => {
-                setBalance(data?.balance)
+                if (data?.balance)
+                    setBalance(data?.balance)
+                if (data?.balanceMLC)
+                    setBalanceMLC(data?.balanceMLC)
+                if (data?.balanceUSD)
+                    setBalanceUSD(data?.balanceUSD)
+                if (data?.balanceUSDT)
+                    setBalanceUSDT(data?.balanceUSDT)
                 if (data?.lastIncome)
                     setLastIncome(data.lastIncome)
                 if (data?.lastIncomeDate)
@@ -44,7 +51,7 @@ const useDashboard = () => {
             })
             .catch(error => toastError(error?.data?.message))
             .finally(() => setIsLoading(false))
-    }, [setBalance, setLastIncome, setLastIncomeDate, toastError])
+    }, [setBalance, setBalanceMLC, setBalanceUSD, setBalanceUSDT, setLastIncome, setLastIncomeDate, toastError])
 
     return {
         isLoading,

@@ -1,21 +1,27 @@
 import { useDashboard, useDashboardContext } from '@/hooks';
-import { Box, Typography } from '@mui/material'
+import { Box, Tooltip, Typography } from '@mui/material'
 import { usePathname } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
 const Balance = () => {
     const { getBalanceData } = useDashboard()
-    const { balance } = useDashboardContext();
+    const { balance, balanceMLC, balanceUSD } = useDashboardContext();
     const pathname = usePathname();
 
     useEffect(() => {
         getBalanceData();
     }, [getBalanceData, pathname]);
 
-    return <Box sx={styles.balance}>
-        <Typography sx={{ fontWeight: 600 }}>Balance: </Typography>
-        <Typography sx={styles.value}>{balance ?? '0'}$</Typography>
-    </Box>
+    const getTooltip = useMemo(() => {
+        return `MLC: $${balanceMLC} USD: $${balanceUSD}`
+    }, [balanceMLC, balanceUSD])
+
+    return <Tooltip title={getTooltip}>
+        <Box sx={styles.balance}>
+            <Typography sx={{ fontWeight: 600 }}>Balance: </Typography>
+            <Typography sx={styles.value}>{balance ?? '0'}$</Typography>
+        </Box>
+    </Tooltip>
 }
 
 export default Balance
