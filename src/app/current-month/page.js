@@ -8,7 +8,7 @@ import Details from "@/components/crud/transaction/Details";
 import Form from "@/components/crud/transaction/Form";
 import DeleteModal from "@/components/DeleteModal";
 import moment from "moment";
-import { useCategory, useList, useSubCategory, useTransaction } from "@/hooks";
+import { useList, useTransaction } from "@/hooks";
 import { getLineColor } from "@/utils/helpers";
 import { Typography } from "@mui/material";
 
@@ -19,16 +19,11 @@ const CurrentMonth = () => {
     const [itemToView, setItemToView] = useState();
 
     const { isLoading, getCurrentMonthTransactions, deleteTransaction } = useTransaction();
-    const { isLoading: isLoadingCategories, getCategories } = useCategory()
-    const { isLoading: isLoadingSubCategories, getSubCategories } = useSubCategory()
-
-    const { categories, subCategories, currentMonthTransactions } = useList();
+    const { currentMonthTransactions } = useList();
 
 
     useEffect(() => {
         getCurrentMonthTransactions();
-        getCategories();
-        getSubCategories();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -37,22 +32,14 @@ const CurrentMonth = () => {
         setItemToDelete();
     }, [deleteTransaction, itemToDelete?._id])
 
-    const getCategory = useCallback(row => {
-        return categories.find(i => i._id === row?.category)?.name
-    }, [categories])
-
-    const getSubCategory = useCallback(row => {
-        return subCategories.find(i => i._id === row?.subCategory)?.name
-    }, [subCategories])
-
     const columns = useMemo(() => [{
         flex: 2,
         minWidth: 200,
         field: "category",
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Category'} />,
-        renderCell: ({ row }) => <Typography variant='body1' color={getLineColor(row)}>{getCategory(row)}</Typography>,
-        valueGetter: (uid, row) => getCategory(row)
+        renderCell: ({ row }) => <Typography variant='body1' color={getLineColor(row)}>{row?.category}</Typography>,
+        valueGetter: (uid, row) => row?.category
     },
     {
         flex: 1.5,
@@ -60,8 +47,8 @@ const CurrentMonth = () => {
         field: "subCategory",
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Subcategory'} />,
-        renderCell: ({ row }) => <Typography variant='body1' color={getLineColor(row)}>{getSubCategory(row)}</Typography>,
-        valueGetter: (uid, row) => getSubCategory(row)
+        renderCell: ({ row }) => <Typography variant='body1' color={getLineColor(row)}>{row?.subCategory}</Typography>,
+        valueGetter: (uid, row) => row?.subCategory
     },
     {
         flex: 1,
@@ -79,7 +66,7 @@ const CurrentMonth = () => {
         renderHeader: () => <ColumnHeader title={'Amount'} />,
         renderCell: ({ row }) => <Typography variant='body1' color={getLineColor(row)}>{row?.amount}</Typography>,
         valueGetter: (uid, row) => row?.amount
-    }], [getCategory, getSubCategory])
+    }], [])
 
     const getTransactionsList = useMemo(() => {
         const firstDay = moment().set({ D: 1, h: 0, m: 0, s: 0 });
@@ -98,7 +85,7 @@ const CurrentMonth = () => {
         {open && <Form item={itemToUpdate} onClose={() => { setOpen(false); setItemToUpdate() }} />}
         {itemToView && <Details item={itemToView} onClose={() => setItemToView()} />}
         {itemToDelete && <DeleteModal onClose={() => setItemToDelete()} onClick={onDelete} />}
-        {(isLoading || isLoadingCategories || isLoadingSubCategories) && <Loader isLoading />}
+        {isLoading && <Loader isLoading />}
     </>
 };
 
