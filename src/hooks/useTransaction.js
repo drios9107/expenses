@@ -5,7 +5,7 @@ import axios from "axios";
 import { useList } from ".";
 
 const useTransaction = () => {
-    const { transactions, setTransactions, setCurrentMonthTransactions, currentMonthTransactions } = useList();
+    const { transactions, setTransactions, setCurrentMonthTransactions } = useList();
 
     const { toastInfo, toastError } = useToast();
     const [isLoading, setIsLoading] = useState(false);
@@ -55,9 +55,11 @@ const useTransaction = () => {
         axios.put(`${process.env.NEXT_PUBLIC_BACKEND}/transactions/${preparedData?._id}`, preparedData)
             .then(({ data }) => {
                 const index = transactions.findIndex(i => i._id === preparedData?._id)
-                const result = [...transactions];
-                result[index] = data?.data;
-                setTransactions(result);
+                if (index > -1) {
+                    const result = [...transactions];
+                    result[index] = data?.data;
+                    setTransactions(result);
+                }
                 setIsSaved(true);
             })
             .catch(error => toastError(error?.data?.message))

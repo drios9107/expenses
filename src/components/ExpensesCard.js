@@ -8,12 +8,10 @@ const ExpensesCard = () => {
 
     return <Card sx={styles.container} elevation={isHover ? 3 : 1} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
         <Box sx={styles.row}>
-            <Typography variant='body2'>Expenses</Typography>
-            {/* <Typography variant='body2'>Date</Typography> */}
+            <Typography variant='body2' sx={{ userSelect: 'none' }}>Expenses</Typography>
         </Box>
         <Box sx={styles.row}>
             <Typography variant='body2' sx={{ fontWeight: 600 }}>{monthExpenses} $</Typography>
-            {/* <Typography variant='body2' sx={{ fontWeight: 600 }}>{lastIncomeDate ? moment(lastIncomeDate).format('DD/MM/YYYY') : '-'}</Typography> */}
         </Box>
     </Card>
 }

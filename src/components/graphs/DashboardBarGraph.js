@@ -32,7 +32,7 @@ const DashboardBarGraph = () => {
     }), [])
 
     if (subCategoryValues.length === 0)
-        return <Typography variant="subtitle2">There is no data to show</Typography>
+        return <Typography variant="subtitle2" sx={{ userSelect: 'none' }}>There is no data to show</Typography>
 
     return <Bar data={data} options={options} />
 }

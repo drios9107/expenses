@@ -6,7 +6,7 @@ const Footer = () => {
     const { conditionalFooterSectionStyles } = useLayoutStyles()
 
     return <Paper sx={[styles.footerSection, conditionalFooterSectionStyles]}>
-        <Typography variant='body1'>Copyright © 2023 Expenses</Typography>
+        <Typography variant='body1' sx={{ userSelect: 'none' }}>Copyright © 2023 Expenses</Typography>
     </Paper>
 }
 

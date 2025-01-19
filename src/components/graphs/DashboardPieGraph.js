@@ -34,7 +34,7 @@ const DashboardPieGraph = () => {
     }), [])
 
     if (categoryValues.length === 0)
-        return <Typography variant="subtitle2">There is no data to show</Typography>
+        return <Typography variant="subtitle2" sx={{ userSelect: 'none' }}>There is no data to show</Typography>
 
     return <Doughnut data={data} options={options} height={'50vh'} />
 

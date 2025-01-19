@@ -9,8 +9,8 @@ const IncomeCard = () => {
 
     return <Card sx={styles.container} elevation={isHover ? 3 : 1} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
         <Box sx={styles.row}>
-            <Typography variant='body2'>Last Income</Typography>
-            <Typography variant='body2'>Date</Typography>
+            <Typography variant='body2' sx={{ userSelect: 'none' }}>Last Income</Typography>
+            <Typography variant='body2' sx={{ userSelect: 'none' }}>Date</Typography>
         </Box>
         <Box sx={styles.row}>
             <Typography variant='body2' sx={{ fontWeight: 600 }}>{lastIncome} $</Typography>

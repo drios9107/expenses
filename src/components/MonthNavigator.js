@@ -23,7 +23,7 @@ const MonthNavigator = ({ currentMonth, currentYear, getPreviousMonth = () => { 
         <IconButton onClick={getPreviousMonth}>
             <ArrowLeft />
         </IconButton>
-        <Typography>{months[currentMonth]} {currentYear}</Typography>
+        <Typography sx={{ userSelect: 'none' }}>{months[currentMonth]} {currentYear}</Typography>
         <IconButton onClick={getNextMonth}>
             <ArrowRight />
         </IconButton>

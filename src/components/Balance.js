@@ -18,7 +18,7 @@ const Balance = () => {
 
     return <Tooltip title={getTooltip}>
         <Box sx={styles.balance}>
-            <Typography sx={{ fontWeight: 600 }}>Balance: </Typography>
+            <Typography sx={{ fontWeight: 600, userSelect: 'none' }}>Balance: </Typography>
             <Typography sx={styles.value}>{balance ?? '0'}$</Typography>
         </Box>
     </Tooltip>
