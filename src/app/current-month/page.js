@@ -10,7 +10,7 @@ import DeleteModal from "@/components/DeleteModal";
 import moment from "moment";
 import { useList, useTransaction } from "@/hooks";
 import { getLineColor } from "@/utils/helpers";
-import { Typography } from "@mui/material";
+import { Tooltip, Typography } from "@mui/material";
 
 const CurrentMonth = () => {
     const [open, setOpen] = useState(false);
@@ -38,7 +38,9 @@ const CurrentMonth = () => {
         field: "category",
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Category'} />,
-        renderCell: ({ row }) => <Typography variant='body1' color={getLineColor(row)}>{row?.category}</Typography>,
+        renderCell: ({ row }) => <Tooltip title={row?.description}>
+            <Typography variant='body1' color={getLineColor(row)}>{row?.category}</Typography>
+        </Tooltip>,
         valueGetter: (uid, row) => row?.category
     },
     {
