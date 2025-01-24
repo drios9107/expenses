@@ -4,7 +4,7 @@ import axios from "axios";
 import { useDashboardContext } from ".";
 
 const useDashboard = () => {
-    const { setCategoryLabels, setCategoryValues, setSubCategoryLabels, setSubCategoryValues, setMonthExpenses,
+    const { setCategoryLabels, setCategoryValues, setSubCategoryLabels, setSubCategoryValues, setMonthExpenses, setMonthIncome,
         setBalance, setBalanceMLC, setBalanceUSD, setBalanceUSDT, setLastIncome, setLastIncomeDate } = useDashboardContext();
 
     const { toastError } = useToast();
@@ -27,10 +27,13 @@ const useDashboard = () => {
                 if (data?.monthExpenses)
                     setMonthExpenses(data.monthExpenses)
 
+                if (data?.monthIncome)
+                    setMonthIncome(data.monthIncome)
+
             })
             .catch(error => toastError(error?.data?.message))
             .finally(() => setIsLoading(false))
-    }, [setCategoryLabels, setCategoryValues, setMonthExpenses, setSubCategoryLabels, setSubCategoryValues, toastError])
+    }, [setCategoryLabels, setCategoryValues, setMonthExpenses, setMonthIncome, setSubCategoryLabels, setSubCategoryValues, toastError])
 
     const getBalanceData = useCallback(() => {
         setIsLoading(true);

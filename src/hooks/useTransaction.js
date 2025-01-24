@@ -14,6 +14,7 @@ const useTransaction = () => {
 
     useEffect(() => {
         if (isSaved) {
+            console.log('***is saved', messages.saved);
             toastInfo(messages.saved);
             setIsSaved(false);
         }

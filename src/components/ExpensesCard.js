@@ -3,15 +3,17 @@ import { Box, Card, Typography } from '@mui/material'
 import { useState } from 'react';
 
 const ExpensesCard = () => {
-    const { monthExpenses = 0 } = useDashboardContext();
+    const { monthExpenses = 0, monthIncome = 0 } = useDashboardContext();
     const [isHover, setIsHover] = useState(false)
 
     return <Card sx={styles.container} elevation={isHover ? 3 : 1} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
         <Box sx={styles.row}>
             <Typography variant='body2' sx={{ userSelect: 'none' }}>Expenses</Typography>
+            <Typography variant='body2' sx={{ userSelect: 'none' }}>Income</Typography>
         </Box>
         <Box sx={styles.row}>
             <Typography variant='body2' sx={{ fontWeight: 600 }}>{monthExpenses} $</Typography>
+            <Typography variant='body2' sx={{ fontWeight: 600 }}>{monthIncome} $</Typography>
         </Box>
     </Card>
 }

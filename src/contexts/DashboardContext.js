@@ -11,6 +11,8 @@ const defaultProvider = {
   setBalance: () => Number,
   monthExpenses: 0,
   setMonthExpenses: () => Number,
+  monthIncome: 0,
+  setMonthIncome: () => Number,
   lastIncome: 0,
   setLastIncome: () => Number,
   lastIncomeDate: 0,
@@ -39,6 +41,7 @@ const DashboardProvider = ({ children }) => {
   const [lastIncome, setLastIncome] = useState(defaultProvider.lastIncome);
   const [lastIncomeDate, setLastIncomeDate] = useState(defaultProvider.lastIncomeDate);
   const [monthExpenses, setMonthExpenses] = useState(defaultProvider.monthExpenses);
+  const [monthIncome, setMonthIncome] = useState(defaultProvider.monthIncome);
 
   const values = {
     balance,
@@ -51,6 +54,8 @@ const DashboardProvider = ({ children }) => {
     setBalanceUSDT,
     monthExpenses,
     setMonthExpenses,
+    monthIncome,
+    setMonthIncome,
     lastIncome,
     setLastIncome,
     lastIncomeDate,
