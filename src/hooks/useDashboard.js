@@ -5,7 +5,7 @@ import { useDashboardContext } from ".";
 
 const useDashboard = () => {
     const { setCategoryLabels, setCategoryValues, setSubCategoryLabels, setSubCategoryValues, setMonthExpenses, setMonthIncome,
-        setBalance, setBalanceMLC, setBalanceUSD, setBalanceUSDT, setLastIncome, setLastIncomeDate } = useDashboardContext();
+        setBalance, setBalanceMLC, setBalanceUSD, setBalanceUSDT, setBiggestIncome, setBiggestIncomeDate } = useDashboardContext();
 
     const { toastError } = useToast();
     const [isLoading, setIsLoading] = useState(false);
@@ -18,7 +18,6 @@ const useDashboard = () => {
                     setCategoryLabels(data.categoryData?.labels);
                     setCategoryValues(data.categoryData?.values);
                 }
-
                 if (data?.subCategoryData) {
                     setSubCategoryLabels(data.subCategoryData?.labels);
                     setSubCategoryValues(data.subCategoryData?.values);
@@ -26,14 +25,18 @@ const useDashboard = () => {
 
                 if (data?.monthExpenses)
                     setMonthExpenses(data.monthExpenses)
-
                 if (data?.monthIncome)
                     setMonthIncome(data.monthIncome)
+
+                if (data?.biggestIncome)
+                    setBiggestIncome(data.biggestIncome)
+                if (data?.biggestIncomeDate)
+                    setBiggestIncomeDate(data.biggestIncomeDate)
 
             })
             .catch(error => toastError(error?.data?.message))
             .finally(() => setIsLoading(false))
-    }, [setCategoryLabels, setCategoryValues, setMonthExpenses, setMonthIncome, setSubCategoryLabels, setSubCategoryValues, toastError])
+    }, [setBiggestIncome, setBiggestIncomeDate, setCategoryLabels, setCategoryValues, setMonthExpenses, setMonthIncome, setSubCategoryLabels, setSubCategoryValues, toastError])
 
     const getBalanceData = useCallback(() => {
         setIsLoading(true);
@@ -47,14 +50,10 @@ const useDashboard = () => {
                     setBalanceUSD(data?.balanceUSD)
                 if (data?.balanceUSDT)
                     setBalanceUSDT(data?.balanceUSDT)
-                if (data?.lastIncome)
-                    setLastIncome(data.lastIncome)
-                if (data?.lastIncomeDate)
-                    setLastIncomeDate(data.lastIncomeDate)
             })
             .catch(error => toastError(error?.data?.message))
             .finally(() => setIsLoading(false))
-    }, [setBalance, setBalanceMLC, setBalanceUSD, setBalanceUSDT, setLastIncome, setLastIncomeDate, toastError])
+    }, [setBalance, setBalanceMLC, setBalanceUSD, setBalanceUSDT, toastError])
 
     return {
         isLoading,

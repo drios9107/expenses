@@ -13,10 +13,10 @@ const defaultProvider = {
   setMonthExpenses: () => Number,
   monthIncome: 0,
   setMonthIncome: () => Number,
-  lastIncome: 0,
-  setLastIncome: () => Number,
-  lastIncomeDate: 0,
-  setLastIncomeDate: () => Number,
+  biggestIncome: 0,
+  setBiggestIncome: () => Number,
+  biggestIncomeDate: 0,
+  setBiggestIncomeDate: () => Number,
   categoryLabels: [],
   setCategoryLabels: () => [],
   categoryValues: [],
@@ -38,8 +38,8 @@ const DashboardProvider = ({ children }) => {
   const [balanceMLC, setBalanceMLC] = useState(defaultProvider.balanceMLC);
   const [balanceUSD, setBalanceUSD] = useState(defaultProvider.balanceUSD);
   const [balanceUSDT, setBalanceUSDT] = useState(defaultProvider.balanceUSDT);
-  const [lastIncome, setLastIncome] = useState(defaultProvider.lastIncome);
-  const [lastIncomeDate, setLastIncomeDate] = useState(defaultProvider.lastIncomeDate);
+  const [biggestIncome, setBiggestIncome] = useState(defaultProvider.biggestIncome);
+  const [biggestIncomeDate, setBiggestIncomeDate] = useState(defaultProvider.biggestIncomeDate);
   const [monthExpenses, setMonthExpenses] = useState(defaultProvider.monthExpenses);
   const [monthIncome, setMonthIncome] = useState(defaultProvider.monthIncome);
 
@@ -56,10 +56,10 @@ const DashboardProvider = ({ children }) => {
     setMonthExpenses,
     monthIncome,
     setMonthIncome,
-    lastIncome,
-    setLastIncome,
-    lastIncomeDate,
-    setLastIncomeDate,
+    biggestIncome,
+    setBiggestIncome,
+    biggestIncomeDate,
+    setBiggestIncomeDate,
 
     categoryLabels,
     setCategoryLabels,
