@@ -1,5 +1,5 @@
 import { messages } from "@/utils/messages";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { useToast } from "./useToast";
 import axios from "axios";
 import useTransaction from "./useTransaction";
@@ -12,19 +12,6 @@ const useRecurrentTransaction = () => {
 
     const { toastInfo, toastError } = useToast();
     const [isLoading, setIsLoading] = useState(false);
-    const [isSaved, setIsSaved] = useState(false);
-    const [isDeleted, setIsDeleted] = useState(false);
-
-    useEffect(() => {
-        if (isSaved) {
-            toastInfo(messages.saved);
-            setIsSaved(false);
-        }
-        if (isDeleted) {
-            toastInfo(messages.deleted);
-            setIsDeleted(false);
-        }
-    }, [isDeleted, isSaved, toastInfo]);
 
     const getRecurrentTransactions = useCallback(() => {
         setIsLoading(true);
@@ -58,11 +45,11 @@ const useRecurrentTransaction = () => {
         axios.post(`${process.env.NEXT_PUBLIC_BACKEND}/recurrent-transactions`, preparedData)
             .then(({ data }) => {
                 setRecurrentTransactions([...recurrentTransactions, data?.data])
-                setIsSaved(true);
+                toastInfo(messages.saved);
             })
             .catch(error => toastError(error?.data?.message))
             .finally(() => setIsLoading(false))
-    }, [setRecurrentTransactions, recurrentTransactions, toastError])
+    }, [setRecurrentTransactions, recurrentTransactions, toastInfo, toastError])
 
     const updateRecurrentTransaction = useCallback(preparedData => {
         setIsLoading(true);
@@ -72,22 +59,22 @@ const useRecurrentTransaction = () => {
                 const result = [...recurrentTransactions];
                 result[index] = data?.data;
                 setRecurrentTransactions(result);
-                setIsSaved(true);
+                toastInfo(messages.saved);
             })
             .catch(error => toastError(error?.data?.message))
             .finally(() => setIsLoading(false))
-    }, [recurrentTransactions, setRecurrentTransactions, toastError])
+    }, [recurrentTransactions, setRecurrentTransactions, toastError, toastInfo])
 
     const deleteRecurrentTransaction = useCallback(id => {
         setIsLoading(true);
         axios.delete(`${process.env.NEXT_PUBLIC_BACKEND}/recurrent-transactions/${id}`)
             .then(({ data }) => {
                 setRecurrentTransactions(recurrentTransactions.filter(i => i?._id !== id))
-                setIsDeleted(true);
+                toastInfo(messages.deleted);
             })
             .catch(error => toastError(error?.data?.message))
             .finally(() => setIsLoading(false))
-    }, [setRecurrentTransactions, recurrentTransactions, toastError])
+    }, [setRecurrentTransactions, recurrentTransactions, toastInfo, toastError])
 
 
     return {

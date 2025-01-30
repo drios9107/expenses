@@ -1,5 +1,5 @@
 import { messages } from "@/utils/messages";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { useToast } from "./useToast";
 import axios from "axios";
 import { useList } from ".";
@@ -9,20 +9,6 @@ const useTransaction = () => {
 
     const { toastInfo, toastError } = useToast();
     const [isLoading, setIsLoading] = useState(false);
-    const [isSaved, setIsSaved] = useState(false);
-    const [isDeleted, setIsDeleted] = useState(false);
-
-    useEffect(() => {
-        if (isSaved) {
-            console.log('***is saved', messages.saved);
-            toastInfo(messages.saved);
-            setIsSaved(false);
-        }
-        if (isDeleted) {
-            toastInfo(messages.deleted);
-            setIsDeleted(false);
-        }
-    }, [isDeleted, isSaved, toastInfo]);
 
     const getCurrentMonthTransactions = useCallback(() => {
         setIsLoading(true);
@@ -45,11 +31,11 @@ const useTransaction = () => {
         axios.post(`${process.env.NEXT_PUBLIC_BACKEND}/transactions`, preparedData)
             .then(({ data }) => {
                 setTransactions([...transactions, data?.data])
-                setIsSaved(true);
+                toastInfo(messages.saved);
             })
             .catch(error => toastError(error?.data?.message))
             .finally(() => setIsLoading(false))
-    }, [setTransactions, toastError, transactions])
+    }, [setTransactions, toastError, toastInfo, transactions])
 
     const updateTransaction = useCallback(preparedData => {
         setIsLoading(true);
@@ -61,22 +47,22 @@ const useTransaction = () => {
                     result[index] = data?.data;
                     setTransactions(result);
                 }
-                setIsSaved(true);
+                toastInfo(messages.saved);
             })
             .catch(error => toastError(error?.data?.message))
             .finally(() => setIsLoading(false))
-    }, [setTransactions, toastError, transactions])
+    }, [setTransactions, toastError, toastInfo, transactions])
 
     const deleteTransaction = useCallback(id => {
         setIsLoading(true);
         axios.delete(`${process.env.NEXT_PUBLIC_BACKEND}/transactions/${id}`)
             .then(({ data }) => {
                 setTransactions(transactions.filter(i => i?._id !== id))
-                setIsDeleted(true);
+                toastInfo(messages.deleted);
             })
             .catch(error => toastError(error?.data?.message))
             .finally(() => setIsLoading(false))
-    }, [setTransactions, toastError, transactions])
+    }, [setTransactions, toastError, toastInfo, transactions])
 
 
     return {

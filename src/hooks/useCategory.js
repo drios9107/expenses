@@ -1,5 +1,5 @@
 import { messages } from "@/utils/messages";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { useToast } from "./useToast";
 import axios from "axios";
 import { useList } from ".";
@@ -9,19 +9,6 @@ const useCategory = () => {
 
     const { toastInfo, toastError } = useToast();
     const [isLoading, setIsLoading] = useState(false);
-    const [isSaved, setIsSaved] = useState(false);
-    const [isDeleted, setIsDeleted] = useState(false);
-
-    useEffect(() => {
-        if (isSaved) {
-            toastInfo(messages.saved);
-            setIsSaved(false);
-        }
-        if (isDeleted) {
-            toastInfo(messages.deleted);
-            setIsDeleted(false);
-        }
-    }, [isDeleted, isSaved, toastInfo]);
 
     const getCategories = useCallback(() => {
         setIsLoading(true);
@@ -36,11 +23,11 @@ const useCategory = () => {
         axios.post(`${process.env.NEXT_PUBLIC_BACKEND}/categories`, preparedData)
             .then(({ data }) => {
                 setCategories([...categories, data?.data])
-                setIsSaved(true);
+                toastInfo(messages.saved);
             })
             .catch(error => toastError(error?.data?.message))
             .finally(() => setIsLoading(false))
-    }, [categories, setCategories, toastError])
+    }, [categories, setCategories, toastError, toastInfo])
 
     const updateCategory = useCallback(preparedData => {
         setIsLoading(true);
@@ -50,22 +37,22 @@ const useCategory = () => {
                 const result = [...categories];
                 result[index] = data?.data;
                 setCategories(result);
-                setIsSaved(true);
+                toastInfo(messages.saved);
             })
             .catch(error => toastError(error?.data?.message))
             .finally(() => setIsLoading(false))
-    }, [categories, setCategories, toastError])
+    }, [categories, setCategories, toastError, toastInfo])
 
     const deleteCategory = useCallback(id => {
         setIsLoading(true);
         axios.delete(`${process.env.NEXT_PUBLIC_BACKEND}/categories/${id}`)
             .then(({ data }) => {
                 setCategories(categories.filter(i => i?._id !== id))
-                setIsDeleted(true);
+                toastInfo(messages.deleted);
             })
             .catch(error => toastError(error?.data?.message))
             .finally(() => setIsLoading(false))
-    }, [categories, setCategories, toastError])
+    }, [categories, setCategories, toastError, toastInfo])
 
 
     return {

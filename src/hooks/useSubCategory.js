@@ -1,5 +1,5 @@
 import { messages } from "@/utils/messages";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { useToast } from "./useToast";
 import axios from "axios";
 import { useList } from ".";
@@ -9,20 +9,6 @@ const useSubCategory = () => {
 
     const { toastInfo, toastError } = useToast();
     const [isLoading, setIsLoading] = useState(false);
-    const [isSaved, setIsSaved] = useState(false);
-    const [isDeleted, setIsDeleted] = useState(false);
-
-    useEffect(() => {
-        if (isSaved) {
-            toastInfo(messages.saved);
-            setIsSaved(false);
-        }
-        if (isDeleted) {
-            toastInfo(messages.deleted);
-            setIsDeleted(false);
-        }
-    }, [isDeleted, isSaved, toastInfo]);
-
 
     const getSubCategories = useCallback(() => {
         setIsLoading(true);
@@ -37,11 +23,11 @@ const useSubCategory = () => {
         axios.post(`${process.env.NEXT_PUBLIC_BACKEND}/subCategories`, preparedData)
             .then(({ data }) => {
                 setSubCategories([...subCategories, data?.data])
-                setIsSaved(true)
+                toastInfo(messages.saved);
             })
             .catch(error => toastError(error?.data?.message))
             .finally(() => setIsLoading(false))
-    }, [setSubCategories, subCategories, toastError])
+    }, [setSubCategories, subCategories, toastError, toastInfo])
 
     const updateSubCategory = useCallback(preparedData => {
         setIsLoading(true);
@@ -51,22 +37,22 @@ const useSubCategory = () => {
                 const result = [...subCategories];
                 result[index] = data?.data;
                 setSubCategories(result);
-                setIsSaved(true)
+                toastInfo(messages.saved);
             })
             .catch(error => toastError(error?.data?.message))
             .finally(() => setIsLoading(false))
-    }, [setSubCategories, subCategories, toastError])
+    }, [setSubCategories, subCategories, toastError, toastInfo])
 
     const deleteSubCategory = useCallback(id => {
         setIsLoading(true);
         axios.delete(`${process.env.NEXT_PUBLIC_BACKEND}/subCategories/${id}`)
             .then(({ data }) => {
                 setSubCategories(subCategories.filter(i => i?._id !== id))
-                setIsDeleted(true)
+                toastInfo(messages.deleted);
             })
             .catch(error => toastError(error?.data?.message))
             .finally(() => setIsLoading(false))
-    }, [setSubCategories, subCategories, toastError])
+    }, [setSubCategories, subCategories, toastError, toastInfo])
 
 
     return {
