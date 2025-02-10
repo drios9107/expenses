@@ -12,8 +12,8 @@ const ExpensesCard = () => {
             <Typography variant='body2' sx={{ userSelect: 'none' }}>Income</Typography>
         </Box>
         <Box sx={styles.row}>
-            <Typography variant='body2' sx={{ fontWeight: 600 }}>{monthExpenses} $</Typography>
-            <Typography variant='body2' sx={{ fontWeight: 600 }}>{monthIncome} $</Typography>
+            <Typography variant='body2' sx={{ fontWeight: 600, textShadow: '1px 2px 3px salmon' }} >{monthExpenses} $</Typography>
+            <Typography variant='body2' sx={{ fontWeight: 600, textShadow: '1px 2px 3px limegreen' }}>{monthIncome} $</Typography>
         </Box>
     </Card>
 }
