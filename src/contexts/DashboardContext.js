@@ -17,6 +17,9 @@ const defaultProvider = {
   setBiggestIncome: () => Number,
   biggestIncomeDate: 0,
   setBiggestIncomeDate: () => Number,
+  days: {},
+  setDays: () => { },
+
   categoryLabels: [],
   setCategoryLabels: () => [],
   categoryValues: [],
@@ -42,6 +45,7 @@ const DashboardProvider = ({ children }) => {
   const [biggestIncomeDate, setBiggestIncomeDate] = useState(defaultProvider.biggestIncomeDate);
   const [monthExpenses, setMonthExpenses] = useState(defaultProvider.monthExpenses);
   const [monthIncome, setMonthIncome] = useState(defaultProvider.monthIncome);
+  const [days, setDays] = useState(defaultProvider.days);
 
   const values = {
     balance,
@@ -60,6 +64,8 @@ const DashboardProvider = ({ children }) => {
     setBiggestIncome,
     biggestIncomeDate,
     setBiggestIncomeDate,
+    days,
+    setDays,
 
     categoryLabels,
     setCategoryLabels,

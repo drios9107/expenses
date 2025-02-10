@@ -1,17 +1,19 @@
 'use client';
 import DashboardSkeleton from "@/components/DashboardSkeleton";
+import DayCard from "@/components/DayCard";
 import ExpensesCard from "@/components/ExpensesCard";
 import DashboardBarGraph from "@/components/graphs/DashboardBarGraph";
 import DashboardPieGraph from "@/components/graphs/DashboardPieGraph";
 import IncomeCard from "@/components/IncomeCard";
 import MonthNavigator from "@/components/MonthNavigator";
-import { useDashboard, useRecurrentTransaction } from "@/hooks";
+import { useDashboard, useDashboardContext, useRecurrentTransaction } from "@/hooks";
 import { Box, Button, Paper, useMediaQuery } from "@mui/material";
 import moment from "moment";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 export default function Home() {
   const { isLoading, getDashboard } = useDashboard();
+  const { days } = useDashboardContext()
   const { runTransactions } = useRecurrentTransaction()
   const isMobile = useMediaQuery("@media (max-width:500px)");
 
@@ -78,6 +80,9 @@ export default function Home() {
         <DashboardPieGraph />
       </Paper>
     </Box>
+    <Box sx={[styles.daysContainer, conditionalGraphContainerStyles]}>
+      {Object.keys(days).map((item, index) => <DayCard key={index} title={item} day={days[item]} />)}
+    </Box>
   </Box>
 }
 
@@ -85,5 +90,6 @@ const styles = {
   container: { flex: 1, flexWrap: 'wrap', display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' },
   monthNavigatorContainer: { display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', height: '80px', flex: 1 },
   graphContainer: { display: 'flex', flexDirection: 'row', flexWrap: 'wrap' },
+  daysContainer: { display: 'flex', flexDirection: 'row', flexWrap: 'wrap', width: '100%', justifyContent: 'flex-start' },
   graph: { height: '300px', flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' },
 }

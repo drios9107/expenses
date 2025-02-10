@@ -5,7 +5,7 @@ import { useDashboardContext } from ".";
 
 const useDashboard = () => {
     const { setCategoryLabels, setCategoryValues, setSubCategoryLabels, setSubCategoryValues, setMonthExpenses, setMonthIncome,
-        setBalance, setBalanceMLC, setBalanceUSD, setBalanceUSDT, setBiggestIncome, setBiggestIncomeDate } = useDashboardContext();
+        setBalance, setBalanceMLC, setBalanceUSD, setBalanceUSDT, setBiggestIncome, setBiggestIncomeDate, setDays } = useDashboardContext();
 
     const { toastError } = useToast();
     const [isLoading, setIsLoading] = useState(false);
@@ -33,10 +33,13 @@ const useDashboard = () => {
                 if (data?.biggestIncomeDate)
                     setBiggestIncomeDate(data.biggestIncomeDate)
 
+                if (data?.days)
+                    setDays(data.days)
+
             })
             .catch(error => toastError(error?.data?.message))
             .finally(() => setIsLoading(false))
-    }, [setBiggestIncome, setBiggestIncomeDate, setCategoryLabels, setCategoryValues, setMonthExpenses, setMonthIncome, setSubCategoryLabels, setSubCategoryValues, toastError])
+    }, [setBiggestIncome, setBiggestIncomeDate, setCategoryLabels, setCategoryValues, setDays, setMonthExpenses, setMonthIncome, setSubCategoryLabels, setSubCategoryValues, toastError])
 
     const getBalanceData = useCallback(() => {
         setIsLoading(true);

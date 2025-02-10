@@ -26,5 +26,5 @@ const DayCard = ({ title, day }) => {
 export default DayCard
 
 const styles = {
-    container: { display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly', flex: 1, minWidth: '200px', gap: '10px', p: '16px', borderRadius: '16px' }
+    container: { display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly', flex: 1, minWidth: '200px', gap: '10px', p: '16px', borderRadius: '16px', cursor: 'pointer' }
 }
