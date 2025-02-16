@@ -12,8 +12,8 @@ const ExpensesCard = () => {
             <Typography variant='body2' sx={{ userSelect: 'none' }}>Income</Typography>
         </Box>
         <Box sx={styles.row}>
-            <Typography variant='body2' sx={{ fontWeight: 600, textShadow: '1px 2px 3px salmon' }} >{monthExpenses} $</Typography>
-            <Typography variant='body2' sx={{ fontWeight: 600, textShadow: '1px 2px 3px limegreen' }}>{monthIncome} $</Typography>
+            <Typography variant='body2' sx={{ fontWeight: 600, textAlign: 'right', textShadow: '1px 2px 3px salmon' }} >{monthExpenses} $</Typography>
+            <Typography variant='body2' sx={{ fontWeight: 600, textAlign: 'right', textShadow: '1px 2px 3px limegreen' }}>{monthIncome} $</Typography>
         </Box>
     </Card>
 }
@@ -21,6 +21,9 @@ const ExpensesCard = () => {
 export default ExpensesCard
 
 const styles = {
-    container: { width: '220px', height: '80px', px: '16px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: '15px', backgroundColor: '#D6E6FF' },
+    container: {
+        width: '220px', height: '80px', px: '16px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between',
+        alignItems: 'center', gap: '15px', backgroundColor: '#D6E6FF', '&:hover': { opacity: 0.7 }
+    },
     row: { display: 'flex', flexDirection: 'column', gap: '5px' },
 }

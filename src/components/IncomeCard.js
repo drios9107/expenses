@@ -13,8 +13,8 @@ const IncomeCard = () => {
             <Typography variant='body2' sx={{ userSelect: 'none' }}>Date</Typography>
         </Box>
         <Box sx={styles.row}>
-            <Typography variant='body2' sx={{ fontWeight: 600 }}>{biggestIncome} $</Typography>
-            <Typography variant='body2' sx={{ fontWeight: 600 }}>{biggestIncomeDate ? moment(biggestIncomeDate).format('DD/MM/YYYY') : '-'}</Typography>
+            <Typography variant='body2' sx={{ fontWeight: 600, textAlign: 'right' }}>{biggestIncome} $</Typography>
+            <Typography variant='body2' sx={{ fontWeight: 600, textAlign: 'right' }}>{biggestIncomeDate ? moment(biggestIncomeDate).format('DD/MM/YYYY') : '-'}</Typography>
         </Box>
     </Card>
 }
@@ -22,6 +22,9 @@ const IncomeCard = () => {
 export default IncomeCard
 
 const styles = {
-    container: { width: '220px', height: '80px', px: '16px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: '15px', backgroundColor: '#D6E6FF' },
+    container: {
+        width: '220px', height: '80px', px: '16px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between',
+        alignItems: 'center', gap: '15px', backgroundColor: '#D6E6FF', '&:hover': { opacity: 0.7 }
+    },
     row: { display: 'flex', flexDirection: 'column', gap: '5px' },
 }
