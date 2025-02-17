@@ -2,7 +2,7 @@ import { Box, Paper } from '@mui/material'
 import Link from 'next/link'
 import React from 'react'
 import Balance from '../Balance'
-import { Home, Logout } from '@mui/icons-material'
+import { Home, Logout, Policy } from '@mui/icons-material'
 import { signOut } from 'next-auth/react'
 import { useLayoutStyles } from '@/hooks/useLayoutStyles'
 
@@ -10,8 +10,9 @@ const Header = () => {
     const { conditionalTopSectionStyles } = useLayoutStyles();
 
     return <Paper sx={[styles.topSection, conditionalTopSectionStyles]}>
-        <Box sx={styles.opacity}>
+        <Box sx={[styles.opacity, { display: 'flex', flexDirection: 'row', gap: '10px' }]}>
             <Link href={'/'} style={styles.link}><Home sx={styles.iconMenu} />Home</Link>
+            <Link href="/privacy" style={styles.link}><Policy sx={styles.iconMenu} />Privacy policy</Link>
         </Box>
         <Box sx={styles.rightSection}>
             <Balance />

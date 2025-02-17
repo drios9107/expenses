@@ -8,8 +8,11 @@ const getLineColor = (row, normalColor = 'textSecondary') => {
 };
 
 const publicRoutes = [
-    '/login'
+    '/login',
+]
+const policyRoutes = [
+    '/privacy',
 ]
 
 
-export { getLineColor, publicRoutes }
+export { getLineColor, publicRoutes, policyRoutes }

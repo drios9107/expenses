@@ -2,7 +2,7 @@ import { Box } from '@mui/material';
 import { useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { usePathname, useRouter } from 'next/navigation';
-import { publicRoutes } from '@/utils/helpers';
+import { policyRoutes, publicRoutes } from '@/utils/helpers';
 import { useLayoutStyles } from '@/hooks/useLayoutStyles';
 import Header from './Header';
 import Footer from './Footer';
@@ -18,7 +18,7 @@ const Layout = ({ children }) => {
 
     useEffect(() => {
         if (status !== 'loading') {
-            if (status === 'unauthenticated')
+            if (status === 'unauthenticated' && !policyRoutes.includes(pathname))
                 replace('/login')
             else if (publicRoutes?.includes(pathname))
                 replace('/')
@@ -28,7 +28,7 @@ const Layout = ({ children }) => {
     if (status !== 'authenticated' && !publicRoutes?.includes(pathname))
         return null
 
-    if (publicRoutes?.includes(pathname))
+    if (publicRoutes?.includes(pathname) || policyRoutes.includes(pathname))
         return <GuestLayout>
             {children}
         </GuestLayout>
