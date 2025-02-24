@@ -4,26 +4,27 @@ import { useToast } from "./useToast";
 import axios from "axios";
 import useTransaction from "./useTransaction";
 import { useDashboardContext, useList } from ".";
+import axiosInstance from "@/utils/AxiosInterceptor";
 
 const useRecurrentTransaction = () => {
     const { recurrentTransactions, setRecurrentTransactions } = useList();
     const { getTransactions } = useTransaction();
     const { setBalance, setBalanceMLC, setBalanceUSD, setBalanceUSDT } = useDashboardContext();
 
-    const { toastInfo, toastError } = useToast();
+    const { toastInfo } = useToast();
     const [isLoading, setIsLoading] = useState(false);
 
     const getRecurrentTransactions = useCallback(() => {
         setIsLoading(true);
-        axios.get(`${process.env.NEXT_PUBLIC_BACKEND}/recurrent-transactions`)
+        axiosInstance.get(`/recurrent-transactions`)
             .then(({ data }) => setRecurrentTransactions(data?.data ?? []))
-            .catch(error => toastError(error?.data?.message))
+            .catch(() => { })
             .finally(() => setIsLoading(false))
-    }, [setRecurrentTransactions, toastError])
+    }, [setRecurrentTransactions])
 
     const runTransactions = useCallback(() => {
         setIsLoading(true);
-        axios.get(`${process.env.NEXT_PUBLIC_BACKEND}/recurrent-transactions/runRecurrence`)
+        axiosInstance.get(`/recurrent-transactions/runRecurrence`)
             .then(({ data }) => {
                 getTransactions();
                 if (data?.balance)
@@ -36,24 +37,24 @@ const useRecurrentTransaction = () => {
                     setBalanceUSDT(data?.balanceUSDT)
                 toastInfo(messages.finishedRecurrence)
             })
-            .catch(error => toastError(error?.data?.message))
+            .catch(() => { })
             .finally(() => setIsLoading(false))
-    }, [getTransactions, setBalance, setBalanceMLC, setBalanceUSD, setBalanceUSDT, toastError, toastInfo])
+    }, [getTransactions, setBalance, setBalanceMLC, setBalanceUSD, setBalanceUSDT, toastInfo])
 
     const createRecurrentTransaction = useCallback(preparedData => {
         setIsLoading(true);
-        axios.post(`${process.env.NEXT_PUBLIC_BACKEND}/recurrent-transactions`, preparedData)
+        axiosInstance.post(`/recurrent-transactions`, preparedData)
             .then(({ data }) => {
                 setRecurrentTransactions([...recurrentTransactions, data?.data])
                 toastInfo(messages.saved);
             })
-            .catch(error => toastError(error?.data?.message))
+            .catch(() => { })
             .finally(() => setIsLoading(false))
-    }, [setRecurrentTransactions, recurrentTransactions, toastInfo, toastError])
+    }, [setRecurrentTransactions, recurrentTransactions, toastInfo])
 
     const updateRecurrentTransaction = useCallback(preparedData => {
         setIsLoading(true);
-        axios.put(`${process.env.NEXT_PUBLIC_BACKEND}/recurrent-transactions/${preparedData?._id}`, preparedData)
+        axiosInstance.put(`/recurrent-transactions/${preparedData?._id}`, preparedData)
             .then(({ data }) => {
                 const index = recurrentTransactions.findIndex(i => i._id === preparedData?._id)
                 const result = [...recurrentTransactions];
@@ -61,20 +62,20 @@ const useRecurrentTransaction = () => {
                 setRecurrentTransactions(result);
                 toastInfo(messages.saved);
             })
-            .catch(error => toastError(error?.data?.message))
+            .catch(() => { })
             .finally(() => setIsLoading(false))
-    }, [recurrentTransactions, setRecurrentTransactions, toastError, toastInfo])
+    }, [recurrentTransactions, setRecurrentTransactions, toastInfo])
 
     const deleteRecurrentTransaction = useCallback(id => {
         setIsLoading(true);
-        axios.delete(`${process.env.NEXT_PUBLIC_BACKEND}/recurrent-transactions/${id}`)
+        axiosInstance.delete(`/recurrent-transactions/${id}`)
             .then(({ data }) => {
                 setRecurrentTransactions(recurrentTransactions.filter(i => i?._id !== id))
                 toastInfo(messages.deleted);
             })
-            .catch(error => toastError(error?.data?.message))
+            .catch(() => { })
             .finally(() => setIsLoading(false))
-    }, [setRecurrentTransactions, recurrentTransactions, toastInfo, toastError])
+    }, [setRecurrentTransactions, recurrentTransactions, toastInfo])
 
 
     return {

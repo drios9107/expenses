@@ -1,18 +1,16 @@
 import { useCallback, useState } from "react";
-import { useToast } from "./useToast";
-import axios from "axios";
 import { useDashboardContext } from ".";
+import axiosInstance from "@/utils/AxiosInterceptor";
 
 const useDashboard = () => {
     const { setCategoryLabels, setCategoryValues, setSubCategoryLabels, setSubCategoryValues, setMonthExpenses, setMonthIncome,
         setBalance, setBalanceMLC, setBalanceUSD, setBalanceUSDT, setBiggestIncome, setBiggestIncomeDate, setDays } = useDashboardContext();
 
-    const { toastError } = useToast();
     const [isLoading, setIsLoading] = useState(false);
 
     const getDashboard = useCallback(params => {
         setIsLoading(true);
-        axios.post(`${process.env.NEXT_PUBLIC_BACKEND}/dashboard`, params)
+        axiosInstance.post(`/dashboard`, params)
             .then(({ data }) => {
                 if (data?.categoryData) {
                     setCategoryLabels(data.categoryData?.labels);
@@ -37,13 +35,13 @@ const useDashboard = () => {
                     setDays(data.days)
 
             })
-            .catch(error => toastError(error?.data?.message))
+            .catch(() => { })
             .finally(() => setIsLoading(false))
-    }, [setBiggestIncome, setBiggestIncomeDate, setCategoryLabels, setCategoryValues, setDays, setMonthExpenses, setMonthIncome, setSubCategoryLabels, setSubCategoryValues, toastError])
+    }, [setBiggestIncome, setBiggestIncomeDate, setCategoryLabels, setCategoryValues, setDays, setMonthExpenses, setMonthIncome, setSubCategoryLabels, setSubCategoryValues])
 
     const getBalanceData = useCallback(() => {
         setIsLoading(true);
-        axios.get(`${process.env.NEXT_PUBLIC_BACKEND}/balance`)
+        axiosInstance.get(`/balance`)
             .then(({ data }) => {
                 if (data?.balance)
                     setBalance(data?.balance)
@@ -54,9 +52,9 @@ const useDashboard = () => {
                 if (data?.balanceUSDT)
                     setBalanceUSDT(data?.balanceUSDT)
             })
-            .catch(error => toastError(error?.data?.message))
+            .catch(() => { })
             .finally(() => setIsLoading(false))
-    }, [setBalance, setBalanceMLC, setBalanceUSD, setBalanceUSDT, toastError])
+    }, [setBalance, setBalanceMLC, setBalanceUSD, setBalanceUSDT,])
 
     return {
         isLoading,

@@ -1,13 +1,19 @@
 import { Box, Paper } from '@mui/material'
 import Link from 'next/link'
-import React from 'react'
+import React, { useCallback } from 'react'
 import Balance from '../Balance'
 import { Home, Logout, Policy } from '@mui/icons-material'
 import { signOut } from 'next-auth/react'
 import { useLayoutStyles } from '@/hooks/useLayoutStyles'
+import { setAuthToken } from '@/utils/AxiosInterceptor'
 
 const Header = () => {
     const { conditionalTopSectionStyles } = useLayoutStyles();
+
+    const handleSignOut = useCallback(() => {
+        signOut()
+        setAuthToken(null);
+    }, [])
 
     return <Paper sx={[styles.topSection, conditionalTopSectionStyles]}>
         <Box sx={[styles.opacity, { display: 'flex', flexDirection: 'row', gap: '10px' }]}>
@@ -17,7 +23,7 @@ const Header = () => {
         <Box sx={styles.rightSection}>
             <Balance />
             <Box sx={[styles.opacity, { cursor: 'pointer', display: 'flex', alignItems: 'center' }]}>
-                <Logout sx={styles.iconMenu} onClick={() => signOut()} />
+                <Logout sx={styles.iconMenu} onClick={handleSignOut} />
             </Box>
         </Box>
 

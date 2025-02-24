@@ -3,43 +3,44 @@ import { useCallback, useState } from "react";
 import { useToast } from "./useToast";
 import axios from "axios";
 import { useList } from ".";
+import axiosInstance from "@/utils/AxiosInterceptor";
 
 const useTransaction = () => {
     const { transactions, setTransactions, setCurrentMonthTransactions } = useList();
 
-    const { toastInfo, toastError } = useToast();
+    const { toastInfo } = useToast();
     const [isLoading, setIsLoading] = useState(false);
 
     const getCurrentMonthTransactions = useCallback(() => {
         setIsLoading(true);
-        axios.get(`${process.env.NEXT_PUBLIC_BACKEND}/transactions/currentMonth`)
+        axiosInstance.get(`/transactions/currentMonth`)
             .then(({ data }) => setCurrentMonthTransactions(data?.data ?? []))
-            .catch(error => toastError(error?.data?.message))
+            .catch(() => { })
             .finally(() => setIsLoading(false))
-    }, [setCurrentMonthTransactions, toastError])
+    }, [setCurrentMonthTransactions])
 
     const getTransactions = useCallback(() => {
         setIsLoading(true);
-        axios.get(`${process.env.NEXT_PUBLIC_BACKEND}/transactions`)
+        axiosInstance.get(`/transactions`)
             .then(({ data }) => setTransactions(data?.data ?? []))
-            .catch(error => toastError(error?.data?.message))
+            .catch(() => { })
             .finally(() => setIsLoading(false))
-    }, [setTransactions, toastError])
+    }, [setTransactions])
 
     const createTransaction = useCallback(preparedData => {
         setIsLoading(true);
-        axios.post(`${process.env.NEXT_PUBLIC_BACKEND}/transactions`, preparedData)
+        axiosInstance.post(`/transactions`, preparedData)
             .then(({ data }) => {
                 setTransactions([...transactions, data?.data])
                 toastInfo(messages.saved);
             })
-            .catch(error => toastError(error?.data?.message))
+            .catch(() => { })
             .finally(() => setIsLoading(false))
-    }, [setTransactions, toastError, toastInfo, transactions])
+    }, [setTransactions, toastInfo, transactions])
 
     const updateTransaction = useCallback(preparedData => {
         setIsLoading(true);
-        axios.put(`${process.env.NEXT_PUBLIC_BACKEND}/transactions/${preparedData?._id}`, preparedData)
+        axiosInstance.put(`/transactions/${preparedData?._id}`, preparedData)
             .then(({ data }) => {
                 const index = transactions.findIndex(i => i._id === preparedData?._id)
                 if (index > -1) {
@@ -49,20 +50,20 @@ const useTransaction = () => {
                 }
                 toastInfo(messages.saved);
             })
-            .catch(error => toastError(error?.data?.message))
+            .catch(() => { })
             .finally(() => setIsLoading(false))
-    }, [setTransactions, toastError, toastInfo, transactions])
+    }, [setTransactions, toastInfo, transactions])
 
     const deleteTransaction = useCallback(id => {
         setIsLoading(true);
-        axios.delete(`${process.env.NEXT_PUBLIC_BACKEND}/transactions/${id}`)
+        axiosInstance.delete(`/transactions/${id}`)
             .then(({ data }) => {
                 setTransactions(transactions.filter(i => i?._id !== id))
                 toastInfo(messages.deleted);
             })
-            .catch(error => toastError(error?.data?.message))
+            .catch(() => { })
             .finally(() => setIsLoading(false))
-    }, [setTransactions, toastError, toastInfo, transactions])
+    }, [setTransactions, toastInfo, transactions])
 
 
     return {

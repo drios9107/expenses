@@ -3,35 +3,36 @@ import { useCallback, useState } from "react";
 import { useToast } from "./useToast";
 import axios from "axios";
 import { useList } from ".";
+import axiosInstance from "@/utils/AxiosInterceptor";
 
 const useSubCategory = () => {
     const { subCategories, setSubCategories } = useList();
 
-    const { toastInfo, toastError } = useToast();
+    const { toastInfo } = useToast();
     const [isLoading, setIsLoading] = useState(false);
 
     const getSubCategories = useCallback(() => {
         setIsLoading(true);
-        axios.get(`${process.env.NEXT_PUBLIC_BACKEND}/subCategories`)
+        axiosInstance.get(`/subCategories`)
             .then(({ data }) => setSubCategories(data?.data ?? []))
-            .catch(error => toastError(error?.data?.message))
+            .catch(() => { })
             .finally(() => setIsLoading(false))
-    }, [setSubCategories, toastError])
+    }, [setSubCategories])
 
     const createSubCategory = useCallback(preparedData => {
         setIsLoading(true);
-        axios.post(`${process.env.NEXT_PUBLIC_BACKEND}/subCategories`, preparedData)
+        axiosInstance.post(`/subCategories`, preparedData)
             .then(({ data }) => {
                 setSubCategories([...subCategories, data?.data])
                 toastInfo(messages.saved);
             })
-            .catch(error => toastError(error?.data?.message))
+            .catch(() => { })
             .finally(() => setIsLoading(false))
-    }, [setSubCategories, subCategories, toastError, toastInfo])
+    }, [setSubCategories, subCategories, toastInfo])
 
     const updateSubCategory = useCallback(preparedData => {
         setIsLoading(true);
-        axios.put(`${process.env.NEXT_PUBLIC_BACKEND}/subCategories/${preparedData?._id}`, preparedData)
+        axiosInstance.put(`/subCategories/${preparedData?._id}`, preparedData)
             .then(({ data }) => {
                 const index = subCategories.findIndex(i => i._id === preparedData?._id)
                 const result = [...subCategories];
@@ -39,20 +40,20 @@ const useSubCategory = () => {
                 setSubCategories(result);
                 toastInfo(messages.saved);
             })
-            .catch(error => toastError(error?.data?.message))
+            .catch(() => { })
             .finally(() => setIsLoading(false))
-    }, [setSubCategories, subCategories, toastError, toastInfo])
+    }, [setSubCategories, subCategories, toastInfo])
 
     const deleteSubCategory = useCallback(id => {
         setIsLoading(true);
-        axios.delete(`${process.env.NEXT_PUBLIC_BACKEND}/subCategories/${id}`)
+        axiosInstance.delete(`/subCategories/${id}`)
             .then(({ data }) => {
                 setSubCategories(subCategories.filter(i => i?._id !== id))
                 toastInfo(messages.deleted);
             })
-            .catch(error => toastError(error?.data?.message))
+            .catch(() => { })
             .finally(() => setIsLoading(false))
-    }, [setSubCategories, subCategories, toastError, toastInfo])
+    }, [setSubCategories, subCategories, toastInfo])
 
 
     return {
