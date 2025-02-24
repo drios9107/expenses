@@ -8,13 +8,19 @@ import Header from './Header';
 import Footer from './Footer';
 import Body from './Body';
 import GuestLayout from './GuestLayout';
+import { setAuthToken } from '@/utils/AxiosInterceptor';
 
 
 const Layout = ({ children }) => {
-    const { status } = useSession()
+    const { status, data: session } = useSession()
     const { replace } = useRouter()
     const pathname = usePathname();
     const { conditionalContainerStyles } = useLayoutStyles()
+
+    useEffect(() => {
+        if (session?.user?.token)
+            setAuthToken(session.user.token);
+    }, [session?.user?.token]);
 
     useEffect(() => {
         if (status !== 'loading') {
