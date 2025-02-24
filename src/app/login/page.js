@@ -3,18 +3,18 @@ import MuiTextfield from "@/components/inputs/MuiTextField";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { GitHub } from "@mui/icons-material";
 import { Box, Button, Divider, IconButton, Paper, Typography } from "@mui/material";
-import { signIn } from "next-auth/react";
+import { getCsrfToken, signIn } from "next-auth/react";
 import { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 
 const defaultValues = {
-    user: '',
+    email: '',
     password: ''
 };
 
 const schema = yup.object().shape({
-    // user: yup.string().required("This field is required"),
+    // email: yup.string().required("This field is required"),
     // password: yup.string().required("This field is required").min(7, "Password must be at least 7 characters"),
 });
 
@@ -23,7 +23,7 @@ const Login = () => {
     } = useForm({ defaultValues, mode: "onBlur", resolver: yupResolver(schema) });
 
     const onSubmit = useCallback(data => {
-        signIn('credentials', { callbackUrl: '/' })
+        signIn('credentials', data)
     }, [])
 
     const callProvider = useCallback(provider => {
@@ -35,8 +35,8 @@ const Login = () => {
         <MuiTextfield
             control={control}
             errors={errors}
-            fieldName={'user'}
-            options={{ label: 'User' }}
+            fieldName={'email'}
+            options={{ label: 'Email' }}
         />
         <MuiTextfield
             control={control}
