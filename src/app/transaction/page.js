@@ -14,6 +14,7 @@ import moment from "moment";
 import { typeList } from "@/components/crud/transaction/Form";
 import { useCategory, useList, useSubCategory, useTransaction } from "@/hooks";
 import { getLineColor } from "@/utils/helpers";
+import { useFormat } from "@/hooks/useFormat";
 
 const Transaction = () => {
     const [open, setOpen] = useState(false);
@@ -25,6 +26,7 @@ const Transaction = () => {
     const { isLoading: isLoadingCategories, getCategories } = useCategory()
     const { isLoading: isLoadingSubCategories, getSubCategories } = useSubCategory()
     const { categories, subCategories, transactions } = useList();
+    const { currencyFormat } = useFormat();
 
     useEffect(() => {
         getTransactions();
@@ -85,7 +87,7 @@ const Transaction = () => {
         field: "amount",
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Amount'} />,
-        renderCell: ({ row }) => <Typography variant='body1' color={getLineColor(row)}>{row?.amount}</Typography>,
+        renderCell: ({ row }) => <Typography variant='body1' color={getLineColor(row)}>{currencyFormat(row?.amount)}</Typography>,
         valueGetter: (uid, row) => row?.amount
     },
     {
@@ -129,7 +131,7 @@ const Transaction = () => {
             onUpdate={() => { setItemToUpdate(row), setOpen(true) }}
             onDelete={() => setItemToDelete(row)}
         />
-    }], [getCategory, getSubCategory, getType])
+    }], [currencyFormat, getCategory, getSubCategory, getType])
 
     const getTransactionsList = useMemo(() => {
         return [...transactions]?.sort((a, b) => b?.date - a?.date)

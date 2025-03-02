@@ -14,6 +14,7 @@ import moment from "moment";
 import { typeList } from "@/components/crud/transaction/Form";
 import { useCategory, useSubCategory, useRecurrentTransaction, useList } from "@/hooks";
 import { PowerOn, PowerOff } from "mdi-material-ui";
+import { useFormat } from "@/hooks/useFormat";
 
 const RecurrentTransaction = () => {
     const [open, setOpen] = useState(false);
@@ -26,6 +27,7 @@ const RecurrentTransaction = () => {
     const { isLoading: isLoadingCategories, getCategories } = useCategory()
     const { isLoading: isLoadingSubCategories, getSubCategories } = useSubCategory()
     const { categories, subCategories, recurrentTransactions } = useList();
+    const { currencyFormat } = useFormat();
 
 
     useEffect(() => {
@@ -91,7 +93,7 @@ const RecurrentTransaction = () => {
         field: "amount",
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Amount'} />,
-        renderCell: ({ row }) => <Typography variant='body1'>{row?.amount}</Typography>,
+        renderCell: ({ row }) => <Typography variant='body1'>{currencyFormat(row?.amount)}</Typography>,
         valueGetter: (uid, row) => row?.amount
     },
     {
@@ -133,7 +135,7 @@ const RecurrentTransaction = () => {
                 </IconButton>
             </Tooltip>
         </ActionColumn>
-    }], [getCategory, getSubCategory, getType])
+    }], [currencyFormat, getCategory, getSubCategory, getType])
 
 
     const getRecurrentTransactionsList = useMemo(() => {

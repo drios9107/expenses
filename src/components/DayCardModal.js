@@ -1,13 +1,23 @@
 import { Box, Button, Divider, Typography } from '@mui/material';
 import SimpleModal from './SimpleModal'
+import { useCallback } from 'react';
+import { useFormat } from '@/hooks/useFormat';
 
 const DayCardModal = ({ title = '', day, maxWidth, onClose = () => { }, extraclasses = {} }) => {
+    const { currencyFormat } = useFormat();
+
+    const getText = useCallback(item => {
+        const subCategory = item?.subCategory ?? '';
+        const category = item?.category ? `(${item.category})` : '';
+        return `${subCategory} ${category}`
+    }, [])
+
     return <SimpleModal onClose={onClose} title={title} maxWidth={maxWidth} extraclasses={extraclasses}>
         <Box sx={styles.dataContainer}>
             {day?.map((item, index) => <Box key={index} >
                 <Box sx={styles.row}>
-                    <Typography sx={{}}>{item?.category} {item?.subCategory ? `(${item.subCategory})` : ''}</Typography>
-                    <Typography sx={{ fontWeight: 600 }}>{item?.amount} $</Typography>
+                    <Typography>{getText(item)}</Typography>
+                    <Typography sx={{ fontWeight: 600 }}>{currencyFormat(item?.amount)} $</Typography>
                 </Box>
 
                 {item?.description && <Box sx={styles.row}>

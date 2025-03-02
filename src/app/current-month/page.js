@@ -11,6 +11,7 @@ import moment from "moment";
 import { useList, useTransaction } from "@/hooks";
 import { getLineColor } from "@/utils/helpers";
 import { Tooltip, Typography } from "@mui/material";
+import { useFormat } from "@/hooks/useFormat";
 
 const CurrentMonth = () => {
     const [open, setOpen] = useState(false);
@@ -20,6 +21,7 @@ const CurrentMonth = () => {
 
     const { isLoading, getCurrentMonthTransactions, deleteTransaction } = useTransaction();
     const { currentMonthTransactions } = useList();
+    const { currencyFormat } = useFormat();
 
 
     useEffect(() => {
@@ -66,9 +68,9 @@ const CurrentMonth = () => {
         field: "amount",
         sortable: true,
         renderHeader: () => <ColumnHeader title={'Amount'} />,
-        renderCell: ({ row }) => <Typography variant='body1' color={getLineColor(row)}>{row?.amount}</Typography>,
+        renderCell: ({ row }) => <Typography variant='body1' color={getLineColor(row)}>{currencyFormat(row?.amount)}</Typography>,
         valueGetter: (uid, row) => row?.amount
-    }], [])
+    }], [currencyFormat])
 
     const getTransactionsList = useMemo(() => {
         const firstDay = moment().set({ D: 1, h: 0, m: 0, s: 0 });
