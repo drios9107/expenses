@@ -1,6 +1,7 @@
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { messages } from './messages';
+import { signOut } from 'next-auth/react';
 
 const axiosInstance = axios.create({
     baseURL: process.env.NEXT_PUBLIC_BACKEND, // Replace with your API base URL
@@ -12,7 +13,10 @@ axiosInstance.interceptors.response.use(response => response, error => {
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx
         const { status, data } = error.response;
-        // if (data?.code)
+        if (['missing-token', 'invalid-token'].includes(data?.code)) {
+            signOut();
+            return;
+        }
         toast.error(messages[data?.code ?? 'default']);
 
         // switch (status) {
