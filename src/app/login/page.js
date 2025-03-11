@@ -30,19 +30,24 @@ const Login = () => {
         signIn(provider, { callbackUrl: '/' })
     }, [])
 
+    const onKeyDown = useCallback(e => {
+        if (e?.key === 'Enter')
+            handleSubmit(onSubmit)()
+    }, [handleSubmit, onSubmit])
+
     return <Paper sx={styles.topSection}>
         <Typography variant='h6'>Login</Typography>
         <MuiTextfield
             control={control}
             errors={errors}
             fieldName={'email'}
-            options={{ label: 'Email' }}
+            options={{ label: 'Email', onKeyDown }}
         />
         <MuiTextfield
             control={control}
             errors={errors}
             fieldName={'password'}
-            options={{ label: 'Password', type: 'password' }}
+            options={{ label: 'Password', type: 'password', onKeyDown }}
         />
 
         <Button variant='contained' onClick={handleSubmit(onSubmit)} /*disabled={!isDirty || !isValid}*/ size="small" >Login</Button>
