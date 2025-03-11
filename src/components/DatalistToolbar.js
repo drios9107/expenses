@@ -6,7 +6,7 @@ const DatalistToolbar = ({ title }) => {
     return <Box sx={styles.topSection}>
         <Typography sx={{ flex: 1 }}>{title}</Typography>
         <Box sx={{ display: 'flex', gap: '25px' }}>
-            <GridToolbarQuickFilter variant="outlined" size="small" sx={styles.gridToolbarQuickFilter} />
+            <GridToolbarQuickFilter variant="outlined" size="small" sx={styles.gridToolbarQuickFilter} autoFocus />
         </Box>
     </Box>
 }
