@@ -9,51 +9,36 @@ import MonthNavigator from "@/components/MonthNavigator";
 import { useDashboard, useDashboardContext, useRecurrentTransaction } from "@/hooks";
 import { Box, Button, Paper, useMediaQuery } from "@mui/material";
 import moment from "moment";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 export default function Home() {
-  const { isLoading, getDashboard } = useDashboard();
+  const { isLoading, conditionalContainerStyles, currentMonth, currentYear,
+    getPreviousMonth, getNextMonth, conditionalGraphContainerStyles,
+    conditionalGraphStyles, isHover1, setIsHover1, isHover2, setIsHover2 } = useDashboard();
   const { days } = useDashboardContext()
   const { runTransactions } = useRecurrentTransaction()
   const isMobile = useMediaQuery("@media (max-width:500px)");
 
-  const [isHover1, setIsHover1] = useState(false);
-  const [isHover2, setIsHover2] = useState(false);
+  const [selectedDate, setSelectedDate] = useState()
 
-  const [currentMonth, setCurrentMonth] = useState(moment().month())
-  const [currentYear, setCurrentYear] = useState(moment().year())
+  const onSelected = useCallback((day) => {
+    const title = moment(day).format('YYYY-MM-DD');
 
-  const conditionalContainerStyles = useMemo(() => {
-    return isMobile ? { borderRadius: '8px', gap: '10px', p: '10px', } : { borderRadius: '16px', gap: '25px', p: '25px', }
-  }, [isMobile])
+    setSelectedDate({
+      title,
+      day: days[title]
+    })
+  }, [days])
 
-  const conditionalGraphContainerStyles = useMemo(() => {
-    return isMobile ? { gap: '10px' } : { gap: '25px' }
-  }, [isMobile])
+  const existingDates = useMemo(() => {
+    const result = Object.keys(days).map((item) => {
+      const [year, month, date] = item.split('-');
+      return moment().set({ year, month: month - 1, date }).toDate()
+    })
 
-  const conditionalGraphStyles = useMemo(() => {
-    return isMobile ? { p: '5px', borderRadius: '8px', } : { p: '25px', borderRadius: '16px', }
-  }, [isMobile])
+    return result;
+  }, [days])
 
-  useEffect(() => {
-    getDashboard({ currentMonth, currentYear });
-  }, [currentMonth, currentYear, getDashboard])
-
-  const getPreviousMonth = useCallback(() => {
-    if (currentMonth === 0) {
-      setCurrentMonth(11)
-      setCurrentYear(currentYear - 1)
-    } else
-      setCurrentMonth(currentMonth - 1)
-  }, [currentMonth, currentYear])
-
-  const getNextMonth = useCallback(() => {
-    if (currentMonth === 11) {
-      setCurrentMonth(0)
-      setCurrentYear(currentYear + 1)
-    } else
-      setCurrentMonth(currentMonth + 1)
-  }, [currentMonth, currentYear])
 
   if (isLoading)
     return <DashboardSkeleton />

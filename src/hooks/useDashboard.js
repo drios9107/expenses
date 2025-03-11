@@ -1,11 +1,19 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDashboardContext } from ".";
 import axiosInstance from "@/utils/AxiosInterceptor";
+import moment from "moment";
+import { useMediaQuery } from "@mui/material";
 
 const useDashboard = () => {
     const { setCategoryLabels, setCategoryValues, setSubCategoryLabels, setSubCategoryValues, setMonthExpenses, setMonthIncome,
         setBalance, setBalanceMLC, setBalanceUSD, setBalanceUSDT, setBiggestIncome, setBiggestIncomeDate, setDays } = useDashboardContext();
+    const isMobile = useMediaQuery("@media (max-width:500px)");
 
+    const [isHover1, setIsHover1] = useState(false);
+    const [isHover2, setIsHover2] = useState(false);
+
+    const [currentMonth, setCurrentMonth] = useState(moment().month())
+    const [currentYear, setCurrentYear] = useState(moment().year())
     const [isLoading, setIsLoading] = useState(false);
 
     const getDashboard = useCallback(params => {
@@ -56,11 +64,42 @@ const useDashboard = () => {
             .finally(() => setIsLoading(false))
     }, [setBalance, setBalanceMLC, setBalanceUSD, setBalanceUSDT,])
 
+    const conditionalContainerStyles = useMemo(() => {
+        return isMobile ? { borderRadius: '8px', gap: '10px', p: '10px', } : { borderRadius: '16px', gap: '25px', p: '25px', }
+    }, [isMobile])
+
+    const conditionalGraphContainerStyles = useMemo(() => {
+        return isMobile ? { gap: '10px' } : { gap: '25px' }
+    }, [isMobile])
+
+    const conditionalGraphStyles = useMemo(() => {
+        return isMobile ? { p: '5px', borderRadius: '8px', } : { p: '25px', borderRadius: '16px', }
+    }, [isMobile])
+
+    useEffect(() => {
+        getDashboard({ currentMonth, currentYear });
+    }, [currentMonth, currentYear, getDashboard])
+
+    const getPreviousMonth = useCallback(() => {
+        if (currentMonth === 0) {
+            setCurrentMonth(11)
+            setCurrentYear(currentYear - 1)
+        } else
+            setCurrentMonth(currentMonth - 1)
+    }, [currentMonth, currentYear])
+
+    const getNextMonth = useCallback(() => {
+        if (currentMonth === 11) {
+            setCurrentMonth(0)
+            setCurrentYear(currentYear + 1)
+        } else
+            setCurrentMonth(currentMonth + 1)
+    }, [currentMonth, currentYear])
+
     return {
-        isLoading,
-        setIsLoading,
-        getDashboard,
-        getBalanceData,
+        isLoading, setIsLoading, getDashboard, getBalanceData, conditionalContainerStyles,
+        currentMonth, currentYear, getPreviousMonth, getNextMonth, conditionalGraphContainerStyles,
+        conditionalGraphStyles, isHover1, setIsHover1, isHover2, setIsHover2
     }
 }
 
