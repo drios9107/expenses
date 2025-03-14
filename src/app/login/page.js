@@ -23,7 +23,7 @@ const Login = () => {
     } = useForm({ defaultValues, mode: "onBlur", resolver: yupResolver(schema) });
 
     const onSubmit = useCallback(data => {
-        signIn('credentials', data)
+        signIn('credentials', { ...data, redirect: false })
     }, [])
 
     const callProvider = useCallback(provider => {

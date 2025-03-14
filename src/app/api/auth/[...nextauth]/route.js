@@ -29,13 +29,11 @@ export const authOptions = {
             async authorize(credentials, req) {
                 return axios.post(`${process.env.NEXT_PUBLIC_BACKEND}/auth/login`, credentials)
                     .then(({ data }) => {
-                        console.log('***dataResponse', data);
                         return data
                     })
                     .catch(error => {
-                        console.log('***errorResponse', error);
                         toast.error(error?.data?.message)
-                        // return null;
+                        return null;
                     })
             }
         })
@@ -48,32 +46,49 @@ export const authOptions = {
     },
     callbacks: {
         async signIn({ user, account }) {
-            // console.log('***signIn callback', { user, account });
             const isMyGithubAccount = (user?.email === 'david.rios@alphalabs.uy' && account?.provider === 'github');
-            return isMyGithubAccount || account?.provider === 'credentials'
+            const isMyGoogleAccount = (user?.email === 'drio9107@gmail.com' && account?.provider === 'google');
+
+            if (account.provider === "github" || account.provider === "google") {
+                const payload = {
+                    user: { email: user.email },
+                    provider: account.provider,
+                    accessToken: account.access_token,
+                }
+
+                return axios.post(`${process.env.NEXT_PUBLIC_BACKEND}/auth/verifyOauthAccessToken`, payload)
+                    .then(({ data }) => {
+                        user.token = data.token;
+                        return true
+                    })
+                    .catch(error => {
+                        toast.error(error?.data?.message)
+                        return false;
+                    })
+            }
+
+            return isMyGoogleAccount || isMyGithubAccount || account?.provider === 'credentials'
         },
         async jwt({ token, user }) {
             if (user) { //user received from backend
-                // console.log('***jwt', user);
-                token = { accessToken: user.token, _id: user._id, email: user.email };
+                token = { accessToken: user?.token, _id: user?._id, email: user?.email };
             }
             return token;
         },
         async session({ session, token }) { //redefined token in jwt sync function
             const result = {
                 user: {
-                    _id: token._id,
-                    email: token.email,
-                    exp: token.exp,
-                    token: token.accessToken,
+                    _id: token?._id,
+                    email: token?.email,
+                    exp: token?.exp,
+                    token: token?.accessToken,
                 }
             }
 
-            // console.log('***session', result);
             return result;
         },
     },
-    secret: process.env.NEXT_PUBLIC_NEXTAUTH_SECRET,
+    secret: process.env.NEXTAUTH_SECRET,
 }
 
 const handler = NextAuth(authOptions);
