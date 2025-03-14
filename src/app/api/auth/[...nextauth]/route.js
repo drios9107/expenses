@@ -49,7 +49,7 @@ export const authOptions = {
             const isMyGithubAccount = (user?.email === 'david.rios@alphalabs.uy' && account?.provider === 'github');
             const isMyGoogleAccount = (user?.email === 'drio9107@gmail.com' && account?.provider === 'google');
 
-            if (account.provider === "github" || account.provider === "google") {
+            if (1 === 2 && (account.provider === "github" || account.provider === "google")) {
                 const payload = {
                     user: { email: user.email },
                     provider: account.provider,
