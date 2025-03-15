@@ -26,7 +26,7 @@ const DashboardBarGraph = () => {
             },
             title: {
                 display: true,
-                text: 'Biggest expenses by category'
+                text: 'Biggest expenses by subcategory'
             }
         }
     }), [])

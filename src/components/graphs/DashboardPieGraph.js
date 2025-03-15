@@ -23,7 +23,7 @@ const DashboardPieGraph = () => {
         responsive: true,
         plugins: {
             title: {
-                text: 'Relation between categories',
+                text: 'Biggest expenses by category',
                 display: true
             },
             legend: {
