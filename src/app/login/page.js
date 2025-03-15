@@ -41,7 +41,7 @@ const Login = () => {
             control={control}
             errors={errors}
             fieldName={'email'}
-            options={{ label: 'Email', onKeyDown }}
+            options={{ label: 'Email', type: 'email', onKeyDown }}
         />
         <MuiTextfield
             control={control}
