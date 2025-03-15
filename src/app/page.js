@@ -53,7 +53,7 @@ export default function Home() {
           getPreviousMonth={getPreviousMonth}
           getNextMonth={getNextMonth}
         />
-        <Button variant='contained' onClick={() => runTransactions()}>Refresh</Button>
+        <Button variant='contained' onClick={() => runTransactions()}>Run Recurrence</Button>
       </Box>
       <ExpensesCard />
     </Paper>

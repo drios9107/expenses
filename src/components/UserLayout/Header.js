@@ -1,6 +1,6 @@
-import { Box, Paper } from '@mui/material'
+import { Box, Paper, Tooltip, useMediaQuery } from '@mui/material'
 import Link from 'next/link'
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import Balance from '../Balance'
 import { Home, Logout, Policy } from '@mui/icons-material'
 import { signOut } from 'next-auth/react'
@@ -9,16 +9,39 @@ import { setAuthToken } from '@/utils/AxiosInterceptor'
 
 const Header = () => {
     const { conditionalTopSectionStyles } = useLayoutStyles();
+    const isMobile = useMediaQuery("@media (max-width:500px)");
 
     const handleSignOut = useCallback(() => {
         signOut()
         setAuthToken(null);
     }, [])
 
+    const getHomeLink = useMemo(() => {
+        const icon = <Home sx={styles.iconMenu} />;
+        const title = 'Home';
+
+        return <Link href={'/'} style={styles.link}>
+            {isMobile ?
+                <Tooltip title={title}>{icon}</Tooltip> :
+                <>{icon} {title}</>}
+        </Link>
+    }, [isMobile])
+
+    const getPrivacyLink = useMemo(() => {
+        const icon = <Policy sx={styles.iconMenu} />;
+        const title = 'Privacy policy';
+
+        return <Link href={'/privacy'} style={styles.link}>
+            {isMobile ?
+                <Tooltip title={title}>{icon}</Tooltip> :
+                <>{icon} {title}</>}
+        </Link>
+    }, [isMobile])
+
     return <Paper sx={[styles.topSection, conditionalTopSectionStyles]}>
         <Box sx={[styles.opacity, { display: 'flex', flexDirection: 'row', gap: '10px' }]}>
-            <Link href={'/'} style={styles.link}><Home sx={styles.iconMenu} />Home</Link>
-            <Link href="/privacy" style={styles.link}><Policy sx={styles.iconMenu} />Privacy policy</Link>
+            {getHomeLink}
+            {getPrivacyLink}
         </Box>
         <Box sx={styles.rightSection}>
             <Balance />
