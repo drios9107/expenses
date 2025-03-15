@@ -25,7 +25,7 @@ export default IncomeCard
 
 const styles = {
     container: {
-        width: '220px', height: '80px', px: '16px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between',
+        width: '250px', height: '80px', px: '16px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between',
         alignItems: 'center', gap: '15px', backgroundColor: '#D6E6FF', '&:hover': { opacity: 0.7 }
     },
     row: { display: 'flex', flexDirection: 'column', gap: '5px' },
