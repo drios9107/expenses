@@ -1,23 +1,26 @@
 import { Box, Button, Divider, Typography } from '@mui/material';
 import SimpleModal from './SimpleModal'
-import { useCallback } from 'react';
 import { useFormat } from '@/hooks/useFormat';
+import moment from 'moment';
+import { useCallback } from 'react';
 
-const DayCardModal = ({ title = '', day, maxWidth, onClose = () => { }, extraclasses = {} }) => {
+const GraphTransactionsModal = ({ title = '', transactions = [], isSubcategory, maxWidth, onClose = () => { }, extraclasses = {} }) => {
     const { currencyFormat } = useFormat();
 
     const getText = useCallback(item => {
-        const subCategory = item?.subCategory ?? '';
-        const category = item?.category ? `(${item.category})` : '';
-        return `${subCategory} ${category}`
-    }, [])
+        if (isSubcategory)
+            return item?.category
+
+        return item?.subCategory ?? '-'
+    }, [isSubcategory])
 
     return <SimpleModal onClose={onClose} title={title} maxWidth={maxWidth} extraclasses={extraclasses}>
         <Box sx={styles.dataContainer}>
-            {day?.map((item, index) => <Box key={index} >
+            {transactions?.map((item, index) => <Box key={index} >
                 <Box sx={styles.row}>
-                    <Typography>{getText(item)}</Typography>
-                    <Typography sx={{ fontWeight: 600 }}>{currencyFormat(item?.amount)} $</Typography>
+                    <Typography sx={{ flex: 1 }}>{getText(item)}</Typography>
+                    <Typography sx={{ flex: 1, textAlign: 'center' }}>{moment(item?.date).format('DD/MM/YYYY')}</Typography>
+                    <Typography sx={{ flex: 0.3, fontWeight: 600, textAlign: 'right' }}>{currencyFormat(item?.amount)} $</Typography>
                 </Box>
 
                 {item?.description && <Box sx={styles.row}>
@@ -34,7 +37,7 @@ const DayCardModal = ({ title = '', day, maxWidth, onClose = () => { }, extracla
     </SimpleModal>
 }
 
-export default DayCardModal
+export default GraphTransactionsModal
 
 const styles = {
     dataContainer: { display: 'flex', flexDirection: 'column', gap: '25px', px: '10px', maxHeight: '70vh', overflowY: 'auto' },

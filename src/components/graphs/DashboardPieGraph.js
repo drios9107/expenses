@@ -1,13 +1,26 @@
 import { Chart as ChartJS, CategoryScale, registerables } from "chart.js";
-import { useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Doughnut } from "react-chartjs-2";
-import { useDashboardContext } from "@/hooks";
+import { useDashboardContext, useTransaction } from "@/hooks";
 import { Typography } from "@mui/material";
+import Loader from "../Loader";
+import GraphTransactionsModal from "../GraphTransactionsModal";
 ChartJS.register(...registerables, CategoryScale);
 
 
-const DashboardPieGraph = () => {
+const DashboardPieGraph = ({ currentMonth, currentYear }) => {
     const { categoryLabels, categoryValues } = useDashboardContext();
+    const [monthTransactions, setMonthTransactions] = useState([]);
+    const { getTransactionsByCategory, isLoading } = useTransaction()
+
+    const onClick = useCallback(async (e, v) => {
+        const category = categoryLabels[v?.[0]?.index];
+        if (category) {
+            const response = await getTransactionsByCategory(category, currentMonth, currentYear)
+            if (response)
+                setMonthTransactions(response)
+        }
+    }, [categoryLabels, getTransactionsByCategory, currentMonth, currentYear])
 
     const data = useMemo(() => ({
         labels: categoryLabels,
@@ -21,6 +34,7 @@ const DashboardPieGraph = () => {
     const options = useMemo(() => ({
         maintainAspectRatio: true,
         responsive: true,
+        onClick,
         plugins: {
             title: {
                 text: 'Biggest expenses by category',
@@ -31,12 +45,16 @@ const DashboardPieGraph = () => {
                 position: 'right'
             },
         }
-    }), [])
+    }), [onClick])
 
     if (categoryValues.length === 0)
         return <Typography variant="subtitle2" sx={{ userSelect: 'none' }}>There is no data to show</Typography>
 
-    return <Doughnut data={data} options={options} height={'50vh'} />
+    return <>
+        {isLoading && <Loader isLoading />}
+        {monthTransactions.length > 0 && <GraphTransactionsModal title={monthTransactions?.[0]?.category} transactions={monthTransactions} onClose={() => setMonthTransactions([])} />}
+        <Doughnut data={data} options={options} height={'50vh'} />
+    </>
 
 }
 

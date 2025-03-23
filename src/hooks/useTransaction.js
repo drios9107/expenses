@@ -27,6 +27,22 @@ const useTransaction = () => {
             .finally(() => setIsLoading(false))
     }, [setTransactions])
 
+    const getTransactionsByCategory = useCallback(async (categoryName, currentMonth, currentYear) => {
+        setIsLoading(true);
+        return axiosInstance.get(`/transactions/by-category-in-period/${encodeURIComponent(categoryName)}/${encodeURIComponent(currentMonth)}/${currentYear}`)
+            .then(({ data }) => data?.data ?? [])
+            .catch(() => { })
+            .finally(() => setIsLoading(false))
+    }, [])
+
+    const getTransactionsByCategoryAndSubCategory = useCallback(async (categoryName, subCategoryName, currentMonth, currentYear) => {
+        setIsLoading(true);
+        return axiosInstance.get(`/transactions/by-category-and-subcategory-in-period/${encodeURIComponent(categoryName)}/${encodeURIComponent(subCategoryName)}/${currentMonth}/${currentYear}`)
+            .then(({ data }) => data?.data ?? [])
+            .catch(() => { })
+            .finally(() => setIsLoading(false))
+    }, [])
+
     const createTransaction = useCallback(preparedData => {
         setIsLoading(true);
         axiosInstance.post(`/transactions`, preparedData)
@@ -71,6 +87,8 @@ const useTransaction = () => {
         setIsLoading,
         getCurrentMonthTransactions,
         getTransactions,
+        getTransactionsByCategory,
+        getTransactionsByCategoryAndSubCategory,
         createTransaction,
         updateTransaction,
         deleteTransaction
