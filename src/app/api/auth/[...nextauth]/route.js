@@ -16,30 +16,20 @@ export const authOptions = {
             clientSecret: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET
         }),
         CredentialsProvider({
-            // The name to display on the sign in form (e.g. 'Sign in with...')
             name: 'Credentials',
-            // The credentials is used to generate a suitable form on the sign in page.
-            // You can specify whatever fields you are expecting to be submitted.
-            // e.g. domain, username, password, 2FA token, etc.
-            // You can pass any HTML attribute to the <input> tag through the object.
-            // credentials: {
-            //     user: { label: "Username", type: "text" },
-            //     password: { label: "Password", type: "password" }
-            // },
             async authorize(credentials, req) {
-                return axios.post(`${process.env.NEXT_PUBLIC_BACKEND}/auth/login`, credentials)
-                    .then(({ data }) => {
-                        return data
-                    })
-                    .catch(error => {
-                        toast.error(error?.data?.message)
-                        return null;
-                    })
+                try {
+                    const { data } = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND}/auth/login`, credentials);
+                    return data;
+                } catch (error) {
+                    throw new Error(error?.response?.data?.code);
+                }
             }
         })
     ],
     pages: {
-        signIn: "/login"
+        signIn: "/login",
+        error: "/login",
     },
     session: {
         jwt: true,
@@ -48,8 +38,10 @@ export const authOptions = {
         async signIn({ user, account }) {
             const isMyGithubAccount = (user?.email === 'david.rios@alphalabs.uy' && account?.provider === 'github');
             const isMyGoogleAccount = (user?.email === 'drio9107@gmail.com' && account?.provider === 'google');
+            const isLoggedWithCredentials = (!user?.error && account?.provider === 'credentials');
 
-            if (1 === 2 && (account.provider === "github" || account.provider === "google")) {
+            if (//(isMyGithubAccount || isMyGoogleAccount) &&
+                (account.provider === "github" || account.provider === "google")) {
                 const payload = {
                     user: { email: user.email },
                     provider: account.provider,
@@ -62,12 +54,12 @@ export const authOptions = {
                         return true
                     })
                     .catch(error => {
-                        toast.error(error?.data?.message)
-                        return false;
+                        console.log('***signin error', error?.response?.data?.code)
+                        throw new Error(error?.response?.data?.code)
                     })
             }
 
-            return isMyGoogleAccount || isMyGithubAccount || account?.provider === 'credentials'
+            return isMyGoogleAccount || isMyGithubAccount || isLoggedWithCredentials
         },
         async jwt({ token, user }) {
             if (user) { //user received from backend

@@ -1,5 +1,8 @@
 const messages = {
     'default': "There was a problem with your request",
+    'user-not-found': "User not found",
+    'user-already-exists': "User already exists",
+    'invalid-credentials': "Invalid credentials",
     'saved': "The item was saved successfully",
     'deleted': "The item was deleted successfully",
     'unauthorized': "You are not allowed to access this service",
