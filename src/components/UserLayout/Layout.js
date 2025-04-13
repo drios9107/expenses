@@ -1,40 +1,18 @@
 import { Box } from '@mui/material';
-import { useEffect } from 'react';
-import { useSession } from 'next-auth/react';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { policyRoutes, publicRoutes } from '@/utils/helpers';
 import { useLayoutStyles } from '@/hooks/useLayoutStyles';
 import Header from './Header';
 import Footer from './Footer';
 import Body from './Body';
 import GuestLayout from './GuestLayout';
-import { setAuthToken } from '@/utils/AxiosInterceptor';
 
 
 const Layout = ({ children }) => {
-    const { status, data: session } = useSession()
-    const { replace } = useRouter()
     const pathname = usePathname();
     const { conditionalContainerStyles } = useLayoutStyles()
 
-    useEffect(() => {
-        if (session?.user?.token)
-            setAuthToken(session.user.token);
-    }, [session?.user?.token]);
-
-    useEffect(() => {
-        if (status !== 'loading') {
-            if (status === 'unauthenticated' && !policyRoutes.includes(pathname))
-                replace('/login')
-            else if (publicRoutes?.includes(pathname))
-                replace('/')
-        }
-    }, [status, pathname, replace])
-
-    if (status !== 'authenticated' && !publicRoutes?.includes(pathname))
-        return null
-
-    if (publicRoutes?.includes(pathname) || policyRoutes.includes(pathname))
+    if ([...publicRoutes, ...policyRoutes]?.includes(pathname))
         return <GuestLayout>
             {children}
         </GuestLayout>

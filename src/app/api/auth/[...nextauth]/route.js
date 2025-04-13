@@ -3,7 +3,6 @@ import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials"
 import axios from "axios"
-import toast from "react-hot-toast"
 
 export const authOptions = {
     providers: [

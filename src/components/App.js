@@ -8,20 +8,23 @@ import NextTopLoader from 'nextjs-toploader';
 import Layout from './UserLayout/Layout';
 import { SessionProvider } from 'next-auth/react';
 import CookieConsentBanner from './CookieConsentBanner';
+import AuthGuard from './AuthGuard';
 
 const App = ({ children }) => {
     return <SessionProvider>
-        <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={es}>
-            <DashboardProvider>
-                <ListProvider>
-                    <NextTopLoader showSpinner={false} />
-                    <CookieConsentBanner />
-                    <Layout>
-                        {children}
-                    </Layout>
-                </ListProvider>
-            </DashboardProvider>
-        </LocalizationProvider>
+        <AuthGuard>
+            <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={es}>
+                <DashboardProvider>
+                    <ListProvider>
+                        <NextTopLoader showSpinner={false} />
+                        <CookieConsentBanner />
+                        <Layout>
+                            {children}
+                        </Layout>
+                    </ListProvider>
+                </DashboardProvider>
+            </LocalizationProvider>
+        </AuthGuard>
     </SessionProvider>
 }
 
