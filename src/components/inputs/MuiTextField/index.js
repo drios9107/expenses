@@ -7,11 +7,12 @@ const MuiTextfield = ({ fieldName, control, errors, options = {}, rules = {} }) 
             name={fieldName}
             control={control}
             rules={{ required: false, ...rules }}
-            render={({ field }) => (
+            render={({ field, fieldState: { error } }) => (
                 <TextField
                     {...field}
                     size='small'
                     {...options}
+                    error={Boolean(error)}
                     rows={options?.multiline ? options?.rows ?? 3 : 1}
                 />
             )}

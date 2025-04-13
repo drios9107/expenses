@@ -16,8 +16,8 @@ const defaultValues = {
 };
 
 const schema = yup.object().shape({
-    // email: yup.string().required("This field is required"),
-    // password: yup.string().required("This field is required").min(7, "Password must be at least 7 characters"),
+    email: yup.string().email().required("This field is required"),
+    password: yup.string().required("This field is required").min(7, "Password must be at least 7 characters"),
 });
 
 const Login = () => {
@@ -60,7 +60,7 @@ const Login = () => {
             options={{ label: 'Password', type: 'password', onKeyDown }}
         />
 
-        <Button variant='contained' onClick={handleSubmit(onSubmit)} /*disabled={!isDirty || !isValid}*/ size="small" >Login</Button>
+        <Button variant='contained' onClick={handleSubmit(onSubmit)} disabled={!isDirty || !isValid} size="small" >Login</Button>
         <Divider sx={{ width: '100%' }} />
 
         <Box sx={styles.providersContainer}>
