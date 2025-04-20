@@ -14,5 +14,6 @@ const policyRoutes = [
     '/privacy',
 ]
 
+const combinedPublicRoutes = [...publicRoutes, ...policyRoutes].map(i => [`/en${i}`, `/es${i}`, i]).flat();
 
-export { getLineColor, publicRoutes, policyRoutes }
+export { getLineColor, publicRoutes, policyRoutes, combinedPublicRoutes }

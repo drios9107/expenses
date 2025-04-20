@@ -1,0 +1,29 @@
+{
+    "common": {
+        "close": "Cerrar"
+    },
+    "dashboard": {
+        "biggestIncome": "Mayor Ingreso",
+        "date": "Fecha",
+        "expenses": "Gastos",
+        "graphBar": "Mayores gastos por subcategoría",
+        "income": "Ingresos",
+        "noData": "No hay datos para mostrar",
+        "pieBar": "Mayores gastos por categoría",
+        "runRecurrence": "Ejecutar Recurrencia"
+    },
+    "months": {
+        "january": "Enero",
+        "february": "Febrero",
+        "march": "Marzo",
+        "april": "Abril",
+        "may": "Mayo",
+        "june": "Junio",
+        "july": "Julio",
+        "august": "Agosto",
+        "september": "Septiembre",
+        "october": "Octubre",
+        "november": "Noviembre",
+        "december": "Diciembre"
+    }
+}

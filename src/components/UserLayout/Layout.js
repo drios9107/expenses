@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import { usePathname } from 'next/navigation';
-import { policyRoutes, publicRoutes } from '@/utils/helpers';
+import { combinedPublicRoutes } from '@/utils/helpers';
 import { useLayoutStyles } from '@/hooks/useLayoutStyles';
 import Header from './Header';
 import Footer from './Footer';
@@ -12,7 +12,7 @@ const Layout = ({ children }) => {
     const pathname = usePathname();
     const { conditionalContainerStyles } = useLayoutStyles()
 
-    if ([...publicRoutes, ...policyRoutes]?.includes(pathname))
+    if (combinedPublicRoutes?.includes(pathname))
         return <GuestLayout>
             {children}
         </GuestLayout>

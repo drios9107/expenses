@@ -1,0 +1,29 @@
+{
+    "common": {
+        "close": "Close"
+    },
+    "dashboard": {
+        "biggestIncome": "Biggest Income",
+        "date": "Date",
+        "expenses": "Expenses",
+        "graphBar": "Biggest expenses by subcategory",
+        "income": "Income",
+        "noData": "There is no data to show",
+        "pieBar": "Biggest expenses by category",
+        "runRecurrence": "Run Recurrence"
+    },
+    "months": {
+        "january": "January",
+        "february": "February",
+        "march": "March",
+        "april": "April",
+        "may": "May",
+        "june": "June",
+        "july": "July",
+        "august": "August",
+        "september": "September",
+        "october": "October",
+        "november": "November",
+        "december": "December"
+    }
+}

@@ -1,5 +1,7 @@
 'use client';
+import { useT } from "@/app/i18n/client";
 import MuiTextfield from "@/components/inputs/MuiTextField";
+import { useTranslation } from "@/hooks/useTranslation";
 import { messages } from "@/utils/messages";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { GitHub, Google } from "@mui/icons-material";
@@ -20,9 +22,10 @@ const schema = yup.object().shape({
     password: yup.string().required("This field is required").min(7, "Password must be at least 7 characters"),
 });
 
-const Login = () => {
+const Login = ({ params }) => {
     const { control, handleSubmit, formState: { errors, isDirty, isValid }, watch
-    } = useForm({ defaultValues, mode: "onBlur", resolver: yupResolver(schema) });
+    } = useForm({ defaultValues, mode: "onChange", resolver: yupResolver(schema) });
+    const { t } = useTranslation(params?.lng, 'login')
 
     const onSubmit = useCallback(data => {
         signIn('credentials', { ...data, redirect: false })
@@ -46,21 +49,21 @@ const Login = () => {
     }, [handleSubmit, onSubmit])
 
     return <Paper sx={styles.topSection}>
-        <Typography variant='h6'>Login</Typography>
+        <Typography variant='h6'>{t('login.login')}</Typography>
         <MuiTextfield
             control={control}
             errors={errors}
             fieldName={'email'}
-            options={{ label: 'Email', type: 'email', onKeyDown }}
+            options={{ label: t('login.email'), type: 'email', onKeyDown }}
         />
         <MuiTextfield
             control={control}
             errors={errors}
             fieldName={'password'}
-            options={{ label: 'Password', type: 'password', onKeyDown }}
+            options={{ label: t('login.password'), type: 'password', onKeyDown }}
         />
 
-        <Button variant='contained' onClick={handleSubmit(onSubmit)} disabled={!isDirty || !isValid} size="small" >Login</Button>
+        <Button variant='contained' onClick={handleSubmit(onSubmit)} disabled={!isDirty || !isValid} size="small" >{t('login.login')}</Button>
         <Divider sx={{ width: '100%' }} />
 
         <Box sx={styles.providersContainer}>

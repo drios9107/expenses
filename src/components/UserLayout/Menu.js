@@ -4,25 +4,27 @@ import MenuLink from '../MenuLink'
 import { CalendarMonth, Category, CurrencyExchange, Payments } from '@mui/icons-material'
 import { ToyBrick } from 'mdi-material-ui'
 import { useLayoutStyles } from '@/hooks/useLayoutStyles'
+import { useParams } from 'next/navigation'
 
 const Menu = () => {
+    const { lng } = useParams()
     const { conditionalMenuStyles } = useLayoutStyles()
 
     return <Paper sx={[styles.menu, conditionalMenuStyles]}>
-        <MenuLink href={'/category'} title='Category'>
+        <MenuLink href={`/${lng}/category`} title='Category'>
             <Category sx={styles.iconMenu} />
         </MenuLink>
-        <MenuLink href={'/subcategory'} title='Subcategory'>
+        <MenuLink href={`/${lng}/subcategory`} title='Subcategory'>
             <ToyBrick sx={styles.iconMenu} />
         </MenuLink>
-        <MenuLink href={'/transaction'} title='Transaction'>
+        <MenuLink href={`/${lng}/transaction`} title='Transaction'>
             <Payments sx={styles.iconMenu} />
         </MenuLink>
-        <MenuLink href={'/recurrent-transaction'} title='Recurrent Transaction'>
+        <MenuLink href={`/${lng}/recurrent-transaction`} title='Recurrent Transaction'>
             <CurrencyExchange sx={styles.iconMenu} />
         </MenuLink>
         <Divider />
-        <MenuLink href={'/current-month'} title='Current Month'>
+        <MenuLink href={`/${lng}/current-month`} title='Current Month'>
             <CalendarMonth sx={styles.iconMenu} />
         </MenuLink>
     </Paper>
