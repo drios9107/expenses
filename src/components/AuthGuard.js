@@ -1,32 +1,33 @@
 'use client';
 import { useSession } from 'next-auth/react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useMemo } from 'react';
 import FallbackLoader from './FallbackLoader';
-import { policyRoutes, publicRoutes } from '@/utils/helpers';
+import { combinedPublicRoutes, policyRoutes, publicRoutes } from '@/utils/helpers';
 import { setAuthToken } from '@/utils/AxiosInterceptor';
 
-export default function AuthGuard({ children }) {
+export default function AuthGuard({ children, params }) {
     const { data: session, status } = useSession()
     const router = useRouter();
     const pathname = usePathname();
+    const { lng } = useParams()
     const searchParams = useSearchParams();
 
     const callbackUrl = useMemo(() => {
         const url = searchParams.get('callbackUrl');
-        return url ? decodeURIComponent(url) : '/';
-    }, [searchParams]);
+        return url ? decodeURIComponent(url) : `/${lng}`;
+    }, [lng, searchParams]);
 
-    const combinedPublicRoutes = useMemo(() => [...publicRoutes, ...policyRoutes], []);
+    const pathIsLoginWithoutCallback = useMemo(() => pathname === `/${lng}/login`, [lng, pathname])
 
     useEffect(() => {
-        if (status === 'unauthenticated' && pathname !== '/login')
-            router.push('/login?callbackUrl=' + encodeURIComponent(pathname));
+        if (status === 'unauthenticated' && !pathIsLoginWithoutCallback)
+            router.push(`/${lng}/login?callbackUrl=${encodeURIComponent(pathname)}`);
         else if (status === 'authenticated' && searchParams.has('callbackUrl'))
             router.push(callbackUrl)
-        else if (status === 'authenticated')
-            router.push('/');
-    }, [status, router, pathname, searchParams, callbackUrl]);
+        else if (status === 'authenticated' && pathIsLoginWithoutCallback)
+            router.push(`/${lng}`);
+    }, [callbackUrl, lng, pathIsLoginWithoutCallback, pathname, router, searchParams, status]);
 
     useEffect(() => {
         if (session?.user?.token)
