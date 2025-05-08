@@ -8,10 +8,11 @@ import IncomeCard from "@/components/IncomeCard";
 import MonthNavigator from "@/components/MonthNavigator";
 import { useDashboard, useDashboardContext, useRecurrentTransaction } from "@/hooks";
 import { useTranslation } from "@/hooks/useTranslation";
+import GetStorage from "@/utils/GetStorage";
 import { Box, Button, Paper, useMediaQuery } from "@mui/material";
 import moment from "moment";
 // import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 export default function Home({ params }) {
   const { t } = useTranslation(params?.lng, 'dashboard')
@@ -20,9 +21,18 @@ export default function Home({ params }) {
     conditionalGraphStyles, isHover1, setIsHover1, isHover2, setIsHover2 } = useDashboard();
   const { days } = useDashboardContext()
   const { runTransactions } = useRecurrentTransaction()
+  const { getFromStorage } = GetStorage()
   const isMobile = useMediaQuery("@media (max-width:500px)");
 
   const [selectedDate, setSelectedDate] = useState()
+  const [needToRunRecurrence, setNeedToRunRecurrence] = useState(false)
+
+  useEffect(() => {
+    const lastRecurrenceDate = getFromStorage('lastRecurrenceDate')
+    console.log('***lastRecurrenceDate', lastRecurrenceDate)
+    if ((lastRecurrenceDate && moment().isAfter(lastRecurrenceDate, 'days')) || !lastRecurrenceDate)
+      setNeedToRunRecurrence(true)
+  }, [getFromStorage])
 
   const onSelected = useCallback((day) => {
     const title = moment(day).format('YYYY-MM-DD');
@@ -42,6 +52,17 @@ export default function Home({ params }) {
     return result;
   }, [days])
 
+  const getRecurrentButtonStyles = useMemo(() => {
+    return needToRunRecurrence ?
+      styles.blinkingButton :
+      {}
+  }, [needToRunRecurrence])
+
+  const handleRecurrence = useCallback(async () => {
+    const response = await runTransactions();
+    if (response)
+      setNeedToRunRecurrence(false)
+  }, [runTransactions])
 
   if (isLoading)
     return <DashboardSkeleton />
@@ -56,7 +77,7 @@ export default function Home({ params }) {
           getPreviousMonth={getPreviousMonth}
           getNextMonth={getNextMonth}
         />
-        <Button variant='contained' onClick={() => runTransactions()}>{t('runRecurrence')}</Button>
+        <Button variant='contained' onClick={handleRecurrence} sx={getRecurrentButtonStyles}>{t('runRecurrence')}</Button>
       </Box>
       <ExpensesCard />
     </Paper>
@@ -74,26 +95,44 @@ export default function Home({ params }) {
   </Box>
 }
 
+const borderColor = 'rgb(169 212 250)';
+
 const styles = {
   container: { flex: 1, flexWrap: 'wrap', display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' },
   monthNavigatorContainer: { display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', height: '80px', flex: 1 },
   graphContainer: { display: 'flex', flexDirection: 'row', flexWrap: 'wrap' },
   daysContainer: { display: 'flex', flexDirection: 'row', flexWrap: 'wrap', width: '100%', justifyContent: 'flex-start' },
   graph: { height: '300px', flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' },
+  blinkingButton: {
+    position: 'relative',
+    overflow: 'visible',
+    margin: '6px',
+    '&::after': {
+      content: '""',
+      position: 'absolute',
+      top: '-6px',
+      left: '-6px',
+      right: '-6px',
+      bottom: '-6px',
+      border: `2px solid ${borderColor}`,
+      borderRadius: 'inherit',
+      animation: 'blink 1.5s infinite',
+      pointerEvents: 'none',
+      zIndex: 1,
+    },
+    '@keyframes blink': {
+      '0%': {
+        opacity: 1,
+        transform: 'scale(1)',
+      },
+      '50%': {
+        opacity: 0,
+        transform: 'scale(1.05)',
+      },
+      '100%': {
+        opacity: 1,
+        transform: 'scale(1)',
+      },
+    }
+  }
 }
-
-
-
-
-// export async function getStaticProps({ locale }) {
-//   return {
-//     props: {
-//       ...(await serverSideTranslations(locale, [
-//         'dashboard',
-//         // 'footer',
-//         // 'header'
-//       ])),
-//       // Will be passed to the page component as props
-//     },
-//   }
-// }

@@ -5,10 +5,13 @@ import axios from "axios";
 import useTransaction from "./useTransaction";
 import { useDashboardContext, useList } from ".";
 import axiosInstance from "@/utils/AxiosInterceptor";
+import GetStorage from "@/utils/GetStorage";
+import moment from "moment";
 
 const useRecurrentTransaction = () => {
     const { recurrentTransactions, setRecurrentTransactions } = useList();
     const { getTransactions } = useTransaction();
+    const { setInStorage } = GetStorage();
     const { setBalance, setBalanceMLC, setBalanceUSD, setBalanceUSDT } = useDashboardContext();
 
     const { toastInfo } = useToast();
@@ -22,9 +25,9 @@ const useRecurrentTransaction = () => {
             .finally(() => setIsLoading(false))
     }, [setRecurrentTransactions])
 
-    const runTransactions = useCallback(() => {
+    const runTransactions = useCallback(async () => {
         setIsLoading(true);
-        axiosInstance.get(`/recurrent-transactions/runRecurrence`)
+        return axiosInstance.get(`/recurrent-transactions/runRecurrence`)
             .then(({ data }) => {
                 getTransactions();
                 if (data?.balance)
@@ -35,11 +38,14 @@ const useRecurrentTransaction = () => {
                     setBalanceUSD(data?.balanceUSD)
                 if (data?.balanceUSDT)
                     setBalanceUSDT(data?.balanceUSDT)
-                toastInfo(messages.finishedRecurrence)
+
+                setInStorage('lastRecurrenceDate', moment().valueOf());
+                toastInfo(messages.finishedRecurrence);
+                return true;
             })
             .catch(() => { })
             .finally(() => setIsLoading(false))
-    }, [getTransactions, setBalance, setBalanceMLC, setBalanceUSD, setBalanceUSDT, toastInfo])
+    }, [getTransactions, setBalance, setBalanceMLC, setBalanceUSD, setBalanceUSDT, setInStorage, toastInfo])
 
     const createRecurrentTransaction = useCallback(preparedData => {
         setIsLoading(true);
