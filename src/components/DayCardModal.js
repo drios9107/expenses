@@ -9,7 +9,7 @@ const DayCardModal = ({ title = '', day, maxWidth, onClose = () => { }, extracla
     const getText = useCallback(item => {
         const subCategory = item?.subCategory ?? '';
         const category = item?.category ? `(${item.category})` : '';
-        return `${subCategory} ${category}`
+        return `${subCategory?.split(':')?.[0]} ${category}`
     }, [])
 
     return <SimpleModal onClose={onClose} title={title} maxWidth={maxWidth} extraclasses={extraclasses}>

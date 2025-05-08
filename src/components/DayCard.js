@@ -15,8 +15,12 @@ const DayCard = ({ title, day }) => {
         return sum
     }, [day])
 
+    const isExpensive = useMemo(() => total >= 5000, [total])
+
+    const getBackgroundColor = useMemo(() => isExpensive ? { backgroundColor: 'rgb(248 74 74)' } : {}, [isExpensive])
+
     return <>
-        <Paper sx={styles.container} elevation={isHover ? 3 : 1} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)} onClick={() => setIsOpen(true)}>
+        <Paper sx={[styles.container, getBackgroundColor]} elevation={isHover ? 3 : 1} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)} onClick={() => setIsOpen(true)}>
             <Typography sx={{ width: '100%', textAlign: 'left', userSelect: 'none' }}>{moment(title).format('dddd DD')}</Typography>
             <Typography sx={{ width: '100%', textAlign: 'right', fontWeight: 600 }}>{currencyFormat(total)} $</Typography>
         </Paper>
