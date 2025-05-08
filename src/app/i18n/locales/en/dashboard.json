@@ -1,17 +1,13 @@
 {
-    "common": {
-        "close": "Close"
-    },
-    "dashboard": {
-        "biggestIncome": "Biggest Income",
-        "date": "Date",
-        "expenses": "Expenses",
-        "graphBar": "Biggest expenses by subcategory",
-        "income": "Income",
-        "noData": "There is no data to show",
-        "pieBar": "Biggest expenses by category",
-        "runRecurrence": "Run Recurrence"
-    },
+    "runRecurrence": "Run Recurrence",
+    "biggestIncome": "Biggest Income",
+    "date": "Date",
+    "expenses": "Expenses",
+    "income": "Income",
+    "graphBarTitle": "Biggest expenses by subcategory",
+    "graphPieTitle": "Biggest expenses by category",
+    "noData": "There is no data to show",
+    "close": "Close",
     "months": {
         "january": "January",
         "february": "February",

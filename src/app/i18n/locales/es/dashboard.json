@@ -1,17 +1,13 @@
 {
-    "common": {
-        "close": "Cerrar"
-    },
-    "dashboard": {
-        "biggestIncome": "Mayor Ingreso",
-        "date": "Fecha",
-        "expenses": "Gastos",
-        "graphBar": "Mayores gastos por subcategoría",
-        "income": "Ingresos",
-        "noData": "No hay datos para mostrar",
-        "pieBar": "Mayores gastos por categoría",
-        "runRecurrence": "Ejecutar Recurrencia"
-    },
+    "runRecurrence": "Correr Recurrencias",
+    "biggestIncome": "Mayor Ingreso",
+    "date": "Fecha",
+    "expenses": "Gastos",
+    "income": "Ingresos",
+    "graphBar": "Mayores gastos por subcategoría",
+    "pieBar": "Mayores gastos por categoría",
+    "noData": "No hay datos para mostrar",
+    "close": "Cerrar",
     "months": {
         "january": "Enero",
         "february": "Febrero",

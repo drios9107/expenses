@@ -2,9 +2,13 @@ import { Box, Button, Divider, Typography } from '@mui/material';
 import SimpleModal from './SimpleModal'
 import { useCallback } from 'react';
 import { useFormat } from '@/hooks/useFormat';
+import { useParams } from 'next/navigation';
+import { useTranslation } from '@/hooks/useTranslation';
 
 const DayCardModal = ({ title = '', day, maxWidth, onClose = () => { }, extraclasses = {} }) => {
     const { currencyFormat } = useFormat();
+    const params = useParams();
+    const { t } = useTranslation(params?.lng ?? 'en', 'dashboard')
 
     const getText = useCallback(item => {
         const subCategory = item?.subCategory ?? '';
@@ -29,7 +33,7 @@ const DayCardModal = ({ title = '', day, maxWidth, onClose = () => { }, extracla
             )}
         </Box>
         <Box sx={styles.actionsContainer}>
-            <Button variant='outlined' onClick={onClose}>Close</Button>
+            <Button variant='outlined' onClick={onClose}>{t('close')}</Button>
         </Box>
     </SimpleModal>
 }

@@ -5,10 +5,14 @@ import { useDashboardContext, useTransaction } from "@/hooks";
 import { Typography } from "@mui/material";
 import Loader from "../Loader";
 import GraphTransactionsModal from "../GraphTransactionsModal";
+import { useParams } from "next/navigation";
+import { useTranslation } from "@/hooks/useTranslation";
 ChartJS.register(...registerables, CategoryScale);
 
 
 const DashboardPieGraph = ({ currentMonth, currentYear }) => {
+    const params = useParams();
+    const { t } = useTranslation(params?.lng ?? 'en', 'dashboard')
     const { categoryLabels, categoryValues } = useDashboardContext();
     const [monthTransactions, setMonthTransactions] = useState([]);
     const { getTransactionsByCategory, isLoading } = useTransaction()
@@ -37,7 +41,7 @@ const DashboardPieGraph = ({ currentMonth, currentYear }) => {
         onClick,
         plugins: {
             title: {
-                text: 'Biggest expenses by category',
+                text: t('graphPieTitle'),
                 display: true
             },
             legend: {
@@ -45,10 +49,10 @@ const DashboardPieGraph = ({ currentMonth, currentYear }) => {
                 position: 'right'
             },
         }
-    }), [onClick])
+    }), [onClick, t])
 
     if (categoryValues.length === 0)
-        return <Typography variant="subtitle2" sx={{ userSelect: 'none' }}>There is no data to show</Typography>
+        return <Typography variant="subtitle2" sx={{ userSelect: 'none' }}>{t('noData')}</Typography>
 
     return <>
         {isLoading && <Loader isLoading />}

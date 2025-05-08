@@ -7,18 +7,18 @@ import DashboardPieGraph from "@/components/graphs/DashboardPieGraph";
 import IncomeCard from "@/components/IncomeCard";
 import MonthNavigator from "@/components/MonthNavigator";
 import { useDashboard, useDashboardContext, useRecurrentTransaction } from "@/hooks";
+import { useTranslation } from "@/hooks/useTranslation";
 import { Box, Button, Paper, useMediaQuery } from "@mui/material";
 import moment from "moment";
 // import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useCallback, useMemo, useState } from "react";
-// import { useTranslation } from "next-i18next";
 
-export default function Home() {
+export default function Home({ params }) {
+  const { t } = useTranslation(params?.lng, 'dashboard')
   const { isLoading, conditionalContainerStyles, currentMonth, currentYear,
     getPreviousMonth, getNextMonth, conditionalGraphContainerStyles,
     conditionalGraphStyles, isHover1, setIsHover1, isHover2, setIsHover2 } = useDashboard();
   const { days } = useDashboardContext()
-  // const { t } = useTranslation('dashboard')
   const { runTransactions } = useRecurrentTransaction()
   const isMobile = useMediaQuery("@media (max-width:500px)");
 
@@ -56,7 +56,7 @@ export default function Home() {
           getPreviousMonth={getPreviousMonth}
           getNextMonth={getNextMonth}
         />
-        <Button variant='contained' onClick={() => runTransactions()}>{/*t('runRecurrence')*/}Run Recurrence</Button>
+        <Button variant='contained' onClick={() => runTransactions()}>{t('runRecurrence')}</Button>
       </Box>
       <ExpensesCard />
     </Paper>

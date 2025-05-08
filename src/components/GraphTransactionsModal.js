@@ -3,9 +3,13 @@ import SimpleModal from './SimpleModal'
 import { useFormat } from '@/hooks/useFormat';
 import moment from 'moment';
 import { useCallback } from 'react';
+import { useParams } from 'next/navigation';
+import { useTranslation } from '@/hooks/useTranslation';
 
 const GraphTransactionsModal = ({ title = '', transactions = [], isSubcategory, maxWidth, onClose = () => { }, extraclasses = {} }) => {
     const { currencyFormat } = useFormat();
+    const params = useParams();
+    const { t } = useTranslation(params?.lng ?? 'en', 'dashboard')
 
     const getText = useCallback(item => {
         if (isSubcategory)
@@ -32,7 +36,7 @@ const GraphTransactionsModal = ({ title = '', transactions = [], isSubcategory, 
             )}
         </Box>
         <Box sx={styles.actionsContainer}>
-            <Button variant='outlined' onClick={onClose}>Close</Button>
+            <Button variant='outlined' onClick={onClose}>{t('close')}</Button>
         </Box>
     </SimpleModal>
 }

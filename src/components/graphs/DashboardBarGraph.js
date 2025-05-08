@@ -5,10 +5,14 @@ import { useDashboardContext, useTransaction } from "@/hooks";
 import { Typography } from "@mui/material";
 import Loader from "../Loader";
 import GraphTransactionsModal from "../GraphTransactionsModal";
+import { useParams } from "next/navigation";
+import { useTranslation } from "@/hooks/useTranslation";
 ChartJS.register(...registerables, CategoryScale);
 
 
 const DashboardBarGraph = ({ currentMonth, currentYear }) => {
+    const params = useParams();
+    const { t } = useTranslation(params?.lng ?? 'en', 'dashboard')
     const { subCategoryLabels, subCategoryValues } = useDashboardContext();
     const [monthTransactions, setMonthTransactions] = useState([]);
     const { getTransactionsByCategoryAndSubCategory, isLoading } = useTransaction()
@@ -45,13 +49,13 @@ const DashboardBarGraph = ({ currentMonth, currentYear }) => {
             },
             title: {
                 display: true,
-                text: 'Biggest expenses by subcategory'
+                text: t('graphBarTitle'),
             }
         }
-    }), [onClick])
+    }), [onClick, t])
 
     if (subCategoryValues.length === 0)
-        return <Typography variant="subtitle2" sx={{ userSelect: 'none' }}>There is no data to show</Typography>
+        return <Typography variant="subtitle2" sx={{ userSelect: 'none' }}>{t('noData')}</Typography>
 
     return <>
         {isLoading && <Loader isLoading />}
