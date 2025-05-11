@@ -1,10 +1,13 @@
 import { useDashboard, useDashboardContext } from '@/hooks';
 import { useFormat } from '@/hooks/useFormat';
+import { useTranslation } from '@/hooks/useTranslation';
 import { Box, Tooltip, Typography } from '@mui/material'
-import { usePathname } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
 import { useEffect, useMemo } from 'react';
 
 const Balance = () => {
+    const params = useParams();
+    const { t } = useTranslation(params?.lng ?? 'en', 'common')
     const { getBalanceData } = useDashboard()
     const { balance, balanceMLC, balanceUSD } = useDashboardContext();
     const pathname = usePathname();
@@ -20,7 +23,7 @@ const Balance = () => {
 
     return <Tooltip title={getTooltip}>
         <Box sx={styles.balance}>
-            <Typography sx={{ fontWeight: 600, userSelect: 'none' }}>Balance: </Typography>
+            <Typography sx={{ fontWeight: 600, userSelect: 'none' }}>{t('balance')}: </Typography>
             <Typography sx={styles.value}>{currencyFormat(balance) ?? '0'}$</Typography>
         </Box>
     </Tooltip>

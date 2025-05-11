@@ -1,17 +1,15 @@
 'use client';
+import { useTranslation } from '@/hooks/useTranslation';
 import { Button, Paper, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import React, { use } from 'react';
 
-const PrivacyPolicy = () => {
+const PrivacyPolicy = ({ params }) => {
+    const { t } = useTranslation(params?.lng ?? 'en', 'privacyPolicy')
     const { back } = useRouter()
     return <Paper sx={styles.topSection}>
-        <Typography variant='h6'>Política de Cookies</Typography>
-        <Typography variant='body1' sx={{ textAlign: 'justify' }}>Este sitio web utiliza cookies esenciales para su funcionamiento, como la gestión de sesiones de usuario.
-            {/* También utilizamos cookies no esenciales para analizar el tráfico y mejorar la experiencia del usuario.
-        Puedes gestionar tus preferencias de cookies en cualquier momento haciendo clic en el enlace correspondiente en el pie de página. */}
-        </Typography>
-        <Button variant='contained' onClick={() => back()} size="small">Go Back</Button>
+        <Typography variant='h6'>{t('title')}</Typography>
+        <Typography variant='body1' sx={{ textAlign: 'justify' }}>{t('text')}</Typography>
+        <Button variant='contained' onClick={() => back()} size="small">{t('button')}</Button>
     </Paper>
 };
 

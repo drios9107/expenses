@@ -7,11 +7,13 @@ import { signOut } from 'next-auth/react'
 import { useLayoutStyles } from '@/hooks/useLayoutStyles'
 import { setAuthToken } from '@/utils/AxiosInterceptor'
 import { useParams } from 'next/navigation'
+import { useTranslation } from '@/hooks/useTranslation'
 
 const Header = () => {
     const { conditionalTopSectionStyles } = useLayoutStyles();
     const isMobile = useMediaQuery("@media (max-width:500px)");
     const { lng } = useParams()
+    const { t } = useTranslation(lng ?? 'en', 'common')
 
     const handleSignOut = useCallback(() => {
         signOut()
@@ -20,25 +22,25 @@ const Header = () => {
 
     const getHomeLink = useMemo(() => {
         const icon = <Home sx={styles.iconMenu} />;
-        const title = 'Home';
+        const title = t('home');
 
         return <Link href={`/${lng}`} style={styles.link}>
             {isMobile ?
                 <Tooltip title={title}>{icon}</Tooltip> :
                 <>{icon} {title}</>}
         </Link>
-    }, [isMobile, lng])
+    }, [isMobile, lng, t])
 
     const getPrivacyLink = useMemo(() => {
         const icon = <Policy sx={styles.iconMenu} />;
-        const title = 'Privacy policy';
+        const title = t('privacyPolicy');
 
         return <Link href={`/${lng}/privacy`} style={styles.link}>
             {isMobile ?
                 <Tooltip title={title}>{icon}</Tooltip> :
                 <>{icon} {title}</>}
         </Link>
-    }, [isMobile, lng])
+    }, [isMobile, lng, t])
 
     return <Paper sx={[styles.topSection, conditionalTopSectionStyles]}>
         <Box sx={[styles.opacity, { display: 'flex', flexDirection: 'row', gap: '10px' }]}>
@@ -48,7 +50,9 @@ const Header = () => {
         <Box sx={styles.rightSection}>
             <Balance />
             <Box sx={[styles.opacity, { cursor: 'pointer', display: 'flex', alignItems: 'center' }]}>
-                <Logout sx={styles.iconMenu} onClick={handleSignOut} />
+                <Tooltip title={t('singOut')}>
+                    <Logout sx={styles.iconMenu} onClick={handleSignOut} />
+                </Tooltip>
             </Box>
         </Box>
 

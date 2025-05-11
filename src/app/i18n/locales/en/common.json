@@ -9,11 +9,12 @@
     "category": "Category",
     "subCategory": "Subcategory",
     "transaction": "Transaction",
-    "recurrentTransaction": "Recurrent Transaction",
+    "recurrentTransaction": "Recurrent",
     "currentMonth": "Current Month",
     "balance": "Balance",
     "defaultDeleteText": "Are you sure you want to delete this?",
     "confirm": "Confirm",
     "cancel": "Cancel",
+    "singOut": "Sign out",
     "save": "Save"
 }

@@ -9,11 +9,12 @@
     "category": "Categoría",
     "subCategory": "Subcategoría",
     "transaction": "Transacciones",
-    "recurrentTransaction": "Transacciones Recurrentes",
+    "recurrentTransaction": "Recurrentes",
     "currentMonth": "Mes Actual",
     "balance": "Saldo",
     "defaultDeleteText": "¿Está seguro de que desea eliminar esto?",
     "confirm": "Confirmar",
     "cancel": "Cancelar",
+    "singOut": "Cerrar sesión",
     "save": "Guardar"
 }
