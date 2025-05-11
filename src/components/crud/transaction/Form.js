@@ -13,7 +13,8 @@ import { useList, useRecurrentTransaction, useTransaction } from '@/hooks';
 import BoxRow from '@/components/BoxRow'
 import WeekDayList from '@/components/WeekDayList'
 import MonthDayList from '@/components/MonthDayList'
-import { usePathname } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
+import { useTranslation } from '@/hooks/useTranslation';
 
 const schema = yup.object().shape({
     category: yup.string().required("This field is required"),
@@ -49,6 +50,8 @@ export const frequencyList = [
 ]
 
 const Form = ({ item, onClose = () => { } }) => {
+    const params = useParams();
+    const { t } = useTranslation(params?.lng ?? 'en', ['common', 'transactions'])
     const pathName = usePathname()
     const { isLoading, updateTransaction, createTransaction } = useTransaction();
     const { isLoading: isLoadingRecurrentTransaction, updateRecurrentTransaction, createRecurrentTransaction } = useRecurrentTransaction();
@@ -112,14 +115,14 @@ const Form = ({ item, onClose = () => { } }) => {
         onClose();
     }, [createRecurrentTransaction, createTransaction, item, onClose, updateRecurrentTransaction, updateTransaction])
 
-    return <SimpleModal onClose={onClose} title={item ? 'Edit' : 'Create'} isLoading={isLoading || isLoadingRecurrentTransaction}>
+    return <SimpleModal onClose={onClose} title={item ? t('common:edit') : t('common:create')} isLoading={isLoading || isLoadingRecurrentTransaction}>
         <Box sx={styles.container}>
             <Box sx={styles.container}>
                 <MuiSingleSelectField
                     control={control}
                     errors={errors}
                     fieldName={'category'}
-                    options={{ label: 'Category', disabled: item?.isRecurrent }}
+                    options={{ label: t('transactions:category'), disabled: item?.isRecurrent }}
                     list={getCategories}
                 />
             </Box>
@@ -128,7 +131,7 @@ const Form = ({ item, onClose = () => { } }) => {
                     control={control}
                     errors={errors}
                     fieldName={'subCategory'}
-                    options={{ label: 'Subcategory', disabled: item?.isRecurrent }}
+                    options={{ label: t('transactions:subCategory'), disabled: item?.isRecurrent }}
                     list={getSubCategories}
                 />
             </Box>
@@ -137,7 +140,7 @@ const Form = ({ item, onClose = () => { } }) => {
                     control={control}
                     errors={errors}
                     fieldName={'date'}
-                    options={{ label: 'Date', maxDate: moment().toDate(), disabled: item?.isRecurrent }}
+                    options={{ label: t('transactions:date'), maxDate: moment().toDate(), disabled: item?.isRecurrent }}
                 />
             </Box>
             <BoxRow>
@@ -145,13 +148,13 @@ const Form = ({ item, onClose = () => { } }) => {
                     control={control}
                     errors={errors}
                     fieldName={'amount'}
-                    options={{ label: 'Amount', type: 'number', slotProps: { htmlInput: { min: 0 } } }}
+                    options={{ label: t('transactions:amount'), type: 'number', slotProps: { htmlInput: { min: 0 } } }}
                 />
                 <MuiSingleSelectField
                     control={control}
                     errors={errors}
                     fieldName={'type'}
-                    options={{ label: 'Type', disabled: item?.isRecurrent }}
+                    options={{ label: t('transactions:type'), disabled: item?.isRecurrent }}
                     list={typeList}
                 />
             </BoxRow>
@@ -159,7 +162,7 @@ const Form = ({ item, onClose = () => { } }) => {
                 <MuiSwitch
                     control={control}
                     fieldName={'isExpense'}
-                    options={{ label: 'Is expense?' }}
+                    options={{ label: t('transactions:isExpense') }}
                 />
             </BoxRow>
             {isRecurrentWatcher && <>
@@ -168,7 +171,7 @@ const Form = ({ item, onClose = () => { } }) => {
                         control={control}
                         errors={errors}
                         fieldName={'frequency'}
-                        options={{ label: 'Frequency' }}
+                        options={{ label: t('transactions:frequency') }}
                         list={frequencyList}
                         extraclasses={{ flex: 1 }}
                     />
@@ -184,12 +187,12 @@ const Form = ({ item, onClose = () => { } }) => {
                     control={control}
                     errors={errors}
                     fieldName={'description'}
-                    options={{ label: 'Description', multiline: true }}
+                    options={{ label: t('transactions:description'), multiline: true }}
                 />
             </Box>
             <Box sx={styles.actionsContainer}>
-                <Button variant='outlined' onClick={onClose}>Cancel</Button>
-                <Button variant='contained' onClick={handleSubmit(onSubmit)}> Save </Button>
+                <Button variant='outlined' onClick={onClose}>{t('common:cancel')}</Button>
+                <Button variant='contained' onClick={handleSubmit(onSubmit)}>{t('common:save')}</Button>
             </Box>
         </Box>
     </SimpleModal >

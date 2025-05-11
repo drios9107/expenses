@@ -15,8 +15,9 @@ import { typeList } from "@/components/crud/transaction/Form";
 import { useCategory, useList, useSubCategory, useTransaction } from "@/hooks";
 import { getLineColor } from "@/utils/helpers";
 import { useFormat } from "@/hooks/useFormat";
+import { useTranslation } from "@/hooks/useTranslation";
 
-const Transaction = () => {
+const Transaction = ({ params }) => {
     const [open, setOpen] = useState(false);
     const [itemToDelete, setItemToDelete] = useState();
     const [itemToUpdate, setItemToUpdate] = useState();
@@ -27,6 +28,8 @@ const Transaction = () => {
     const { isLoading: isLoadingSubCategories, getSubCategories } = useSubCategory()
     const { categories, subCategories, transactions } = useList();
     const { currencyFormat } = useFormat();
+    const { t } = useTranslation(params?.lng ?? 'en', 'transactions')
+
 
     useEffect(() => {
         getTransactions();
@@ -57,7 +60,7 @@ const Transaction = () => {
         minWidth: 150,
         field: "category",
         sortable: true,
-        renderHeader: () => <ColumnHeader title={'Category'} />,
+        renderHeader: () => <ColumnHeader title={t('category')} />,
         renderCell: ({ row }) => <Tooltip title={row?.description}>
             <Typography variant='body1' color={getLineColor(row)}>{getCategory(row)}</Typography>
         </Tooltip>,
@@ -68,7 +71,7 @@ const Transaction = () => {
         minWidth: 150,
         field: "subCategory",
         sortable: true,
-        renderHeader: () => <ColumnHeader title={'Subcategory'} />,
+        renderHeader: () => <ColumnHeader title={t('subCategory')} />,
         renderCell: ({ row }) => <Typography variant='body1' color={getLineColor(row)}>{getSubCategory(row)}</Typography>,
         valueGetter: (uid, row) => getSubCategory(row)
     },
@@ -77,7 +80,7 @@ const Transaction = () => {
         minWidth: 120,
         field: "date",
         sortable: true,
-        renderHeader: () => <ColumnHeader title={'Date'} />,
+        renderHeader: () => <ColumnHeader title={t('date')} />,
         renderCell: ({ row }) => <Typography variant='body1' color={getLineColor(row)}>{moment(row?.date).format('YYYY-MM-DD')}</Typography>,
         valueGetter: (uid, row) => moment(row?.date).format('YYYY-MM-DD')
     },
@@ -86,7 +89,7 @@ const Transaction = () => {
         minWidth: 100,
         field: "amount",
         sortable: true,
-        renderHeader: () => <ColumnHeader title={'Amount'} />,
+        renderHeader: () => <ColumnHeader title={t('amount')} />,
         renderCell: ({ row }) => <Typography variant='body1' color={getLineColor(row)}>{currencyFormat(row?.amount)}</Typography>,
         valueGetter: (uid, row) => row?.amount
     },
@@ -95,7 +98,7 @@ const Transaction = () => {
         minWidth: 80,
         field: "type",
         sortable: true,
-        renderHeader: () => <ColumnHeader title={'Type'} />,
+        renderHeader: () => <ColumnHeader title={t('type')} />,
         renderCell: ({ row }) => <Typography variant='body1' color={getLineColor(row)}>{getType(row)}</Typography>,
         valueGetter: (uid, row) => getType(row)
     },
@@ -104,7 +107,7 @@ const Transaction = () => {
         minWidth: 110,
         field: "isExpense",
         sortable: true,
-        renderHeader: () => <ColumnHeader title={'Is Expense?'} />,
+        renderHeader: () => <ColumnHeader title={t('isExpense')} />,
         renderCell: ({ row }) => <Typography sx={{ width: '100%', textAlign: 'center' }} color={getLineColor(row)}>{row?.isExpense ? <Check sx={styles.icon} /> : <DoNotDisturb sx={styles.icon} />}</Typography>,
     },
     {
@@ -112,7 +115,7 @@ const Transaction = () => {
         minWidth: 110,
         field: "isRecurrent",
         sortable: true,
-        renderHeader: () => <ColumnHeader title={'Is Recurrent?'} />,
+        renderHeader: () => <ColumnHeader title={t('isRecurrent')} />,
         renderCell: ({ row }) => <Typography sx={{ width: '100%', textAlign: 'center' }} color={getLineColor(row)}>{row?.isRecurrent ? <Check sx={styles.icon} /> : <DoNotDisturb sx={styles.icon} />}</Typography>,
     },
     {
@@ -121,7 +124,7 @@ const Transaction = () => {
         sortable: false,
         disableColumnMenu: true,
         headerAlign: 'center',
-        renderHeader: () => <Tooltip title={"Create"}>
+        renderHeader: () => <Tooltip title={t('create')}>
             <IconButton onClick={() => setOpen(true)}>
                 <Add sx={styles.icon} />
             </IconButton>
@@ -131,7 +134,7 @@ const Transaction = () => {
             onUpdate={() => { setItemToUpdate(row), setOpen(true) }}
             onDelete={() => setItemToDelete(row)}
         />
-    }], [currencyFormat, getCategory, getSubCategory, getType])
+    }], [currencyFormat, getCategory, getSubCategory, getType, t])
 
     const getTransactionsList = useMemo(() => {
         return [...transactions]?.sort((a, b) => b?.date - a?.date)
@@ -140,7 +143,7 @@ const Transaction = () => {
     return (
         <>
             <DataList
-                title="Transaction list"
+                title={t('transactionList')}
                 columns={columns}
                 rows={getTransactionsList}
             />

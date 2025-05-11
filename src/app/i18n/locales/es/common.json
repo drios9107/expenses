@@ -1,0 +1,19 @@
+{
+    "search": "Buscar...",
+    "create": "Crear",
+    "details": "Detalles",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "home": "Inicio",
+    "privacyPolicy": "Políticas de Privacidad",
+    "category": "Categoría",
+    "subCategory": "Subcategoría",
+    "transaction": "Transacciones",
+    "recurrentTransaction": "Transacciones Recurrentes",
+    "currentMonth": "Mes Actual",
+    "balance": "Saldo",
+    "defaultDeleteText": "¿Está seguro de que desea eliminar esto?",
+    "confirm": "Confirmar",
+    "cancel": "Cancelar",
+    "save": "Guardar"
+}

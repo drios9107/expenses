@@ -1,12 +1,17 @@
+import { useTranslation } from '@/hooks/useTranslation';
 import { Box, Typography } from '@mui/material'
 import { GridToolbarQuickFilter } from '@mui/x-data-grid'
+import { useParams } from 'next/navigation';
 import React from 'react'
 
 const DatalistToolbar = ({ title }) => {
+    const params = useParams();
+    const { t } = useTranslation(params?.lng ?? 'en', 'common')
+
     return <Box sx={styles.topSection}>
         <Typography sx={{ flex: 1 }}>{title}</Typography>
         <Box sx={{ display: 'flex', gap: '25px' }}>
-            <GridToolbarQuickFilter variant="outlined" size="small" sx={styles.gridToolbarQuickFilter} autoFocus />
+            <GridToolbarQuickFilter variant="outlined" size="small" sx={styles.gridToolbarQuickFilter} autoFocus placeholder={t('search')} />
         </Box>
     </Box>
 }

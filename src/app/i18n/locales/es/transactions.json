@@ -1,0 +1,13 @@
+{
+    "category": "Categoría",
+    "subCategory": "Subcategoría",
+    "date": "Fecha",
+    "amount": "Cantidad",
+    "type": "Tipo",
+    "isExpense": "¿Es un Gasto?",
+    "isRecurrent": "¿Es Recurrente?",
+    "description": "Descripción",
+    "frequency": "Frecuencia",
+    "create": "Agregar",
+    "transactionList": "Lista de Transacciones"
+}
