@@ -12,8 +12,11 @@ import { useList, useTransaction } from "@/hooks";
 import { getLineColor } from "@/utils/helpers";
 import { Tooltip, Typography } from "@mui/material";
 import { useFormat } from "@/hooks/useFormat";
+import { useTranslation } from "@/hooks/useTranslation";
+import { t } from "i18next";
 
-const CurrentMonth = () => {
+const CurrentMonth = ({ params }) => {
+    const { t } = useTranslation(params?.lng ?? 'en', 'transactions')
     const [open, setOpen] = useState(false);
     const [itemToDelete, setItemToDelete] = useState();
     const [itemToUpdate, setItemToUpdate] = useState();
@@ -39,7 +42,7 @@ const CurrentMonth = () => {
         minWidth: 200,
         field: "category",
         sortable: true,
-        renderHeader: () => <ColumnHeader title={'Category'} />,
+        renderHeader: () => <ColumnHeader title={t('Category')} />,
         renderCell: ({ row }) => <Tooltip title={row?.description}>
             <Typography variant='body1' color={getLineColor(row)}>{row?.category}</Typography>
         </Tooltip>,
@@ -50,7 +53,7 @@ const CurrentMonth = () => {
         minWidth: 200,
         field: "subCategory",
         sortable: true,
-        renderHeader: () => <ColumnHeader title={'Subcategory'} />,
+        renderHeader: () => <ColumnHeader title={t('subCategory')} />,
         renderCell: ({ row }) => <Typography variant='body1' color={getLineColor(row)}>{row?.subCategory}</Typography>,
         valueGetter: (uid, row) => row?.subCategory
     },
@@ -59,7 +62,7 @@ const CurrentMonth = () => {
         minWidth: 120,
         field: "date",
         sortable: true,
-        renderHeader: () => <ColumnHeader title={'Date'} />,
+        renderHeader: () => <ColumnHeader title={t('date')} />,
         renderCell: ({ row }) => <Typography variant='body1' color={getLineColor(row)}>{moment(row?.date).format('YYYY-MM-DD')}</Typography>,
         valueGetter: (uid, row) => moment(row?.date).format('YYYY-MM-DD')
     },
@@ -67,10 +70,10 @@ const CurrentMonth = () => {
         minWidth: 100,
         field: "amount",
         sortable: true,
-        renderHeader: () => <ColumnHeader title={'Amount'} />,
+        renderHeader: () => <ColumnHeader title={t('amount')} />,
         renderCell: ({ row }) => <Typography variant='body1' color={getLineColor(row)}>{currencyFormat(row?.amount)}</Typography>,
         valueGetter: (uid, row) => row?.amount
-    }], [currencyFormat])
+    }], [currencyFormat, t])
 
     const getTransactionsList = useMemo(() => {
         const firstDay = moment().set({ D: 1, h: 0, m: 0, s: 0 });
@@ -82,7 +85,7 @@ const CurrentMonth = () => {
 
     return <>
         <DataList
-            title="Transaction list"
+            title={t('transactionList')}
             columns={columns}
             rows={getTransactionsList}
         />
