@@ -9,5 +9,10 @@
     "description": "Description",
     "frequency": "Frequency",
     "create": "Create",
-    "transactionList": "Transaction list"
+    "enable": "Enable",
+    "disable": "Disable",
+    "changeStatus": "Cambiar estado",
+    "changeStatusText": "¿Esta seguro de que desea cambiar el estado?",
+    "transactionList": "Transaction list",
+    "recurrentTransactionList": "Recurrent Transaction list"
 }

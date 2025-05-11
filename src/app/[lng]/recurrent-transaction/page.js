@@ -15,8 +15,11 @@ import { typeList } from "@/components/crud/transaction/Form";
 import { useCategory, useSubCategory, useRecurrentTransaction, useList } from "@/hooks";
 import { PowerOn, PowerOff } from "mdi-material-ui";
 import { useFormat } from "@/hooks/useFormat";
+import { t } from "i18next";
+import { useTranslation } from "@/hooks/useTranslation";
 
-const RecurrentTransaction = () => {
+const RecurrentTransaction = ({ params }) => {
+    const { t } = useTranslation(params?.lng ?? 'en', 'transactions')
     const [open, setOpen] = useState(false);
     const [itemToDelete, setItemToDelete] = useState();
     const [itemToToogleActivation, setItemToToogleActivation] = useState();
@@ -64,7 +67,7 @@ const RecurrentTransaction = () => {
         minWidth: 200,
         field: "category",
         sortable: true,
-        renderHeader: () => <ColumnHeader title={'Category'} />,
+        renderHeader: () => <ColumnHeader title={t('category')} />,
         renderCell: ({ row }) => <Tooltip title={row?.description}>
             <Typography variant='body1'>{getCategory(row)}</Typography>
         </Tooltip>,
@@ -75,7 +78,7 @@ const RecurrentTransaction = () => {
         minWidth: 200,
         field: "subCategory",
         sortable: true,
-        renderHeader: () => <ColumnHeader title={'Subcategory'} />,
+        renderHeader: () => <ColumnHeader title={t('subCategory')} />,
         renderCell: ({ row }) => <Typography variant='body1'>{getSubCategory(row)}</Typography>,
         valueGetter: (uid, row) => getSubCategory(row)
     },
@@ -84,7 +87,7 @@ const RecurrentTransaction = () => {
         minWidth: 120,
         field: "date",
         sortable: true,
-        renderHeader: () => <ColumnHeader title={'Date'} />,
+        renderHeader: () => <ColumnHeader title={t('date')} />,
         renderCell: ({ row }) => <Typography variant='body1'>{moment(row?.date).format('YYYY-MM-DD')}</Typography>,
         valueGetter: (uid, row) => moment(row?.date).format('YYYY-MM-DD')
     },
@@ -92,7 +95,7 @@ const RecurrentTransaction = () => {
         minWidth: 100,
         field: "amount",
         sortable: true,
-        renderHeader: () => <ColumnHeader title={'Amount'} />,
+        renderHeader: () => <ColumnHeader title={t('amount')} />,
         renderCell: ({ row }) => <Typography variant='body1'>{currencyFormat(row?.amount)}</Typography>,
         valueGetter: (uid, row) => row?.amount
     },
@@ -100,15 +103,15 @@ const RecurrentTransaction = () => {
         minWidth: 80,
         field: "type",
         sortable: true,
-        renderHeader: () => <ColumnHeader title={'Type'} />,
+        renderHeader: () => <ColumnHeader title={t('type')} />,
         renderCell: ({ row }) => <Typography variant='body1'>{getType(row)}</Typography>,
         valueGetter: (uid, row) => getType(row)
     },
     {
-        minWidth: 60,
+        minWidth: 110,
         field: "isExpense",
         sortable: true,
-        renderHeader: () => <ColumnHeader title={'Is Expense?'} />,
+        renderHeader: () => <ColumnHeader title={t('isExpense')} />,
         renderCell: ({ row }) => <Typography sx={{ width: '100%', textAlign: 'center' }}>{row?.isExpense ? <Check /> : <DoNotDisturb />}</Typography>,
     },
     {
@@ -117,7 +120,7 @@ const RecurrentTransaction = () => {
         sortable: false,
         disableColumnMenu: true,
         headerAlign: 'center',
-        renderHeader: () => <Tooltip title={"Create"}>
+        renderHeader: () => <Tooltip title={t("create")}>
             <IconButton onClick={() => setOpen(true)}>
                 <Add color="#7e7e7e" sx={{ height: "20px", width: "20px" }} />
             </IconButton>
@@ -127,15 +130,15 @@ const RecurrentTransaction = () => {
             onUpdate={() => { setItemToUpdate(row), setOpen(true) }}
             onDelete={() => setItemToDelete(row)}
         >
-            <Tooltip title={row?.isActive ? "Disable" : "Enable"}>
+            <Tooltip title={row?.isActive ? t("disable") : t("enable")}>
                 <IconButton onClick={() => setItemToToogleActivation(row)}>
                     {row?.isActive ?
-                        <PowerOff color={'#000000'} sx={{ height: "20px", width: "20px" }} /> :
-                        <PowerOn color={'#000000'} sx={{ height: "20px", width: "20px" }} />}
+                        <PowerOn color={'#000000'} sx={{ height: "20px", width: "20px" }} /> :
+                        <PowerOff color={'#000000'} sx={{ height: "20px", width: "20px" }} />}
                 </IconButton>
             </Tooltip>
         </ActionColumn>
-    }], [currencyFormat, getCategory, getSubCategory, getType])
+    }], [currencyFormat, getCategory, getSubCategory, getType, t])
 
 
     const getRecurrentTransactionsList = useMemo(() => {
@@ -145,14 +148,14 @@ const RecurrentTransaction = () => {
     return (
         <>
             <DataList
-                title="Recurrent transaction list"
+                title={t('recurrentTransactionList')}
                 columns={columns}
                 rows={getRecurrentTransactionsList}
             />
             {open && <Form item={itemToUpdate} onClose={() => { setOpen(false); setItemToUpdate() }} />}
             {itemToView && <Details item={itemToView} onClose={() => setItemToView()} />}
             {itemToDelete && <DeleteModal onClose={() => setItemToDelete()} onClick={onDelete} />}
-            {itemToToogleActivation && <DeleteModal title="Change status" text='Are you sure you want to change the status?' onClose={() => setItemToToogleActivation()} onClick={onToogleActivation} />}
+            {itemToToogleActivation && <DeleteModal title={t('changeStatus')} text={t('changeStatusText')} onClose={() => setItemToToogleActivation()} onClick={onToogleActivation} />}
             {(isLoading || isLoadingCategories || isLoadingSubCategories) && <Loader isLoading />}
         </>
     );
