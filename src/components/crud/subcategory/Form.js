@@ -8,6 +8,8 @@ import { useCallback } from 'react';
 import { useList, useSubCategory } from '@/hooks';
 import MuiSingleSelectField from '@/components/inputs/MuiSingleSelectField'
 import FormActionButtons from '@/components/FormActionButtons'
+import { useParams } from 'next/navigation'
+import { useTranslation } from '@/hooks/useTranslation'
 
 
 const schema = yup.object().shape({
@@ -18,6 +20,8 @@ const schema = yup.object().shape({
 const defaultValues = { name: "" }
 
 const Form = ({ item, onClose = () => { } }) => {
+    const params = useParams();
+    const { t } = useTranslation(params?.lng ?? 'en', 'subCategory')
     const { categories } = useList();
     const { isLoading, createSubCategory, updateSubCategory } = useSubCategory();
 
@@ -31,14 +35,14 @@ const Form = ({ item, onClose = () => { } }) => {
         onClose();
     }, [createSubCategory, item, onClose, updateSubCategory])
 
-    return <SimpleModal onClose={onClose} title={item ? 'Edit' : 'Create'} isLoading={isLoading}>
+    return <SimpleModal onClose={onClose} title={item ? t('edit') : t('create')} isLoading={isLoading}>
         <Box sx={styles.container}>
             <Box sx={[styles.container, {}]} >
                 <MuiTextfield
                     control={control}
                     errors={errors}
                     fieldName={'name'}
-                    options={{ label: 'Name' }}
+                    options={{ label: t('name') }}
                 />
             </Box>
             <Box sx={styles.container}>
@@ -46,7 +50,7 @@ const Form = ({ item, onClose = () => { } }) => {
                     control={control}
                     errors={errors}
                     fieldName={'category'}
-                    options={{ label: 'Category' }}
+                    options={{ label: t('category') }}
                     list={categories}
                 />
             </Box>

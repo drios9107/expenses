@@ -11,8 +11,12 @@ import { Add } from "@mui/icons-material";
 import Form from "@/components/crud/category/Form";
 import DeleteModal from "@/components/DeleteModal";
 import { useCategory, useList } from "@/hooks";
+import { t } from "i18next";
+import { useTranslation } from "@/hooks/useTranslation";
 
-const Category = () => {
+const Category = ({ params }) => {
+    const { t } = useTranslation(params?.lng ?? 'en', 'category')
+
     const [open, setOpen] = useState(false);
     const [itemToDelete, setItemToDelete] = useState();
     const [itemToUpdate, setItemToUpdate] = useState();
@@ -36,7 +40,7 @@ const Category = () => {
         minWidth: 200,
         field: "name",
         sortable: true,
-        renderHeader: () => <ColumnHeader title={'Name'} />,
+        renderHeader: () => <ColumnHeader title={t('name')} />,
         renderCell: ({ row }) => <Typography>{row?.name}</Typography>
     },
     {
@@ -45,7 +49,7 @@ const Category = () => {
         sortable: false,
         disableColumnMenu: true,
         headerAlign: 'center',
-        renderHeader: () => <Tooltip title={"Create"}>
+        renderHeader: () => <Tooltip title={t("create")}>
             <IconButton onClick={() => setOpen(true)}>
                 <Add color="#7e7e7e" sx={{ height: "20px", width: "20px" }} />
             </IconButton>
@@ -55,12 +59,12 @@ const Category = () => {
             onUpdate={() => { setItemToUpdate(row), setOpen(true) }}
             onDelete={() => setItemToDelete(row)}
         />
-    }], [])
+    }], [t])
 
     return (
         <>
             <DataList
-                title="Category list"
+                title={t('categoryList')}
                 columns={columns}
                 rows={categories}
             />

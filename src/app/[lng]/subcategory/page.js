@@ -11,8 +11,10 @@ import { Add } from "@mui/icons-material";
 import Form from "@/components/crud/subcategory/Form";
 import DeleteModal from "@/components/DeleteModal";
 import { useCategory, useList, useSubCategory } from "@/hooks";
+import { useTranslation } from "@/hooks/useTranslation";
 
-const Subcategory = () => {
+const Subcategory = ({ params }) => {
+    const { t } = useTranslation(params?.lng ?? 'en', 'subCategory')
     const [open, setOpen] = useState(false);
     const [itemToDelete, setItemToDelete] = useState();
     const [itemToUpdate, setItemToUpdate] = useState();
@@ -42,7 +44,7 @@ const Subcategory = () => {
         minWidth: 200,
         field: "name",
         sortable: true,
-        renderHeader: () => <ColumnHeader title={'Name'} />,
+        renderHeader: () => <ColumnHeader title={t('name')} />,
         renderCell: ({ row }) => <Typography>{row?.name}</Typography>
     },
     {
@@ -50,7 +52,7 @@ const Subcategory = () => {
         minWidth: 200,
         field: "category",
         sortable: true,
-        renderHeader: () => <ColumnHeader title={'Category'} />,
+        renderHeader: () => <ColumnHeader title={t('category')} />,
         renderCell: ({ row }) => <Typography>{getCategory(row)}</Typography>,
         valueGetter: (uid, row) => getCategory(row)
     },
@@ -60,7 +62,7 @@ const Subcategory = () => {
         sortable: false,
         disableColumnMenu: true,
         headerAlign: 'center',
-        renderHeader: () => <Tooltip title={"Create"}>
+        renderHeader: () => <Tooltip title={t("create")}>
             <IconButton onClick={() => setOpen(true)}>
                 <Add color="#7e7e7e" sx={{ height: "20px", width: "20px" }} />
             </IconButton>
@@ -70,12 +72,12 @@ const Subcategory = () => {
             onUpdate={() => { setItemToUpdate(row), setOpen(true) }}
             onDelete={() => setItemToDelete(row)}
         />
-    }], [getCategory])
+    }], [getCategory, t])
 
     return (
         <>
             <DataList
-                title="Subcategory list"
+                title={t('subCategoryList')}
                 columns={columns}
                 rows={subCategories}
             />
