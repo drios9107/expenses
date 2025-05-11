@@ -7,6 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useCallback } from 'react';
 import { useList, useSubCategory } from '@/hooks';
 import MuiSingleSelectField from '@/components/inputs/MuiSingleSelectField'
+import FormActionButtons from '@/components/FormActionButtons'
 
 
 const schema = yup.object().shape({
@@ -49,10 +50,7 @@ const Form = ({ item, onClose = () => { } }) => {
                     list={categories}
                 />
             </Box>
-            <Box sx={styles.actionsContainer}>
-                <Button variant='outlined' onClick={onClose}>Cancel</Button>
-                <Button variant='contained' onClick={handleSubmit(onSubmit)}> Save </Button>
-            </Box>
+            <FormActionButtons onClose={onClose} onClick={handleSubmit(onSubmit)} />
         </Box>
     </SimpleModal >
 }
@@ -61,5 +59,4 @@ export default Form
 
 const styles = {
     container: { display: 'flex', flexDirection: 'column', gap: '25px', pt: '10px' },
-    actionsContainer: { display: 'flex', flexDirection: 'row', gap: '10px', justifyContent: 'flex-end' },
 }

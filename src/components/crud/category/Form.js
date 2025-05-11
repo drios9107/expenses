@@ -6,6 +6,7 @@ import * as yup from 'yup'
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useCallback } from 'react';
 import { useCategory } from '@/hooks'
+import FormActionButtons from '@/components/FormActionButtons'
 
 const schema = yup.object().shape({
     name: yup.string().required("This field is required"),
@@ -36,10 +37,7 @@ const Form = ({ item, onClose = () => { } }) => {
                     options={{ label: 'Name' }}
                 />
             </Box>
-            <Box sx={styles.actionsContainer}>
-                <Button variant='outlined' onClick={onClose}>Cancel</Button>
-                <Button variant='contained' onClick={handleSubmit(onSubmit)}> Save </Button>
-            </Box>
+            <FormActionButtons onClose={onClose} onClick={handleSubmit(onSubmit)} />
         </Box>
     </SimpleModal >
 }
@@ -48,5 +46,4 @@ export default Form
 
 const styles = {
     container: { display: 'flex', flexDirection: 'column', gap: '25px', pt: '10px' },
-    actionsContainer: { display: 'flex', flexDirection: 'row', gap: '10px', justifyContent: 'flex-end' },
 }

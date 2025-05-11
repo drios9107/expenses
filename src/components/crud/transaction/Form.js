@@ -15,6 +15,7 @@ import WeekDayList from '@/components/WeekDayList'
 import MonthDayList from '@/components/MonthDayList'
 import { useParams, usePathname } from 'next/navigation';
 import { useTranslation } from '@/hooks/useTranslation';
+import FormActionButtons from '@/components/FormActionButtons';
 
 const schema = yup.object().shape({
     category: yup.string().required("This field is required"),
@@ -190,10 +191,7 @@ const Form = ({ item, onClose = () => { } }) => {
                     options={{ label: t('transactions:description'), multiline: true }}
                 />
             </Box>
-            <Box sx={styles.actionsContainer}>
-                <Button variant='outlined' onClick={onClose}>{t('common:cancel')}</Button>
-                <Button variant='contained' onClick={handleSubmit(onSubmit)}>{t('common:save')}</Button>
-            </Box>
+            <FormActionButtons onClose={onClose} onClick={handleSubmit(onSubmit)} />
         </Box>
     </SimpleModal >
 }
@@ -202,5 +200,4 @@ export default Form
 
 const styles = {
     container: { display: 'flex', flexDirection: 'column', gap: '25px', pt: '10px' },
-    actionsContainer: { display: 'flex', flexDirection: 'row', gap: '10px', justifyContent: 'flex-end' },
 }
