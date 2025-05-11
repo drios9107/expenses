@@ -68,7 +68,7 @@ const Login = ({ params }) => {
 
         <Box sx={styles.providersContainer}>
             <IconButton onClick={() => callProvider('github')}><GitHub color="info" /> </IconButton>
-            <IconButton onClick={() => callProvider('google')}><Google color="info" /> </IconButton>
+            {/* <IconButton onClick={() => callProvider('google')}><Google color="info" /> </IconButton> */}
         </Box>
     </Paper>
 }
