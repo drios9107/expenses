@@ -1,9 +1,9 @@
-import React from 'react'
-import {Backdrop, CircularProgress, Typography, Box} from "@mui/material"
+import { Backdrop, CircularProgress, Typography, Box } from "@mui/material"
 
-const Loader = ({ isLoading,msg='' }) => {
+const Loader = ({ isLoading, msg = '' }) => {
+
   return <Backdrop
-    sx={{ color: '#0848C6', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+    sx={{ color: '#0848C6', zIndex: 9999 }}
     open={isLoading}
   >
     <Box display='flex' flexDirection='column' justifyContent={'center'} alignItems={'center'}>
@@ -11,7 +11,7 @@ const Loader = ({ isLoading,msg='' }) => {
         <CircularProgress color="inherit" />
       </Box>
       {
-          msg && <Typography color={'#4c4e64'} variant='body1'>{msg}</Typography>
+        msg && <Typography color={'#4c4e64'} variant='body1'>{msg}</Typography>
       }
     </Box>
   </Backdrop>
