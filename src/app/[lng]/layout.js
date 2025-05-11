@@ -5,6 +5,8 @@ import App from "@/components/App";
 import { Toaster } from "react-hot-toast";
 import { dir } from "i18next";
 import I18nClientProvider from "../i18n/client";
+import Loader from "@/components/Loader";
+import { Suspense } from "react";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -22,20 +24,22 @@ export const metadata = {
   description: "Track your expenses",
 };
 
-const languages = ['en', 'de']
+const languages = ['en', 'es']
 
 export async function generateStaticParams() {
   return languages.map((lng) => ({ lng }))
 }
 
 export default async function RootLayout({ children, params: { lng } }) {
-  return <html lang={lng}>
+  return <html lang={lng} dir={dir(lng)}>
     <body className={`${geistSans.variable} ${geistMono.variable}`}>
       <I18nClientProvider lng={lng}>
-        <App>
-          <Toaster position="top-right" />
-          {children}
-        </App>
+        <Suspense fallback={<Loader isLoading={true} />}>
+          <App>
+            <Toaster position="top-right" />
+            {children}
+          </App>
+        </Suspense>
       </I18nClientProvider>
     </body>
   </html >
