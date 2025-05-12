@@ -24,7 +24,7 @@ const GraphTransactionsModal = ({ title = '', transactions = [], isSubcategory, 
                 <Box sx={styles.row}>
                     <Typography sx={{ flex: 1 }}>{getText(item)}</Typography>
                     <Typography sx={{ flex: 1, textAlign: 'center' }}>{moment(item?.date).format('DD/MM/YYYY')}</Typography>
-                    <Typography sx={{ flex: 0.3, fontWeight: 600, textAlign: 'right' }}>{currencyFormat(item?.amount)} $</Typography>
+                    <Typography sx={{ flex: 0.3, fontWeight: 600, textAlign: 'right', textShadow: `1px 2px 3px ${item?.amount >= 1000 ? 'salmon' : 'primary'}` }}>{currencyFormat(item?.amount)} $</Typography>
                 </Box>
 
                 {item?.description && <Box sx={styles.row}>

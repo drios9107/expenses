@@ -21,7 +21,7 @@ const DayCardModal = ({ title = '', day, maxWidth, onClose = () => { }, extracla
             {day?.map((item, index) => <Box key={index} >
                 <Box sx={styles.row}>
                     <Typography>{getText(item)}</Typography>
-                    <Typography sx={{ fontWeight: 600 }}>{currencyFormat(item?.amount)} $</Typography>
+                    <Typography sx={{ fontWeight: 600, textShadow: `1px 2px 3px ${item?.amount >= 1000 ? 'salmon' : 'primary'}` }}>{currencyFormat(item?.amount)} $</Typography>
                 </Box>
 
                 {item?.description && <Box sx={styles.row}>
