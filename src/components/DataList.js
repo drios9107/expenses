@@ -9,7 +9,7 @@ const DataList = ({ model = 'category', title = '', rows = [], columns, datagrid
             rows={rows}
             columns={columns}
             initialState={{ pagination: { paginationModel: { page: 0, pageSize: 10 } } }}
-            pageSizeOptions={[10, 20, 50]}
+            pageSizeOptions={[10, 20, 50, 100]}
             sx={styles.datagrid}
             rowHeight={50}
             disableRowSelectionOnClick
