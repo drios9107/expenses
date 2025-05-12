@@ -29,8 +29,7 @@ export default function Home({ params }) {
 
   useEffect(() => {
     const lastRecurrenceDate = getFromStorage('lastRecurrenceDate')
-    console.log('***lastRecurrenceDate', lastRecurrenceDate, moment().isAfter(lastRecurrenceDate, 'day'))
-    if ((lastRecurrenceDate && moment().isAfter(lastRecurrenceDate, 'day')) || !lastRecurrenceDate)
+    if ((lastRecurrenceDate && moment().isAfter(parseInt(lastRecurrenceDate), 'day')) || !lastRecurrenceDate)
       setNeedToRunRecurrence(true)
   }, [getFromStorage])
 
