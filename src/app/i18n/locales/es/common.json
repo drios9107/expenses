@@ -1,4 +1,10 @@
 {
+    "frequencyList": {
+        "daily": "Diario",
+        "twoDays": "Cada dos días",
+        "daysWeek": "En los días de la semana seleccionados",
+        "daysMonth": "En los días del mes seleccionados"
+    },
     "search": "Buscar...",
     "create": "Crear",
     "details": "Detalles",

@@ -7,10 +7,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { GitHub, Google } from "@mui/icons-material";
 import { Box, Button, Divider, IconButton, Paper, Typography } from "@mui/material";
 import { signIn } from "next-auth/react";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import * as yup from "yup";
+import { en, es } from "yup-locales";
 
 const defaultValues = {
     email: '',
@@ -18,14 +19,19 @@ const defaultValues = {
 };
 
 const schema = yup.object().shape({
-    email: yup.string().email().required("This field is required"),
-    password: yup.string().required("This field is required").min(7, "Password must be at least 7 characters"),
+    email: yup.string().email().required(),
+    password: yup.string().required().min(7, "Password must be at least 7 characters"),
 });
 
 const Login = ({ params }) => {
+    const { t } = useTranslation(params?.lng, 'login')
+
+    useEffect(() => {
+        yup.setLocale(params?.lng === 'en' ? en : es)
+    }, [params?.lng])
+
     const { control, handleSubmit, formState: { errors, isDirty, isValid }, watch
     } = useForm({ defaultValues, mode: "onChange", resolver: yupResolver(schema) });
-    const { t } = useTranslation(params?.lng, 'login')
 
     const onSubmit = useCallback(data => {
         signIn('credentials', { ...data, redirect: false })

@@ -1,4 +1,10 @@
 {
+    "frequencyList": {
+        "daily": "Daily",
+        "twoDays": "Every two days",
+        "daysWeek": "On selected days of week",
+        "daysMonth": "On selected days of month"
+    },
     "search": "Search...",
     "create": "Create",
     "details": "Details",

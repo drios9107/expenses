@@ -16,13 +16,14 @@ import MonthDayList from '@/components/MonthDayList'
 import { useParams, usePathname } from 'next/navigation';
 import { useTranslation } from '@/hooks/useTranslation';
 import FormActionButtons from '@/components/FormActionButtons';
+import { en, es } from 'yup-locales';
 
 const schema = yup.object().shape({
-    category: yup.string().required("This field is required"),
+    category: yup.string().required(),
     subCategory: yup.string().nullable(),
-    date: yup.date().max(moment().set('days', moment().day() + 1).toDate()).required("This field is required"),
-    amount: yup.number().min(0).required("This field is required"),
-    type: yup.string().required("This field is required"),
+    date: yup.date().max(moment().set('days', moment().day() + 1).toDate()).required(),
+    amount: yup.number().min(0).required(),
+    type: yup.string().required(),
     description: yup.string().nullable(),
 });
 
@@ -44,10 +45,10 @@ export const typeList = [
 ]
 
 export const frequencyList = [
-    { _id: 'daily', name: 'Daily' },
-    { _id: 'twoDays', name: 'Every two days' },
-    { _id: 'daysWeek', name: 'On selected days of week' },
-    { _id: 'daysMonth', name: 'On selected days of month' }
+    { _id: 'daily' },
+    { _id: 'twoDays' },
+    { _id: 'daysWeek' },
+    { _id: 'daysMonth' }
 ]
 
 const Form = ({ item, onClose = () => { } }) => {
@@ -63,6 +64,10 @@ const Form = ({ item, onClose = () => { } }) => {
 
     const weekDayRef = useRef();
     const monthDayRef = useRef();
+
+    useEffect(() => {
+        yup.setLocale(params?.lng === 'en' ? en : es)
+    }, [params?.lng])
 
     const { control, handleSubmit, setValue, formState: { errors, isDirty, isValid }, watch
     } = useForm({ defaultValues: item ? { ...item, date: moment(item?.date).toDate() } : defaultValues, mode: "onBlur", resolver: yupResolver(schema) });
@@ -83,6 +88,10 @@ const Form = ({ item, onClose = () => { } }) => {
         return subCategories.filter(i => i.category === categoryWatcher)
     }, [categoryWatcher, subCategories])
 
+    const getFrequencyList = useMemo(() => {
+        return frequencyList.map(i => ({ ...i, name: t(`common:frequencyList.${i._id}`) }))
+    }, [t])
+
     useEffect(() => {
         if (item?.isRecurrent && item?.weekDays?.length > 0)
             setDaysWeek(item.weekDays)
@@ -91,8 +100,8 @@ const Form = ({ item, onClose = () => { } }) => {
     }, [item?.isRecurrent, item?.monthDays, item?.weekDays])
 
     useEffect(() => {
-        setValue('isRecurrent', pathName === '/recurrent-transaction')
-    }, [pathName, setValue])
+        setValue('isRecurrent', pathName === `/${params?.lng}/recurrent-transaction`)
+    }, [params?.lng, pathName, setValue])
 
     const onSubmit = useCallback(data => {
         const preparedData = { ...data, date: moment(data?.date).set({ h: 8, m: 0, s: 0, milliseconds: 0 }).valueOf() }
@@ -173,7 +182,7 @@ const Form = ({ item, onClose = () => { } }) => {
                         errors={errors}
                         fieldName={'frequency'}
                         options={{ label: t('transactions:frequency') }}
-                        list={frequencyList}
+                        list={getFrequencyList}
                         extraclasses={{ flex: 1 }}
                     />
                     <Box sx={{ flex: 1 }}>
