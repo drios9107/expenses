@@ -6,7 +6,7 @@ import { useList } from ".";
 import axiosInstance from "@/utils/AxiosInterceptor";
 
 const useSubCategory = () => {
-    const { subCategories, setSubCategories } = useList();
+    const { subCategories, setSubCategories, setCategories } = useList();
 
     const { toastInfo } = useToast();
     const [isLoading, setIsLoading] = useState(false);
@@ -19,30 +19,38 @@ const useSubCategory = () => {
             .finally(() => setIsLoading(false))
     }, [setSubCategories])
 
-    const createSubCategory = useCallback(preparedData => {
+    const createSubCategory = useCallback(async preparedData => {
         setIsLoading(true);
-        axiosInstance.post(`/subCategories`, preparedData)
+        return axiosInstance.post(`/subCategories`, preparedData)
             .then(({ data }) => {
                 setSubCategories([...subCategories, data?.data])
                 toastInfo(messages.saved);
+                if (preparedData?.newCategory)
+                    setCategories(previous => [...previous, preparedData?.newCategory]);
+
+                return true;
             })
             .catch(() => { })
             .finally(() => setIsLoading(false))
-    }, [setSubCategories, subCategories, toastInfo])
+    }, [setCategories, setSubCategories, subCategories, toastInfo])
 
-    const updateSubCategory = useCallback(preparedData => {
+    const updateSubCategory = useCallback(async preparedData => {
         setIsLoading(true);
-        axiosInstance.put(`/subCategories/${preparedData?._id}`, preparedData)
+        return axiosInstance.put(`/subCategories/${preparedData?._id}`, preparedData)
             .then(({ data }) => {
                 const index = subCategories.findIndex(i => i._id === preparedData?._id)
                 const result = [...subCategories];
                 result[index] = data?.data;
                 setSubCategories(result);
                 toastInfo(messages.saved);
+                if (preparedData?.newCategory)
+                    setCategories(previous => [...previous, preparedData?.newCategory]);
+
+                return true;
             })
             .catch(() => { })
             .finally(() => setIsLoading(false))
-    }, [setSubCategories, subCategories, toastInfo])
+    }, [setCategories, setSubCategories, subCategories, toastInfo])
 
     const deleteSubCategory = useCallback(id => {
         setIsLoading(true);

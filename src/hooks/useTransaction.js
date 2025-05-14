@@ -6,7 +6,7 @@ import { useList } from ".";
 import axiosInstance from "@/utils/AxiosInterceptor";
 
 const useTransaction = () => {
-    const { transactions, setTransactions, setCurrentMonthTransactions } = useList();
+    const { transactions, setTransactions, setCurrentMonthTransactions, setCategories, setSubCategories } = useList();
 
     const { toastInfo } = useToast();
     const [isLoading, setIsLoading] = useState(false);
@@ -43,20 +43,26 @@ const useTransaction = () => {
             .finally(() => setIsLoading(false))
     }, [])
 
-    const createTransaction = useCallback(preparedData => {
+    const createTransaction = useCallback(async preparedData => {
         setIsLoading(true);
-        axiosInstance.post(`/transactions`, preparedData)
+        return axiosInstance.post(`/transactions`, preparedData)
             .then(({ data }) => {
                 setTransactions([...transactions, data?.data])
                 toastInfo(messages.saved);
+                if (preparedData?.newCategory)
+                    setCategories(previous => [...previous, preparedData?.newCategory]);
+                if (preparedData?.newSubCategory)
+                    setSubCategories(previous => [...previous, { ...preparedData?.newSubCategory, category: preparedData?.newCategory?._id }]);
+
+                return true;
             })
             .catch(() => { })
             .finally(() => setIsLoading(false))
-    }, [setTransactions, toastInfo, transactions])
+    }, [setCategories, setSubCategories, setTransactions, toastInfo, transactions])
 
-    const updateTransaction = useCallback(preparedData => {
+    const updateTransaction = useCallback(async preparedData => {
         setIsLoading(true);
-        axiosInstance.put(`/transactions/${preparedData?._id}`, preparedData)
+        return axiosInstance.put(`/transactions/${preparedData?._id}`, preparedData)
             .then(({ data }) => {
                 const index = transactions.findIndex(i => i._id === preparedData?._id)
                 if (index > -1) {
@@ -65,10 +71,16 @@ const useTransaction = () => {
                     setTransactions(result);
                 }
                 toastInfo(messages.saved);
+                if (preparedData?.newCategory)
+                    setCategories(previous => [...previous, preparedData?.newCategory]);
+                if (preparedData?.newSubCategory)
+                    setSubCategories(previous => [...previous, { ...preparedData?.newSubCategory, category: preparedData?.newCategory?._id }]);
+
+                return true;
             })
             .catch(() => { })
             .finally(() => setIsLoading(false))
-    }, [setTransactions, toastInfo, transactions])
+    }, [setCategories, setSubCategories, setTransactions, toastInfo, transactions])
 
     const deleteTransaction = useCallback(id => {
         setIsLoading(true);

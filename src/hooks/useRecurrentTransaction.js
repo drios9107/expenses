@@ -9,7 +9,7 @@ import GetStorage from "@/utils/GetStorage";
 import moment from "moment";
 
 const useRecurrentTransaction = () => {
-    const { recurrentTransactions, setRecurrentTransactions } = useList();
+    const { recurrentTransactions, setRecurrentTransactions, setCategories, setSubCategories } = useList();
     const { getTransactions } = useTransaction();
     const { setInStorage } = GetStorage();
     const { setBalance, setBalanceMLC, setBalanceUSD, setBalanceUSDT } = useDashboardContext();
@@ -47,30 +47,42 @@ const useRecurrentTransaction = () => {
             .finally(() => setIsLoading(false))
     }, [getTransactions, setBalance, setBalanceMLC, setBalanceUSD, setBalanceUSDT, setInStorage, toastInfo])
 
-    const createRecurrentTransaction = useCallback(preparedData => {
+    const createRecurrentTransaction = useCallback(async preparedData => {
         setIsLoading(true);
-        axiosInstance.post(`/recurrent-transactions`, preparedData)
+        return axiosInstance.post(`/recurrent-transactions`, preparedData)
             .then(({ data }) => {
                 setRecurrentTransactions([...recurrentTransactions, data?.data])
                 toastInfo(messages.saved);
+                if (preparedData?.newCategory)
+                    setCategories(previous => [...previous, preparedData?.newCategory]);
+                if (preparedData?.newSubCategory)
+                    setSubCategories(previous => [...previous, { ...preparedData?.newSubCategory, category: preparedData?.newCategory?._id }]);
+
+                return true;
             })
             .catch(() => { })
             .finally(() => setIsLoading(false))
-    }, [setRecurrentTransactions, recurrentTransactions, toastInfo])
+    }, [setRecurrentTransactions, recurrentTransactions, toastInfo, setCategories, setSubCategories])
 
-    const updateRecurrentTransaction = useCallback(preparedData => {
+    const updateRecurrentTransaction = useCallback(async preparedData => {
         setIsLoading(true);
-        axiosInstance.put(`/recurrent-transactions/${preparedData?._id}`, preparedData)
+        return axiosInstance.put(`/recurrent-transactions/${preparedData?._id}`, preparedData)
             .then(({ data }) => {
                 const index = recurrentTransactions.findIndex(i => i._id === preparedData?._id)
                 const result = [...recurrentTransactions];
                 result[index] = data?.data;
                 setRecurrentTransactions(result);
                 toastInfo(messages.saved);
+                if (preparedData?.newCategory)
+                    setCategories(previous => [...previous, preparedData?.newCategory]);
+                if (preparedData?.newSubCategory)
+                    setSubCategories(previous => [...previous, { ...preparedData?.newSubCategory, category: preparedData?.newCategory?._id }]);
+
+                return true;
             })
             .catch(() => { })
             .finally(() => setIsLoading(false))
-    }, [recurrentTransactions, setRecurrentTransactions, toastInfo])
+    }, [recurrentTransactions, setCategories, setRecurrentTransactions, setSubCategories, toastInfo])
 
     const deleteRecurrentTransaction = useCallback(id => {
         setIsLoading(true);
