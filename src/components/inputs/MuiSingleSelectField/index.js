@@ -1,4 +1,5 @@
-import { FormControl, FormHelperText, InputLabel, MenuItem, Select } from "@mui/material";
+import ShowFieldErrors from "@/components/ShowFieldErrors";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { Controller } from "react-hook-form";
 
 const MuiSingleSelectField = ({ fieldName, control, errors, options = {}, list = [], extraclasses = {} }) => {
@@ -30,9 +31,7 @@ const MuiSingleSelectField = ({ fieldName, control, errors, options = {}, list =
           </>
         )}
       />
-      {errors?.[fieldName] && <FormHelperText sx={{ color: "error.main" }}>
-        {errors[fieldName].message}
-      </FormHelperText>}
+      <ShowFieldErrors errors={errors} fieldName={fieldName} />
     </FormControl>
   );
 };

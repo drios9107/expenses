@@ -1,4 +1,5 @@
-import { FormControl, FormHelperText, TextField } from '@mui/material'
+import ShowFieldErrors from '@/components/ShowFieldErrors'
+import { FormControl, TextField } from '@mui/material';
 import { Controller } from 'react-hook-form'
 
 const MuiTextfield = ({ fieldName, control, errors, options = {}, rules = {} }) => {
@@ -17,9 +18,7 @@ const MuiTextfield = ({ fieldName, control, errors, options = {}, rules = {} }) 
                 />
             )}
         />
-        {errors?.[fieldName] && <FormHelperText sx={{ color: "error.main" }}>
-            {errors[fieldName].message}
-        </FormHelperText>}
+        <ShowFieldErrors errors={errors} fieldName={fieldName} />
     </FormControl>
 }
 

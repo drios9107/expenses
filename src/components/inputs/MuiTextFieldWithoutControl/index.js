@@ -1,4 +1,5 @@
-import { FormControl, FormHelperText, TextField } from '@mui/material'
+import ShowFieldErrors from '@/components/ShowFieldErrors'
+import { FormControl, TextField } from '@mui/material';
 
 const MuiTextfieldWithoutControl = ({ fieldName, state, setState = () => { }, errors, options = {} }) => {
     return <FormControl>
@@ -10,9 +11,7 @@ const MuiTextfieldWithoutControl = ({ fieldName, state, setState = () => { }, er
             rows={options?.multiline ? options?.rows ?? 3 : 1}
             maxRows={Infinity}
         />
-        {errors?.[fieldName] && <FormHelperText sx={{ color: "error.main" }}>
-            {errors[fieldName].message}
-        </FormHelperText>}
+        <ShowFieldErrors errors={errors} fieldName={fieldName} />
     </FormControl>
 }
 

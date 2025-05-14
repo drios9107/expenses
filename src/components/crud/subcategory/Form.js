@@ -1,21 +1,25 @@
 import MuiTextfield from '@/components/inputs/MuiTextField'
 import SimpleModal from '@/components/SimpleModal'
-import { Box, Button } from '@mui/material'
+import { Box } from '@mui/material';
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useList, useSubCategory } from '@/hooks';
-import MuiSingleSelectField from '@/components/inputs/MuiSingleSelectField'
 import FormActionButtons from '@/components/FormActionButtons'
 import { useParams } from 'next/navigation'
 import { useTranslation } from '@/hooks/useTranslation'
 import { en, es } from 'yup-locales'
+import CategorySelect from '@/components/CategorySelect'
+import { ObjectId } from 'bson';
 
 
 const schema = yup.object().shape({
     name: yup.string().required(),
-    category: yup.string().required(),
+    category: yup.object().shape({
+        name: yup.string().required(),
+        _id: yup.string().required()
+    }).required()
 });
 
 const defaultValues = { name: "" }
@@ -25,20 +29,57 @@ const Form = ({ item, onClose = () => { } }) => {
     const { t } = useTranslation(params?.lng ?? 'en', 'subCategory')
     const { categories } = useList();
     const { isLoading, createSubCategory, updateSubCategory } = useSubCategory();
+    const [newCategory, setNewCategory] = useState()
 
     useEffect(() => {
         yup.setLocale(params?.lng === 'en' ? en : es)
     }, [params?.lng])
 
-    const { control, handleSubmit, formState: { errors, isDirty, isValid }
-    } = useForm({ defaultValues: item ?? defaultValues, mode: "onBlur", resolver: yupResolver(schema) });
+    const { control, handleSubmit, setValue, watch, formState: { errors, isDirty, isValid }
+    } = useForm({
+        defaultValues: item ?? defaultValues,
+        mode: "onBlur",
+        resolver: yupResolver(schema)
+    });
 
-    const onSubmit = useCallback(preparedData => {
-        item ?
-            updateSubCategory(preparedData) :
-            createSubCategory(preparedData);
-        onClose();
-    }, [createSubCategory, item, onClose, updateSubCategory])
+    useEffect(() => {
+        if (item?.category)
+            setValue('category', categories.find(i => i?._id === item?.category))
+    }, [categories, item?.category, setValue])
+
+    const getCategories = useMemo(() => {
+        if (newCategory)
+            return [...categories, newCategory].sort((a, b) => b?.name?.localeCompare(a?.name));
+
+        return categories
+    }, [categories, newCategory])
+
+    const onCreateCategory = useCallback(v => {
+        const newItem = { name: v, _id: new ObjectId().toString() };
+        setNewCategory(newItem);
+    }, [])
+
+    useEffect(() => {
+        if (newCategory)
+            setValue('category', newCategory)
+    }, [newCategory, setValue])
+
+    const onSubmit = useCallback(async data => {
+        const preparedData = { ...data }
+        if (preparedData?.category?._id) {
+            preparedData['newCategory'] = newCategory;
+            preparedData['category'] = newCategory?._id;
+        }
+
+        const response = item ?
+            await updateSubCategory(preparedData) :
+            await createSubCategory(preparedData);
+
+        if (response) {
+            setNewCategory()
+            onClose();
+        }
+    }, [createSubCategory, item, newCategory, onClose, updateSubCategory])
 
     return <SimpleModal onClose={onClose} title={item ? t('edit') : t('create')} isLoading={isLoading}>
         <Box sx={styles.container}>
@@ -51,12 +92,12 @@ const Form = ({ item, onClose = () => { } }) => {
                 />
             </Box>
             <Box sx={styles.container}>
-                <MuiSingleSelectField
+                <CategorySelect
+                    list={getCategories}
                     control={control}
                     errors={errors}
-                    fieldName={'category'}
+                    onCreateCategory={onCreateCategory}
                     options={{ label: t('category') }}
-                    list={categories}
                 />
             </Box>
             <FormActionButtons onClose={onClose} onClick={handleSubmit(onSubmit)} />

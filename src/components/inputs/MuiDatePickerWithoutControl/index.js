@@ -1,5 +1,6 @@
 import { DatePicker } from '@mui/x-date-pickers';
-import { FormControl, FormHelperText } from '@mui/material';
+import { FormControl } from '@mui/material';
+import ShowFieldErrors from '@/components/ShowFieldErrors';
 
 const MuiDatePickerWithoutControl = ({ fieldName, state, setState = () => { }, errors, options, formExtraclasses = {} }) => {
     return <FormControl size='small' sx={formExtraclasses}>
@@ -10,9 +11,7 @@ const MuiDatePickerWithoutControl = ({ fieldName, state, setState = () => { }, e
             allowSameDateSelection
             {...options}
         />
-        {errors?.[fieldName] && <FormHelperText sx={{ color: "error.main" }}>
-            {errors[fieldName].message}
-        </FormHelperText>}
+        <ShowFieldErrors errors={errors} fieldName={fieldName} />
     </FormControl>
 }
 

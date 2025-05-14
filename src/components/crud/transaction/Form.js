@@ -1,6 +1,6 @@
 import MuiTextfield from '@/components/inputs/MuiTextField'
 import SimpleModal from '@/components/SimpleModal'
-import { Box, Button } from '@mui/material';
+import { Box } from '@mui/material';
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -17,10 +17,19 @@ import { useParams, usePathname } from 'next/navigation';
 import { useTranslation } from '@/hooks/useTranslation';
 import FormActionButtons from '@/components/FormActionButtons';
 import { en, es } from 'yup-locales';
+import CategorySelect from '@/components/CategorySelect';
+import { ObjectId } from 'bson';
+import SubCategorySelect from '@/components/SubCategorySelect';
 
 const schema = yup.object().shape({
-    category: yup.string().required(),
-    subCategory: yup.string().nullable(),
+    category: yup.object().shape({
+        name: yup.string().required(),
+        _id: yup.string().required()
+    }).required(),
+    subCategory: yup.object().shape({
+        name: yup.string().required(),
+        _id: yup.string().required()
+    }).nullable(),
     date: yup.date().max(moment().set('days', moment().day() + 1).toDate()).required(),
     amount: yup.number().min(0).required(),
     type: yup.string().required(),
@@ -29,7 +38,6 @@ const schema = yup.object().shape({
 
 const defaultValues = {
     category: '',
-    subCategory: '',
     date: moment().toDate(),
     amount: 0,
     type: 'cup',
@@ -58,6 +66,8 @@ const Form = ({ item, onClose = () => { } }) => {
     const { isLoading, updateTransaction, createTransaction } = useTransaction();
     const { isLoading: isLoadingRecurrentTransaction, updateRecurrentTransaction, createRecurrentTransaction } = useRecurrentTransaction();
     const { categories, subCategories } = useList();
+    const [newCategory, setNewCategory] = useState()
+    const [newSubCategory, setNewSubCategory] = useState()
 
     const [daysWeek, setDaysWeek] = useState([]);
     const [daysMonth, setDaysMonth] = useState([]);
@@ -72,6 +82,16 @@ const Form = ({ item, onClose = () => { } }) => {
     const { control, handleSubmit, setValue, formState: { errors, isDirty, isValid }, watch
     } = useForm({ defaultValues: item ? { ...item, date: moment(item?.date).toDate() } : defaultValues, mode: "onBlur", resolver: yupResolver(schema) });
 
+    useEffect(() => {
+        if (item?.category)
+            setValue('category', categories.find(i => i?._id === item?.category))
+    }, [categories, item?.category, setValue])
+
+    useEffect(() => {
+        if (item?.subCategory)
+            setValue('subCategory', subCategories.find(i => i?._id === item?.subCategory))
+    }, [item?.subCategory, setValue, subCategories])
+
     const categoryWatcher = watch('category');
     const isRecurrentWatcher = watch('isRecurrent');
     const isExpenseWatcher = watch('isExpense');
@@ -79,18 +99,47 @@ const Form = ({ item, onClose = () => { } }) => {
     const dateWatcher = watch('date');
 
     const getCategories = useMemo(() => {
+        let tempCategories = [...categories];
+        if (newCategory)
+            tempCategories = [...tempCategories, newCategory].sort((a, b) => b?.name?.localeCompare(a?.name));
+
         return isExpenseWatcher ?
-            categories.filter(i => i?.name !== 'Ingresos') :
-            categories.filter(i => i?.name === 'Ingresos');
-    }, [categories, isExpenseWatcher])
+            tempCategories.filter(i => i?.name !== 'Ingresos') :
+            tempCategories.filter(i => i?.name === 'Ingresos');
+    }, [categories, isExpenseWatcher, newCategory])
 
     const getSubCategories = useMemo(() => {
-        return subCategories.filter(i => i.category === categoryWatcher)
-    }, [categoryWatcher, subCategories])
+        let tempSubCategories = [...subCategories];
+        if (newSubCategory)
+            tempSubCategories = [...tempSubCategories, newSubCategory].sort((a, b) => b?.name?.localeCompare(a?.name));
+
+        return tempSubCategories.filter(i => i.category === categoryWatcher?._id)
+    }, [categoryWatcher, newSubCategory, subCategories])
 
     const getFrequencyList = useMemo(() => {
         return frequencyList.map(i => ({ ...i, name: t(`common:frequencyList.${i._id}`) }))
     }, [t])
+
+    const onCreateCategory = useCallback(v => {
+        const newItem = { name: v, _id: new ObjectId().toString() };
+        setNewCategory(newItem);
+    }, [])
+
+    useEffect(() => {
+        if (newCategory)
+            setValue('category', newCategory)
+    }, [newCategory, setValue])
+
+
+    const onCreateSubCategory = useCallback(v => {
+        const newItem = { name: v, _id: new ObjectId().toString() };
+        setNewSubCategory(newItem);
+    }, [])
+
+    useEffect(() => {
+        if (newSubCategory)
+            setValue('subCategory', newSubCategory)
+    }, [newSubCategory, setValue])
 
     useEffect(() => {
         if (item?.isRecurrent && item?.weekDays?.length > 0)
@@ -103,7 +152,7 @@ const Form = ({ item, onClose = () => { } }) => {
         setValue('isRecurrent', pathName === `/${params?.lng}/recurrent-transaction`)
     }, [params?.lng, pathName, setValue])
 
-    const onSubmit = useCallback(data => {
+    const onSubmit = useCallback(async data => {
         const preparedData = { ...data, date: moment(data?.date).set({ h: 8, m: 0, s: 0, milliseconds: 0 }).valueOf() }
 
         if (!preparedData?.isRecurrent) {
@@ -114,35 +163,51 @@ const Form = ({ item, onClose = () => { } }) => {
         else if (preparedData?.isRecurrent && preparedData?.frequency === 'daysMonth')
             preparedData['monthDays'] = monthDayRef.current?.getSectionValues();
 
+        if (preparedData?.category?._id) {
+            preparedData['newCategory'] = newCategory;
+            preparedData['category'] = newCategory?._id;
+        }
+
+        if (preparedData?.subCategory?._id) {
+            preparedData['newSubCategory'] = newSubCategory;
+            preparedData['subCategory'] = newSubCategory?._id;
+        }
+
+        let response = false;
         if (preparedData?.isRecurrent)
-            item ?
-                updateRecurrentTransaction(preparedData) :
-                createRecurrentTransaction({ ...preparedData, isActive: true })
+            response = item ?
+                await updateRecurrentTransaction(preparedData) :
+                await createRecurrentTransaction({ ...preparedData, isActive: true })
         else
-            item ?
-                updateTransaction(preparedData) :
-                createTransaction(preparedData);
-        onClose();
-    }, [createRecurrentTransaction, createTransaction, item, onClose, updateRecurrentTransaction, updateTransaction])
+            response = item ?
+                await updateTransaction(preparedData) :
+                await createTransaction(preparedData);
+
+        if (response) {
+            setNewCategory();
+            setNewSubCategory();
+            onClose();
+        }
+    }, [createRecurrentTransaction, createTransaction, item, newCategory, newSubCategory, onClose, updateRecurrentTransaction, updateTransaction])
 
     return <SimpleModal onClose={onClose} title={item ? t('common:edit') : t('common:create')} isLoading={isLoading || isLoadingRecurrentTransaction}>
         <Box sx={styles.container}>
             <Box sx={styles.container}>
-                <MuiSingleSelectField
+                <CategorySelect
+                    list={getCategories}
                     control={control}
                     errors={errors}
-                    fieldName={'category'}
+                    onCreateCategory={onCreateCategory}
                     options={{ label: t('transactions:category'), disabled: item?.isRecurrent }}
-                    list={getCategories}
                 />
             </Box>
             <Box sx={styles.container}>
-                <MuiSingleSelectField
+                <SubCategorySelect
+                    list={getSubCategories}
                     control={control}
                     errors={errors}
-                    fieldName={'subCategory'}
+                    onCreateCategory={onCreateSubCategory}
                     options={{ label: t('transactions:subCategory'), disabled: item?.isRecurrent }}
-                    list={getSubCategories}
                 />
             </Box>
             <Box sx={styles.container}>
