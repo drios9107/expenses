@@ -163,15 +163,13 @@ const Form = ({ item, onClose = () => { } }) => {
         else if (preparedData?.isRecurrent && preparedData?.frequency === 'daysMonth')
             preparedData['monthDays'] = monthDayRef.current?.getSectionValues();
 
-        if (preparedData?.category?._id) {
+        if (newCategory)
             preparedData['newCategory'] = newCategory;
-            preparedData['category'] = newCategory?._id;
-        }
+        preparedData['category'] = newCategory?._id ?? data?.category?._id;
 
-        if (preparedData?.subCategory?._id) {
+        if (newSubCategory)
             preparedData['newSubCategory'] = newSubCategory;
-            preparedData['subCategory'] = newSubCategory?._id;
-        }
+        preparedData['subCategory'] = newSubCategory?._id ?? data?.subCategory?._id;
 
         let response = false;
         if (preparedData?.isRecurrent)
