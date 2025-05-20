@@ -5,6 +5,9 @@
         "daysWeek": "On selected days of week",
         "daysMonth": "On selected days of month"
     },
+    "bigMenu": "Expand",
+    "smallMenu": "Contract",
+    "smallMenu2": "Contract Menu",
     "search": "Search...",
     "create": "Create",
     "details": "Details",

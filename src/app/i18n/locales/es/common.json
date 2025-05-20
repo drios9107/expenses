@@ -5,6 +5,9 @@
         "daysWeek": "En los días de la semana seleccionados",
         "daysMonth": "En los días del mes seleccionados"
     },
+    "bigMenu": "Expandir",
+    "smallMenu": "Contraer",
+    "smallMenu2": "Contraer Menú",
     "search": "Buscar...",
     "create": "Crear",
     "details": "Detalles",
