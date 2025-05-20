@@ -85,7 +85,7 @@ const colourStyles = (palette) => {
         },
       };
     },
-    container: (styles) => ({ ...styles, width: "100%", minHeight: "55.97px" }),
+    container: (styles) => ({ ...styles, width: "100%" }),
     valueContainer: (styles) => ({ ...styles, padding: "2px 13px" }),
     placeholder: (styles) => ({ ...styles, color: palette.text.secondary }),
     menu: (styles) => ({ ...styles, backgroundColor: '#fff', zIndex: 100 }),

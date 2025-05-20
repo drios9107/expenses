@@ -9,7 +9,7 @@ const SubCategorySelect = ({ onCreateCategory, control, errors, list = [], optio
         list={list}
         fieldName={'subCategory'}
         onCreateOption={onCreateCategory}
-        {...options}
+        options={options}
     />
 }
 
