@@ -1,11 +1,10 @@
 import { IconButton, MenuItem, Tooltip, useMediaQuery } from '@mui/material'
 import Link from 'next/link'
 
-const MenuLink = ({ href, title = '', children }) => {
-    const isMobile = useMediaQuery("@media (max-width:500px)");
+const MenuLink = ({ href, title = '', useMobileView, children }) => {
 
     return <Link href={href} >
-        {isMobile ?
+        {useMobileView ?
             <Tooltip title={title}>
                 <IconButton>{children}</IconButton>
             </Tooltip> :
