@@ -16,6 +16,7 @@ import { useCategory, useList, useSubCategory, useTransaction } from "@/hooks";
 import { getLineColor } from "@/utils/helpers";
 import { useFormat } from "@/hooks/useFormat";
 import { useTranslation } from "@/hooks/useTranslation";
+import DataListAdvancedSearch from "@/components/DataListAdvancedSearch";
 
 const Transaction = ({ params }) => {
     const [open, setOpen] = useState(false);
@@ -142,10 +143,10 @@ const Transaction = ({ params }) => {
 
     return (
         <>
-            <DataList
+            <DataListAdvancedSearch
                 title={t('transactionList')}
                 columns={columns}
-                rows={getTransactionsList}
+            // rows={getTransactionsList}
             />
             {open && <Form item={itemToUpdate} onClose={() => { setOpen(false); setItemToUpdate() }} />}
             {itemToView && <Details item={itemToView} onClose={() => setItemToView()} />}

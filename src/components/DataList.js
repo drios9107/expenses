@@ -2,7 +2,7 @@ import { Paper } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid'
 import DatalistToolbar from './DatalistToolbar'
 
-const DataList = ({ model = 'category', title = '', rows = [], columns, datagridOptions = {}, children }) => {
+const DataList = ({ title = '', rows = [], columns, ...datagridOptions }) => {
     return <Paper sx={styles.container}>
         <DataGrid
             getRowId={row => row?.id ?? row?.uid ?? row?._id}
