@@ -8,6 +8,7 @@
     "graphPieTitle": "Biggest expenses by category",
     "noData": "There is no data to show",
     "close": "Close",
+    "monthlyTotal": "Monthly total",
     "months": {
         "january": "January",
         "february": "February",

@@ -6,10 +6,11 @@ import DashboardBarGraph from "@/components/graphs/DashboardBarGraph";
 import DashboardPieGraph from "@/components/graphs/DashboardPieGraph";
 import IncomeCard from "@/components/IncomeCard";
 import MonthNavigator from "@/components/MonthNavigator";
+import RenderDayCards from "@/components/RenderDayCards";
 import { useDashboard, useDashboardContext, useRecurrentTransaction } from "@/hooks";
 import { useTranslation } from "@/hooks/useTranslation";
 import GetStorage from "@/utils/GetStorage";
-import { Box, Button, Paper, useMediaQuery } from "@mui/material";
+import { Box, Button, Paper, Typography, useMediaQuery } from "@mui/material";
 import moment from "moment";
 // import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -89,7 +90,7 @@ export default function Home({ params }) {
       </Paper>
     </Box>
     <Box sx={[styles.daysContainer, conditionalGraphContainerStyles]}>
-      {Object.keys(days).map((item, index) => <DayCard key={index} title={item} day={days[item]} />)}
+      <RenderDayCards days={days} />
     </Box>
   </Box>
 }
@@ -133,5 +134,5 @@ const styles = {
         transform: 'scale(1)',
       },
     }
-  }
+  },
 }
