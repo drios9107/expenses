@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import DataList from './DataList';
 import { useSearch } from '@/hooks';
+import DatalistToolbar from './DatalistToolbar';
+import useDebounce from '@/hooks/useDebounce';
 
 const DataListAdvancedSearch = ({ model = 'transactions', title = '', columns, ...datagridOptions }) => {
     const [page, setPage] = useState(0);
@@ -8,6 +10,7 @@ const DataListAdvancedSearch = ({ model = 'transactions', title = '', columns, .
     const { advancedSearch, isLoading } = useSearch();
 
     const [searchTerm, setSearchTerm] = useState();
+    const searchTermDebounced = useDebounce(searchTerm, 500);
     const [rowCount, setRowCount] = useState(0);
     const [pageSize, setPageSize] = useState(10);
     const [paginationToken, setPaginationToken] = useState();
@@ -17,24 +20,17 @@ const DataListAdvancedSearch = ({ model = 'transactions', title = '', columns, .
     const [isRecurrent, setIsRecurrent] = useState();
 
     const fetchData = useCallback(async (params = {}) => {
-        console.log('***params', {
-            searchTerm,
+        const payload = {
+            searchTerm: searchTermDebounced,
             limit: pageSize,
             sortField,
             sortDirection,
             isExpense,
             isRecurrent,
             ...params
-        })
-        const response = await advancedSearch(model, {
-            searchTerm,
-            limit: pageSize,
-            sortField,
-            sortDirection,
-            isExpense,
-            isRecurrent,
-            ...params
-        });
+        }
+        console.log('***params', payload)
+        const response = await advancedSearch(model, payload);
         if (response) {
             console.log('***response', response)
             if (response?.data)
@@ -44,7 +40,7 @@ const DataListAdvancedSearch = ({ model = 'transactions', title = '', columns, .
             if (response?.total)
                 setRowCount(response?.total)
         }
-    }, [advancedSearch, isExpense, isRecurrent, model, pageSize, searchTerm, sortDirection, sortField])
+    }, [advancedSearch, isExpense, isRecurrent, model, pageSize, searchTermDebounced, sortDirection, sortField])
 
     const onPaginationModelChange = useCallback(async (model) => {
         console.log('***new pagination model', model)
@@ -81,7 +77,6 @@ const DataListAdvancedSearch = ({ model = 'transactions', title = '', columns, .
         fetchData();
     }, [fetchData])
 
-
     return <DataList
         title={title}
         columns={columns}
@@ -95,6 +90,14 @@ const DataListAdvancedSearch = ({ model = 'transactions', title = '', columns, .
         paginationModel={{ page, pageSize }}
         onPaginationModelChange={onPaginationModelChange}
         rowCount={rowCount ?? rows?.length}
+        slots={{
+            toolbar: props => <DatalistToolbar
+                {...props}
+                onChange={v => setSearchTerm(v?.target?.value)}
+                value={searchTerm}
+            />
+        }}
+
         {...datagridOptions}
     />
 }
