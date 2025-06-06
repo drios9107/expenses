@@ -4,7 +4,7 @@ import axiosInstance from "@/utils/AxiosInterceptor";
 import moment from "moment";
 import { useMediaQuery } from "@mui/material";
 
-const useDashboard = () => {
+const useDashboard = (useDashboardData = false) => {
     const { setCategoryLabels, setCategoryValues, setSubCategoryLabels, setSubCategoryValues, setMonthExpenses, setMonthIncome,
         setBalance, setBalanceMLC, setBalanceUSD, setBalanceUSDT, setBiggestIncome, setBiggestIncomeDate, setDays } = useDashboardContext();
     const isMobile = useMediaQuery("@media (max-width:500px)");
@@ -77,8 +77,9 @@ const useDashboard = () => {
     }, [isMobile])
 
     useEffect(() => {
-        getDashboard({ currentMonth, currentYear });
-    }, [currentMonth, currentYear, getDashboard])
+        if (useDashboardData)
+            getDashboard({ currentMonth, currentYear });
+    }, [currentMonth, currentYear, getDashboard, useDashboardData])
 
     const getPreviousMonth = useCallback(() => {
         if (currentMonth === 0) {

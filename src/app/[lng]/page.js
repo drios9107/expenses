@@ -19,7 +19,7 @@ export default function Home({ params }) {
   const { t } = useTranslation(params?.lng, 'dashboard')
   const { isLoading, conditionalContainerStyles, currentMonth, currentYear,
     getPreviousMonth, getNextMonth, conditionalGraphContainerStyles,
-    conditionalGraphStyles, isHover1, setIsHover1, isHover2, setIsHover2 } = useDashboard();
+    conditionalGraphStyles, isHover1, setIsHover1, isHover2, setIsHover2 } = useDashboard(true);
   const { days } = useDashboardContext()
   const { runTransactions } = useRecurrentTransaction()
   const { getFromStorage } = GetStorage()
