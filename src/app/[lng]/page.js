@@ -24,6 +24,7 @@ export default function Home({ params }) {
   const { runTransactions } = useRecurrentTransaction()
   const { getFromStorage } = GetStorage()
   const isMobile = useMediaQuery("@media (max-width:500px)");
+  const isBelow930 = useMediaQuery("@media (max-width:930px)");
 
   const [selectedDate, setSelectedDate] = useState()
   const [needToRunRecurrence, setNeedToRunRecurrence] = useState(false)
@@ -52,12 +53,6 @@ export default function Home({ params }) {
     return result;
   }, [days])
 
-  const getRecurrentButtonStyles = useMemo(() => {
-    return needToRunRecurrence ?
-      styles.blinkingButton :
-      {}
-  }, [needToRunRecurrence])
-
   const handleRecurrence = useCallback(async () => {
     const response = await runTransactions();
     if (response)
@@ -77,7 +72,7 @@ export default function Home({ params }) {
           getPreviousMonth={getPreviousMonth}
           getNextMonth={getNextMonth}
         />
-        <Button variant='contained' onClick={handleRecurrence} sx={getRecurrentButtonStyles}>{t('runRecurrence')}</Button>
+        <Button variant='contained' onClick={handleRecurrence} sx={styles.blinkingButton}>{t('runRecurrence')}</Button>
       </Box>
       <ExpensesCard />
     </Paper>
@@ -104,6 +99,8 @@ const styles = {
   daysContainer: { display: 'flex', flexDirection: 'row', flexWrap: 'wrap', width: '100%', justifyContent: 'flex-start' },
   graph: { height: '300px', flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' },
   blinkingButton: {
+    whiteSpace: 'nowrap',
+    fontSize: '0.8rem',
     position: 'relative',
     overflow: 'visible',
     margin: '6px',

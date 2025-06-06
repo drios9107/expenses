@@ -1,17 +1,24 @@
-import { Divider, Paper } from '@mui/material';
-import { useState } from 'react';
+import { Divider, Paper, useMediaQuery } from '@mui/material';
+import { useEffect, useState } from 'react';
 import MenuLink from '../MenuLink'
 import { CalendarMonth, Category, CurrencyExchange, Payments } from '@mui/icons-material';
 import { ToyBrick } from 'mdi-material-ui';
 import { useParams } from 'next/navigation'
 import { useTranslation } from '@/hooks/useTranslation'
 import MenuAction from '../MenuAction'
+import { is } from 'date-fns/locale';
 
 
 const Menu = () => {
     const { lng } = useParams();
     const { t } = useTranslation(lng ?? 'en', 'common');
+    const isMobile = useMediaQuery("@media (max-width:500px)");
     const [collapsed, setCollapsed] = useState(false);
+
+    useEffect(() => {
+        if (isMobile)
+            setCollapsed(true)
+    }, [isMobile])
 
     return (
         <Paper sx={collapsed ? { ...styles.menu, ...styles.collapsedMenu } : styles.menu}>
@@ -57,10 +64,10 @@ const Menu = () => {
                 <CalendarMonth sx={styles.iconMenu} />
             </MenuLink>
 
-            <MenuAction
+            {!isMobile && <MenuAction
                 onClick={() => setCollapsed(!collapsed)}
                 collapsed={collapsed}
-            />
+            />}
         </Paper>
     );
 };
@@ -72,6 +79,7 @@ const styles = {
         backgroundColor: '#fff',
         borderRadius: '16px',
         width: '200px',
+        minWidth: '35.2px',
         minHeight: '250px',
         height: 'fit-content',
         display: 'flex',
