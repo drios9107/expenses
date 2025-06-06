@@ -29,5 +29,5 @@ const Layout = ({ children }) => {
 export default Layout
 
 const styles = {
-    container: { display: 'flex', flexDirection: 'column', width: '100%', backgroundColor: 'gainsboro', minHeight: '100vh' },
+    container: { display: 'flex', flexDirection: 'column', width: '100%', backgroundColor: 'gainsboro', minHeight: '100vh', minWidth: '300px' },
 }
