@@ -6,7 +6,6 @@ import { ToyBrick } from 'mdi-material-ui';
 import { useParams } from 'next/navigation'
 import { useTranslation } from '@/hooks/useTranslation'
 import MenuAction from '../MenuAction'
-import { is } from 'date-fns/locale';
 
 
 const Menu = () => {
@@ -78,8 +77,8 @@ const styles = {
     menu: {
         backgroundColor: '#fff',
         borderRadius: '16px',
+        minWidth: '200px',
         width: '200px',
-        minWidth: '35.2px',
         minHeight: '250px',
         height: 'fit-content',
         display: 'flex',
@@ -91,6 +90,7 @@ const styles = {
         boxShadow: '0px 2px 10px rgba(0, 0, 0, 0.1)',
     },
     collapsedMenu: {
+        minWidth: '72px',
         width: '72px',
         alignItems: 'center',
     },

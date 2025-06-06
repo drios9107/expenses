@@ -25,6 +25,6 @@ const DataList = ({ title = '', rows = [], columns, ...datagridOptions }) => {
 export default DataList
 
 const styles = {
-    container: { display: 'flex', flexDirection: 'column', gap: '10px', width: '100%', maxWidth: 'calc(100vw - 75px)', p: '25px', borderRadius: '16px' },
+    container: { p: '25px', borderRadius: '16px' },
     datagrid: { border: 0, minHeight: '300px', '& .MuiDataGrid-cell': { display: 'flex', alignItems: 'center' } },
 }
