@@ -1,18 +1,17 @@
 'use client';
 // ** React Imports
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { IconButton, Tooltip, Typography } from "@mui/material";
 import ColumnHeader from "@/components/ColumnHeader";
 import ActionColumn from "@/components/ActionColumn";
 import Loader from "@/components/Loader";
-import DataList from "@/components/DataList";
 import Details from "@/components/crud/transaction/Details";
 import { Add, Check, DoNotDisturb } from "@mui/icons-material";
 import Form from "@/components/crud/transaction/Form";
 import DeleteModal from "@/components/DeleteModal";
 import moment from "moment";
 import { typeList } from "@/components/crud/transaction/Form";
-import { useCategory, useList, useSubCategory, useTransaction } from "@/hooks";
+import { useTransaction } from "@/hooks";
 import { getLineColor } from "@/utils/helpers";
 import { useFormat } from "@/hooks/useFormat";
 import { useTranslation } from "@/hooks/useTranslation";
@@ -25,7 +24,6 @@ const Transaction = ({ params }) => {
     const [itemToView, setItemToView] = useState();
 
     const { isLoading, deleteTransaction } = useTransaction();
-    const { categories, subCategories, transactions } = useList();
     const { currencyFormat } = useFormat();
     const { t } = useTranslation(params?.lng ?? 'en', 'transactions')
 
@@ -37,14 +35,6 @@ const Transaction = ({ params }) => {
     const getType = useCallback(row => {
         return typeList.find(i => i._id === row?.type)?.name
     }, [])
-
-    const getCategory = useCallback(row => {
-        return categories.find(i => i._id === row?.category)?.name
-    }, [categories])
-
-    const getSubCategory = useCallback(row => {
-        return subCategories.find(i => i._id === row?.subCategory)?.name
-    }, [subCategories])
 
     const columns = useMemo(() => [{
         flex: 2,
