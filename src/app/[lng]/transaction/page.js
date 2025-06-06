@@ -24,20 +24,10 @@ const Transaction = ({ params }) => {
     const [itemToUpdate, setItemToUpdate] = useState();
     const [itemToView, setItemToView] = useState();
 
-    const { isLoading, getTransactions, deleteTransaction } = useTransaction();
-    const { isLoading: isLoadingCategories, getCategories } = useCategory()
-    const { isLoading: isLoadingSubCategories, getSubCategories } = useSubCategory()
+    const { isLoading, deleteTransaction } = useTransaction();
     const { categories, subCategories, transactions } = useList();
     const { currencyFormat } = useFormat();
     const { t } = useTranslation(params?.lng ?? 'en', 'transactions')
-
-
-    useEffect(() => {
-        getTransactions();
-        getCategories();
-        getSubCategories();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     const onDelete = useCallback(() => {
         deleteTransaction(itemToDelete?._id);
@@ -63,9 +53,9 @@ const Transaction = ({ params }) => {
         sortable: true,
         renderHeader: () => <ColumnHeader title={t('category')} />,
         renderCell: ({ row }) => <Tooltip title={row?.description}>
-            <Typography variant='body1' color={getLineColor(row)}>{getCategory(row)}</Typography>
+            <Typography variant='body1' color={getLineColor(row)}>{row?.category?.name}</Typography>
         </Tooltip>,
-        valueGetter: (uid, row) => getCategory(row)
+        valueGetter: (uid, row) => row?.category?.name
     },
     {
         flex: 1.5,
@@ -73,8 +63,8 @@ const Transaction = ({ params }) => {
         field: "subCategory",
         sortable: true,
         renderHeader: () => <ColumnHeader title={t('subCategory')} />,
-        renderCell: ({ row }) => <Typography variant='body1' color={getLineColor(row)}>{getSubCategory(row)}</Typography>,
-        valueGetter: (uid, row) => getSubCategory(row)
+        renderCell: ({ row }) => <Typography variant='body1' color={getLineColor(row)}>{row?.subCategory?.name}</Typography>,
+        valueGetter: (uid, row) => row?.subCategory?.name
     },
     {
         flex: 1,
@@ -135,23 +125,18 @@ const Transaction = ({ params }) => {
             onUpdate={() => { setItemToUpdate(row), setOpen(true) }}
             onDelete={() => setItemToDelete(row)}
         />
-    }], [currencyFormat, getCategory, getSubCategory, getType, t])
-
-    const getTransactionsList = useMemo(() => {
-        return [...transactions]?.sort((a, b) => b?.date - a?.date)
-    }, [transactions])
+    }], [currencyFormat, getType, t])
 
     return (
         <>
             <DataListAdvancedSearch
                 title={t('transactionList')}
                 columns={columns}
-            // rows={getTransactionsList}
             />
             {open && <Form item={itemToUpdate} onClose={() => { setOpen(false); setItemToUpdate() }} />}
             {itemToView && <Details item={itemToView} onClose={() => setItemToView()} />}
             {itemToDelete && <DeleteModal onClose={() => setItemToDelete()} onClick={onDelete} />}
-            {(isLoading || isLoadingCategories || isLoadingSubCategories) && <Loader isLoading />}
+            {isLoading && <Loader isLoading />}
         </>
     );
 };

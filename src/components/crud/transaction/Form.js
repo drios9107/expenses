@@ -9,7 +9,7 @@ import MuiDatePicker from '@/components/inputs/MuiDatePicker'
 import moment from 'moment'
 import MuiSingleSelectField from '@/components/inputs/MuiSingleSelectField'
 import MuiSwitch from '@/components/inputs/MuiSwitch'
-import { useList, useRecurrentTransaction, useTransaction } from '@/hooks';
+import { useCategory, useList, useRecurrentTransaction, useSubCategory, useTransaction } from '@/hooks';
 import BoxRow from '@/components/BoxRow'
 import WeekDayList from '@/components/WeekDayList'
 import MonthDayList from '@/components/MonthDayList'
@@ -64,6 +64,8 @@ const Form = ({ item, onClose = () => { } }) => {
     const { t } = useTranslation(params?.lng ?? 'en', ['common', 'transactions'])
     const pathName = usePathname()
     const { isLoading, updateTransaction, createTransaction } = useTransaction();
+    const { isLoading: isLoadingCategory, getCategories } = useCategory();
+    const { isLoading: isLoadingSubCategory, getSubCategories } = useSubCategory();
     const { isLoading: isLoadingRecurrentTransaction, updateRecurrentTransaction, createRecurrentTransaction } = useRecurrentTransaction();
     const { categories, subCategories } = useList();
     const [newCategory, setNewCategory] = useState()
@@ -74,6 +76,12 @@ const Form = ({ item, onClose = () => { } }) => {
 
     const weekDayRef = useRef();
     const monthDayRef = useRef();
+
+    useEffect(() => {
+        getCategories();
+        getSubCategories();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     useEffect(() => {
         yup.setLocale(params?.lng === 'en' ? en : es)
@@ -98,7 +106,7 @@ const Form = ({ item, onClose = () => { } }) => {
     const frequencyWatcher = watch('frequency');
     const dateWatcher = watch('date');
 
-    const getCategories = useMemo(() => {
+    const getCategoriesList = useMemo(() => {
         let tempCategories = [...categories];
         if (newCategory)
             tempCategories = [...tempCategories, newCategory].sort((a, b) => b?.name?.localeCompare(a?.name));
@@ -108,7 +116,7 @@ const Form = ({ item, onClose = () => { } }) => {
             tempCategories.filter(i => i?.name === 'Ingresos');
     }, [categories, isExpenseWatcher, newCategory])
 
-    const getSubCategories = useMemo(() => {
+    const getSubCategoriesList = useMemo(() => {
         let tempSubCategories = [...subCategories];
         if (newSubCategory)
             tempSubCategories = [...tempSubCategories, newSubCategory].sort((a, b) => b?.name?.localeCompare(a?.name));
@@ -188,11 +196,13 @@ const Form = ({ item, onClose = () => { } }) => {
         }
     }, [createRecurrentTransaction, createTransaction, item, newCategory, newSubCategory, onClose, updateRecurrentTransaction, updateTransaction])
 
-    return <SimpleModal onClose={onClose} title={item ? t('common:edit') : t('common:create')} isLoading={isLoading || isLoadingRecurrentTransaction}>
+    const modalIsLoading = useMemo(() => isLoading || isLoadingRecurrentTransaction || isLoadingCategory || isLoadingSubCategory, [isLoading, isLoadingCategory, isLoadingRecurrentTransaction, isLoadingSubCategory])
+
+    return <SimpleModal onClose={onClose} title={item ? t('common:edit') : t('common:create')} isLoading={modalIsLoading}>
         <Box sx={styles.container}>
             <Box sx={styles.container}>
                 <CategorySelect
-                    list={getCategories}
+                    list={getCategoriesList}
                     control={control}
                     errors={errors}
                     onCreateCategory={onCreateCategory}
@@ -201,7 +211,7 @@ const Form = ({ item, onClose = () => { } }) => {
             </Box>
             <Box sx={styles.container}>
                 <SubCategorySelect
-                    list={getSubCategories}
+                    list={getSubCategoriesList}
                     control={control}
                     errors={errors}
                     onCreateCategory={onCreateSubCategory}
