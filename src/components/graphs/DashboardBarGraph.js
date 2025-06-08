@@ -1,12 +1,13 @@
 import { useCallback, useMemo, useState } from "react";
 import { Chart as ChartJS, CategoryScale, registerables } from "chart.js";
-import { Bar } from "react-chartjs-2";
 import { useDashboardContext, useTransaction } from "@/hooks";
 import { Typography } from "@mui/material";
 import Loader from "../Loader";
 import GraphTransactionsModal from "../GraphTransactionsModal";
 import { useParams } from "next/navigation";
 import { useTranslation } from "@/hooks/useTranslation";
+import ChartContainer from "../ChartContainer";
+import { Bar } from "react-chartjs-2";
 ChartJS.register(...registerables, CategoryScale);
 
 
@@ -41,7 +42,7 @@ const DashboardBarGraph = ({ currentMonth, currentYear }) => {
 
     const options = useMemo(() => ({
         type: 'bar',
-        responsive: true,
+        maintainAspectRatio: false,
         onClick,
         plugins: {
             legend: {
@@ -50,18 +51,41 @@ const DashboardBarGraph = ({ currentMonth, currentYear }) => {
             title: {
                 display: true,
                 text: t('graphBarTitle'),
+            },
+        },
+        scales: {
+            x: {
+                ticks: {
+                    autoSkip: true,
+                    maxRotation: 60,
+                    minRotation: 60,
+                    font: {
+                        size: 10
+                    },
+                },
+                grid: {
+                    display: false
+                }
+            },
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    font: {
+                        size: 10 // Smaller font for mobile
+                    }
+                }
             }
-        }
+        },
     }), [onClick, t])
 
     if (subCategoryValues.length === 0)
         return <Typography variant="subtitle2" sx={{ userSelect: 'none' }}>{t('noData')}</Typography>
 
-    return <>
+    return <ChartContainer>
         {isLoading && <Loader isLoading />}
         {monthTransactions.length > 0 && <GraphTransactionsModal title={monthTransactions?.[0]?.subCategory} transactions={monthTransactions} onClose={() => setMonthTransactions([])} isSubcategory />}
         <Bar data={data} options={options} />
-    </>
+    </ChartContainer>
 }
 
 export default DashboardBarGraph

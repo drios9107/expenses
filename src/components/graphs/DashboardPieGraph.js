@@ -7,6 +7,7 @@ import Loader from "../Loader";
 import GraphTransactionsModal from "../GraphTransactionsModal";
 import { useParams } from "next/navigation";
 import { useTranslation } from "@/hooks/useTranslation";
+import ChartContainer from "../ChartContainer";
 ChartJS.register(...registerables, CategoryScale);
 
 
@@ -36,7 +37,7 @@ const DashboardPieGraph = ({ currentMonth, currentYear }) => {
     }), [categoryValues, categoryLabels]);
 
     const options = useMemo(() => ({
-        maintainAspectRatio: true,
+        maintainAspectRatio: false,
         responsive: true,
         onClick,
         plugins: {
@@ -54,12 +55,11 @@ const DashboardPieGraph = ({ currentMonth, currentYear }) => {
     if (categoryValues.length === 0)
         return <Typography variant="subtitle2" sx={{ userSelect: 'none' }}>{t('noData')}</Typography>
 
-    return <>
+    return <ChartContainer>
         {isLoading && <Loader isLoading />}
         {monthTransactions.length > 0 && <GraphTransactionsModal title={monthTransactions?.[0]?.category} transactions={monthTransactions} onClose={() => setMonthTransactions([])} />}
-        <Doughnut data={data} options={options} height={'50vh'} />
-    </>
-
+        <Doughnut data={data} options={options} />
+    </ChartContainer>
 }
 
 export default DashboardPieGraph
