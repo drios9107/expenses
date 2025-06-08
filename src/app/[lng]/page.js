@@ -10,6 +10,7 @@ import RenderDayCards from "@/components/RenderDayCards";
 import { useDashboard, useDashboardContext, useRecurrentTransaction } from "@/hooks";
 import { useTranslation } from "@/hooks/useTranslation";
 import GetStorage from "@/utils/GetStorage";
+import { fadeInStyles } from "@/utils/helpers";
 import { Box, Button, Paper, Typography, useMediaQuery } from "@mui/material";
 import moment from "moment";
 // import { serverSideTranslations } from "next-i18next/serverSideTranslations";
@@ -77,14 +78,14 @@ export default function Home({ params }) {
       <ExpensesCard />
     </Paper>
     <Box sx={[styles.graphContainer, conditionalGraphContainerStyles]}>
-      <Paper sx={[styles.graph, conditionalGraphStyles]} elevation={isHover1 ? 3 : 1} onMouseEnter={() => setIsHover1(true)} onMouseLeave={() => setIsHover1(false)}>
+      <Paper sx={[styles.graph, conditionalGraphStyles, fadeInStyles()]} elevation={isHover1 ? 3 : 1} onMouseEnter={() => setIsHover1(true)} onMouseLeave={() => setIsHover1(false)}>
         <DashboardBarGraph currentMonth={currentMonth} currentYear={currentYear} />
       </Paper>
-      <Paper sx={[styles.graph, conditionalGraphStyles]} elevation={isHover2 ? 3 : 1} onMouseEnter={() => setIsHover2(true)} onMouseLeave={() => setIsHover2(false)}>
+      <Paper sx={[styles.graph, conditionalGraphStyles, fadeInStyles()]} elevation={isHover2 ? 3 : 1} onMouseEnter={() => setIsHover2(true)} onMouseLeave={() => setIsHover2(false)}>
         <DashboardPieGraph currentMonth={currentMonth} currentYear={currentYear} />
       </Paper>
     </Box>
-    <Box sx={[styles.daysContainer, conditionalGraphContainerStyles]}>
+    <Box sx={[styles.daysContainer, conditionalGraphContainerStyles, fadeInStyles()]}>
       <RenderDayCards days={days} />
     </Box>
   </Box>

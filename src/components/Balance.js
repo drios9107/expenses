@@ -1,6 +1,7 @@
 import { useDashboard, useDashboardContext } from '@/hooks';
 import { useFormat } from '@/hooks/useFormat';
 import { useTranslation } from '@/hooks/useTranslation';
+import { fadeInStyles } from '@/utils/helpers';
 import { Box, Tooltip, Typography } from '@mui/material'
 import { useParams, usePathname } from 'next/navigation';
 import { useEffect, useMemo } from 'react';
@@ -34,5 +35,8 @@ export default Balance
 
 const styles = {
     balance: { display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' },
-    value: { textShadow: '1px 2px 3px lightskyblue' }
+    value: {
+        textShadow: '1px 2px 3px lightskyblue',
+        ...fadeInStyles()
+    }
 }

@@ -16,4 +16,21 @@ const policyRoutes = [
 
 const combinedPublicRoutes = [...publicRoutes, ...policyRoutes].map(i => [`/en${i}`, `/es${i}`, i]).flat();
 
-export { getLineColor, publicRoutes, policyRoutes, combinedPublicRoutes }
+const fadeInStyles = (initialScale = 0.95, delay = 1) => ({
+    opacity: 0,
+    transform: `scale(${initialScale})`,
+    animation: `fadeIn ${delay}s ease-out forwards`,
+
+    '@keyframes fadeIn': {
+        from: {
+            opacity: 0,
+            transform: `scale(${initialScale})`
+        },
+        to: {
+            opacity: 1,
+            transform: 'scale(1)'
+        }
+    }
+})
+
+export { getLineColor, publicRoutes, policyRoutes, combinedPublicRoutes, fadeInStyles }
