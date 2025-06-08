@@ -66,6 +66,7 @@ const Menu = () => {
             {!isMobile && <MenuAction
                 onClick={() => setCollapsed(!collapsed)}
                 collapsed={collapsed}
+                title={t(collapsed ? 'expandMenu' : 'smallMenu2')}
             />}
         </Paper>
     );

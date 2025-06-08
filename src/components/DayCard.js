@@ -15,7 +15,7 @@ const DayCard = ({ title, day }) => {
         return sum
     }, [day])
 
-    const isExpensive = useMemo(() => total >= 5000, [total])
+    const isExpensive = useMemo(() => total >= 4000, [total])
 
     const getBackgroundColor = useMemo(() => isExpensive ? { backgroundColor: 'rgb(248 74 74)' } : {}, [isExpensive])
 

@@ -10,6 +10,12 @@ const DashboardSkeleton = () => {
             <Skeleton variant='rounded' width={'100%'} height={'300px'} animation='wave' />
             <Skeleton variant='rounded' width={'100%'} height={'300px'} animation='wave' />
         </Box>
+        <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', width: '100%', height: '100%', justifyContent: 'space-between' }}>
+            <Skeleton variant='rounded' width={'23%'} height={'40px'} animation='wave' />
+            <Skeleton variant='rounded' width={'23%'} height={'40px'} animation='wave' />
+            <Skeleton variant='rounded' width={'23%'} height={'40px'} animation='wave' />
+            <Skeleton variant='rounded' width={'23%'} height={'40px'} animation='wave' />
+        </Box>
     </Box>
 }
 
