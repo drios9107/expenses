@@ -2,6 +2,7 @@
 import { useT } from "@/app/i18n/client";
 import MuiTextfield from "@/components/inputs/MuiTextField";
 import { useTranslation } from "@/hooks/useTranslation";
+import { fadeInStyles } from "@/utils/helpers";
 import { messages } from "@/utils/messages";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { GitHub, Google } from "@mui/icons-material";
@@ -82,6 +83,6 @@ const Login = ({ params }) => {
 export default Login;
 
 const styles = {
-    topSection: { display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '300px', backgroundColor: '#fff', boxShadow: '2px 2px 10px #4D4D4D33', borderRadius: '16px', gap: '25px', p: '25px' },
+    topSection: { display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '300px', backgroundColor: '#fff', boxShadow: '2px 2px 10px #4D4D4D33', borderRadius: '16px', gap: '25px', p: '25px', ...fadeInStyles() },
     providersContainer: { display: 'flex', flexDirection: 'row', gap: '10px', justifyContent: 'center', alignItems: 'center' },
 }
