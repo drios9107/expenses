@@ -17,6 +17,6 @@ export default Body
 
 
 const styles = {
-    middleSection: { display: 'flex', flexDirection: 'row', width: '100%', minWidth: 0 },
+    middleSection: { display: 'flex', flexDirection: 'row', width: '100%', minWidth: 0, flex: 1 },
     bodySection: { flex: 7, minWidth: 0 },
 }
