@@ -27,16 +27,14 @@ const RecurrentTransaction = ({ params }) => {
     const [itemToView, setItemToView] = useState();
 
     const { isLoading, getRecurrentTransactions, deleteRecurrentTransaction, updateRecurrentTransaction } = useRecurrentTransaction();
-    const { isLoading: isLoadingCategories, getCategories } = useCategory()
-    const { isLoading: isLoadingSubCategories, getSubCategories } = useSubCategory()
-    const { categories, subCategories, recurrentTransactions } = useList();
+    const { isLoading: isLoadingCategories } = useCategory()
+    const { isLoading: isLoadingSubCategories } = useSubCategory()
+    const { recurrentTransactions } = useList();
     const { currencyFormat } = useFormat();
 
 
     useEffect(() => {
         getRecurrentTransactions();
-        getCategories();
-        getSubCategories();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -54,14 +52,6 @@ const RecurrentTransaction = ({ params }) => {
         return typeList.find(i => i._id === row?.type)?.name
     }, [])
 
-    const getCategory = useCallback(row => {
-        return categories.find(i => i._id === row?.category)?.name
-    }, [categories])
-
-    const getSubCategory = useCallback(row => {
-        return subCategories.find(i => i._id === row?.subCategory)?.name
-    }, [subCategories])
-
     const columns = useMemo(() => [{
         flex: 2,
         minWidth: 200,
@@ -69,9 +59,9 @@ const RecurrentTransaction = ({ params }) => {
         sortable: true,
         renderHeader: () => <ColumnHeader title={t('category')} />,
         renderCell: ({ row }) => <Tooltip title={row?.description}>
-            <Typography variant='body1'>{getCategory(row)}</Typography>
+            <Typography variant='body1'>{row?.category?.name}</Typography>
         </Tooltip>,
-        valueGetter: (uid, row) => getCategory(row)
+        valueGetter: (uid, row) => row?.category?.name
     },
     {
         flex: 1.5,
@@ -79,8 +69,8 @@ const RecurrentTransaction = ({ params }) => {
         field: "subCategory",
         sortable: true,
         renderHeader: () => <ColumnHeader title={t('subCategory')} />,
-        renderCell: ({ row }) => <Typography variant='body1'>{getSubCategory(row)}</Typography>,
-        valueGetter: (uid, row) => getSubCategory(row)
+        renderCell: ({ row }) => <Typography variant='body1'>{row?.subCategory?.name}</Typography>,
+        valueGetter: (uid, row) => row?.subCategory?.name
     },
     {
         flex: 1,
@@ -138,7 +128,7 @@ const RecurrentTransaction = ({ params }) => {
                 </IconButton>
             </Tooltip>
         </ActionColumn>
-    }], [currencyFormat, getCategory, getSubCategory, getType, t])
+    }], [currencyFormat, getType, t])
 
 
     const getRecurrentTransactionsList = useMemo(() => {

@@ -92,12 +92,12 @@ const Form = ({ item, onClose = () => { } }) => {
 
     useEffect(() => {
         if (item?.category)
-            setValue('category', categories.find(i => i?._id === item?.category))
+            setValue('category', categories.find(i => i?._id === item?.category?._id))
     }, [categories, item?.category, setValue])
 
     useEffect(() => {
         if (item?.subCategory)
-            setValue('subCategory', subCategories.find(i => i?._id === item?.subCategory))
+            setValue('subCategory', subCategories.find(i => i?._id === item?.subCategory?._id))
     }, [item?.subCategory, setValue, subCategories])
 
     const categoryWatcher = watch('category');
@@ -121,7 +121,7 @@ const Form = ({ item, onClose = () => { } }) => {
         if (newSubCategory)
             tempSubCategories = [...tempSubCategories, newSubCategory].sort((a, b) => b?.name?.localeCompare(a?.name));
 
-        return tempSubCategories.filter(i => i.category === categoryWatcher?._id)
+        return tempSubCategories.filter(i => i.category?._id === categoryWatcher?._id)
     }, [categoryWatcher, newSubCategory, subCategories])
 
     const getFrequencyList = useMemo(() => {
