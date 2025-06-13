@@ -7,7 +7,7 @@ const useMessages = () => {
     const { toastInfo } = useToast();
     const [isLoading, setIsLoading] = useState(false);
 
-    const sendEmail = useCallback(preparedData => {
+    const sendEmail = useCallback(async preparedData => {
         setIsLoading(true);
         axiosInstance.post(`/functions/send-email`, preparedData)
             .then(({ data }) => {

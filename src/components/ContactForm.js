@@ -9,6 +9,7 @@ import { useTranslation } from '@/hooks/useTranslation';
 import { useParams } from 'next/navigation';
 import { useCallback, useMemo } from 'react';
 import SimpleModal from './SimpleModal';
+import { useMessages } from '@/hooks';
 
 const contactSchema = yup.object().shape({
     name: yup.string().required('Name is required'),
@@ -29,6 +30,7 @@ const defaultValues = {
 const ContactForm = ({ onClose = () => { } }) => {
     const params = useParams();
     const { t } = useTranslation(params?.lng, 'contact')
+    const { sendEmail } = useMessages();
 
     const inquiryOptions = useMemo(() => [
         { _id: 'job', name: t('jobOpportunity') },
@@ -41,9 +43,11 @@ const ContactForm = ({ onClose = () => { } }) => {
 
     const onSubmit = useCallback(async (data) => {
         console.log('***Form data:', data);
+        const response = await sendEmail(data);
 
-        onClose()
-    }, [onClose]);
+        if (response)
+            onClose();
+    }, [onClose, sendEmail]);
 
     const onClear = useCallback(() => {
         reset(defaultValues)
