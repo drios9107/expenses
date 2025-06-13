@@ -65,6 +65,5 @@ const styles = {
   button: { width: 'fit-content', borderRadius: '16px' },
   footer: { backgroundColor: '#02aba8', height: '100px', width: '100%' },
 
-  link: { display: 'flex', flexDirection: 'row', gap: '5px', alignItems: 'center', color: '#fff', cursor: 'pointer', '& :hover': { opacity: 0.7 } },
-
+  link: { display: 'flex', flexDirection: 'row', gap: '5px', alignItems: 'center', color: '#fff', cursor: 'pointer', '&:hover': { opacity: 0.7 } },
 }
