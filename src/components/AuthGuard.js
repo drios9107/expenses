@@ -19,15 +19,18 @@ export default function AuthGuard({ children, params }) {
     }, [lng, searchParams]);
 
     const pathIsLoginWithoutCallback = useMemo(() => pathname === `/${lng}/login`, [lng, pathname])
+    const pathIsLandingPage = useMemo(() => pathname === `/${lng}`, [lng, pathname])
 
     useEffect(() => {
-        if (status === 'unauthenticated' && !pathIsLoginWithoutCallback)
-            router.push(`/${lng}/login?callbackUrl=${encodeURIComponent(pathname)}`);
-        else if (status === 'authenticated' && searchParams.has('callbackUrl'))
-            router.push(callbackUrl)
-        else if (status === 'authenticated' && pathIsLoginWithoutCallback)
-            router.push(`/${lng}`);
-    }, [callbackUrl, lng, pathIsLoginWithoutCallback, pathname, router, searchParams, status]);
+        if (!pathIsLandingPage) {
+            if (status === 'unauthenticated' && !pathIsLoginWithoutCallback)
+                router.push(`/${lng}/login?callbackUrl=${encodeURIComponent(pathname)}`);
+            else if (status === 'authenticated' && searchParams.has('callbackUrl'))
+                router.push(callbackUrl)
+            else if (status === 'authenticated' && pathIsLoginWithoutCallback)
+                router.push(`/${lng}`);
+        }
+    }, [callbackUrl, lng, pathIsLandingPage, pathIsLoginWithoutCallback, pathname, router, searchParams, status]);
 
     useEffect(() => {
         if (session?.user?.token)

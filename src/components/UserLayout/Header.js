@@ -24,7 +24,7 @@ const Header = () => {
         const icon = <Home sx={styles.iconMenu} />;
         const title = t('home');
 
-        return <Link href={`/${lng}`} style={styles.link}>
+        return <Link href={`/${lng}/dashboard`} style={styles.link}>
             {isMobile ?
                 <Tooltip title={title}>{icon}</Tooltip> :
                 <>{icon} {title}</>}

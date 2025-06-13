@@ -1,136 +1,68 @@
 'use client';
-import DashboardSkeleton from "@/components/DashboardSkeleton";
-import DayCard from "@/components/DayCard";
-import ExpensesCard from "@/components/ExpensesCard";
-import DashboardBarGraph from "@/components/graphs/DashboardBarGraph";
-import DashboardPieGraph from "@/components/graphs/DashboardPieGraph";
-import IncomeCard from "@/components/IncomeCard";
-import MonthNavigator from "@/components/MonthNavigator";
-import RenderDayCards from "@/components/RenderDayCards";
-import { useDashboard, useDashboardContext, useRecurrentTransaction } from "@/hooks";
 import { useTranslation } from "@/hooks/useTranslation";
-import GetStorage from "@/utils/GetStorage";
-import { fadeInStyles } from "@/utils/helpers";
-import { Box, Button, Paper, Typography, useMediaQuery } from "@mui/material";
-import moment from "moment";
-// import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { Box, Button, Typography } from "@mui/material";
+import banner from '@/assets/banner3.jpg'
+import feature1 from '@/assets/feature1.png'
+import feature2 from '@/assets/feature2.jpg'
+import feature3 from '@/assets/feature3.jpg'
+import feature4 from '@/assets/feature4.jpg'
+import LandingPageImageDescription from "@/components/LandingPageImageDescription";
+import { useRouter } from "next/navigation";
+import { useMemo } from "react";
+import Link from "next/link";
+import { useSession } from "next-auth/react";
+import { riseAnimation } from "@/utils/helpers";
+
 
 export default function Home({ params }) {
-  const { t } = useTranslation(params?.lng, 'dashboard')
-  const { isLoading, conditionalContainerStyles, currentMonth, currentYear,
-    getPreviousMonth, getNextMonth, conditionalGraphContainerStyles,
-    conditionalGraphStyles, isHover1, setIsHover1, isHover2, setIsHover2 } = useDashboard(true);
-  const { days } = useDashboardContext()
-  const { runTransactions } = useRecurrentTransaction()
-  const { getFromStorage } = GetStorage()
-  const isMobile = useMediaQuery("@media (max-width:500px)");
-  const isBelow930 = useMediaQuery("@media (max-width:930px)");
+  const { status } = useSession()
+  const { t } = useTranslation(params?.lng, 'landing')
+  const lng = useMemo(() => params?.lng ?? 'en', [params?.lng])
+  const router = useRouter();
 
-  const [selectedDate, setSelectedDate] = useState()
-  const [needToRunRecurrence, setNeedToRunRecurrence] = useState(false)
+  return <Box sx={styles.container}>
 
-  useEffect(() => {
-    const lastRecurrenceDate = getFromStorage('lastRecurrenceDate')
-    if ((lastRecurrenceDate && moment().isAfter(parseInt(lastRecurrenceDate), 'day')) || !lastRecurrenceDate)
-      setNeedToRunRecurrence(true)
-  }, [getFromStorage])
-
-  const onSelected = useCallback((day) => {
-    const title = moment(day).format('YYYY-MM-DD');
-
-    setSelectedDate({
-      title,
-      day: days[title]
-    })
-  }, [days])
-
-  const existingDates = useMemo(() => {
-    const result = Object.keys(days).map((item) => {
-      const [year, month, date] = item.split('-');
-      return moment().set({ year, month: month - 1, date }).toDate()
-    })
-
-    return result;
-  }, [days])
-
-  const handleRecurrence = useCallback(async () => {
-    const response = await runTransactions();
-    if (response)
-      setNeedToRunRecurrence(false)
-  }, [runTransactions])
-
-  if (isLoading)
-    return <DashboardSkeleton />
-
-  return <Box sx={{ display: 'flex', flexDirection: 'column', gap: isMobile ? '10px' : '25px' }}>
-    <Paper sx={[styles.container, conditionalContainerStyles]}>
-      <IncomeCard />
-      <Box sx={styles.monthNavigatorContainer}>
-        <MonthNavigator
-          currentMonth={currentMonth}
-          currentYear={currentYear}
-          getPreviousMonth={getPreviousMonth}
-          getNextMonth={getNextMonth}
-        />
-        <Button variant='contained' onClick={handleRecurrence} sx={styles.blinkingButton}>{t('runRecurrence')}</Button>
+    <Box sx={styles.banner}>
+      <Box sx={styles.menu}>
+        {status === 'authenticated' ?
+          <Link href={`/${lng}/dashboard`} style={styles.link}>
+            {t('dashboard')}
+          </Link> :
+          <Link href={`/${lng}/login`} style={styles.link}>
+            {t('login')}
+          </Link>}
       </Box>
-      <ExpensesCard />
-    </Paper>
-    <Box sx={[styles.graphContainer, conditionalGraphContainerStyles]}>
-      <Paper sx={[styles.graph, conditionalGraphStyles, fadeInStyles()]} elevation={isHover1 ? 3 : 1} onMouseEnter={() => setIsHover1(true)} onMouseLeave={() => setIsHover1(false)}>
-        <DashboardBarGraph currentMonth={currentMonth} currentYear={currentYear} />
-      </Paper>
-      <Paper sx={[styles.graph, conditionalGraphStyles, fadeInStyles()]} elevation={isHover2 ? 3 : 1} onMouseEnter={() => setIsHover2(true)} onMouseLeave={() => setIsHover2(false)}>
-        <DashboardPieGraph currentMonth={currentMonth} currentYear={currentYear} />
-      </Paper>
+      <Box sx={styles.titleContainer}>
+        <Typography variant="h4" color="#fff">{t('title')}</Typography>
+        <Typography variant="h5" color="#fff">{t('subtitle')}</Typography>
+      </Box>
+
+      <Button variant='contained' onClick={() => router.push(`/${params?.lng}/login`)} sx={styles.button}>{t('loginNow')}</Button>
     </Box>
-    <Box sx={[styles.daysContainer, conditionalGraphContainerStyles, fadeInStyles()]}>
-      <RenderDayCards days={days} />
+
+    <Box sx={styles.rowContainer}>
+      <LandingPageImageDescription src={feature1} description={t('feature1')} />
+      <LandingPageImageDescription src={feature2} useImageOnLeft={false} description={t('feature2')} />
+      <LandingPageImageDescription src={feature3} description={t('feature3')} />
+      <LandingPageImageDescription src={feature4} useImageOnLeft={false} description={t('feature4')} />
+    </Box>
+
+    <Box sx={styles.footer}>
+
     </Box>
   </Box>
 }
 
-const borderColor = 'rgb(169 212 250)';
-
 const styles = {
-  container: { flex: 1, flexWrap: 'wrap', display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' },
-  monthNavigatorContainer: { display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', height: '80px', flex: 1 },
-  graphContainer: { display: 'flex', flexDirection: 'row', flexWrap: 'wrap' },
-  daysContainer: { display: 'flex', flexDirection: 'row', flexWrap: 'wrap', width: '100%', justifyContent: 'flex-start' },
-  graph: { height: '300px', flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' },
-  blinkingButton: {
-    whiteSpace: 'nowrap',
-    fontSize: '0.8rem',
-    position: 'relative',
-    overflow: 'visible',
-    margin: '6px',
-    '&::after': {
-      content: '""',
-      position: 'absolute',
-      top: '-6px',
-      left: '-6px',
-      right: '-6px',
-      bottom: '-6px',
-      border: `2px solid ${borderColor}`,
-      borderRadius: 'inherit',
-      animation: 'blink 1.5s infinite',
-      pointerEvents: 'none',
-      zIndex: 1,
-    },
-    '@keyframes blink': {
-      '0%': {
-        opacity: 1,
-        transform: 'scale(1)',
-      },
-      '50%': {
-        opacity: 0,
-        transform: 'scale(1.05)',
-      },
-      '100%': {
-        opacity: 1,
-        transform: 'scale(1)',
-      },
-    }
-  },
+  container: { width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: '100px', },
+  menu: { px: '50px', width: '100%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '10px' },
+  banner: { display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: '100px', backgroundImage: `url(${banner.src})`, backgroundSize: 'cover', width: '100%', py: '50px' },
+  titleContainer: { userSelect: 'none', display: 'flex', flexDirection: 'column', gap: '10px', justifyContent: 'center', alignItems: 'center', padding: '50px', '& > h4, & > h5': { textShadow: '1px 1px 3px rgba(0, 0, 0, 0.7)' } },
+  rowContainer: { display: 'flex', flexDirection: 'column', gap: '25px', width: '100%', justifyContent: 'center', alignItems: 'center', animation: `${riseAnimation} 1s ease-out forwards`, },
+  button: { width: 'fit-content', borderRadius: '16px' },
+  footer: { backgroundColor: '#02aba8', height: '100px', width: '100%' },
+
+  iconMenu: { color: '#00000099', height: "20px", width: "20px" },
+  link: { display: 'flex', flexDirection: 'row', gap: '5px', alignItems: 'center', color: '#fff', cursor: 'pointer', '& :hover': { opacity: 0.7 } },
+
 }

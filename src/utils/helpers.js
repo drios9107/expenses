@@ -1,3 +1,4 @@
+import { keyframes } from "@emotion/react";
 
 const getLineColor = (row, normalColor = 'textSecondary') => {
     if (row?.isExpense)
@@ -8,13 +9,16 @@ const getLineColor = (row, normalColor = 'textSecondary') => {
 };
 
 const publicRoutes = [
+    '/',
     '/login',
 ]
 const policyRoutes = [
     '/privacy',
 ]
 
-const combinedPublicRoutes = [...publicRoutes, ...policyRoutes].map(i => [`/en${i}`, `/es${i}`, i]).flat();
+let combinedPublicRoutes = [...publicRoutes, ...policyRoutes].map(i => [`/en${i}`, `/es${i}`, i]);
+combinedPublicRoutes.push(['/en', '/es']);
+combinedPublicRoutes = combinedPublicRoutes.flat();
 
 const fadeInStyles = (initialScale = 0.95, delay = 1) => ({
     opacity: 0,
@@ -33,4 +37,15 @@ const fadeInStyles = (initialScale = 0.95, delay = 1) => ({
     }
 })
 
-export { getLineColor, publicRoutes, policyRoutes, combinedPublicRoutes, fadeInStyles }
+const riseAnimation = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+export { getLineColor, publicRoutes, policyRoutes, combinedPublicRoutes, fadeInStyles, riseAnimation }
