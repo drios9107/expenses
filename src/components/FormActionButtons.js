@@ -3,13 +3,13 @@ import { Box, Button } from '@mui/material'
 import { useParams } from 'next/navigation';
 import React from 'react'
 
-const FormActionButtons = ({ onClose, onClick }) => {
+const FormActionButtons = ({ onClose, onClick, onCloseProps = {}, onClickProps = {}, onCloseTitle, onClickTitle }) => {
     const params = useParams();
     const { t } = useTranslation(params?.lng ?? 'en', 'common')
 
     return <Box sx={styles.actionsContainer}>
-        <Button variant='outlined' onClick={onClose}>{t('common:cancel')}</Button>
-        <Button variant='contained' onClick={onClick}>{t('common:save')}</Button>
+        <Button variant='outlined' onClick={onClose} {...onCloseProps}>{onCloseTitle ?? t('common:cancel')}</Button>
+        <Button variant='contained' onClick={onClick} {...onClickProps}>{onClickTitle ?? t('common:save')}</Button>
     </Box>
 }
 

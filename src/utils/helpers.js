@@ -8,8 +8,18 @@ const getLineColor = (row, normalColor = 'textSecondary') => {
     return 'success'
 };
 
+const profileInformation = {
+    name: 'David Rios Peña',
+    email: 'drios9107@gmail.com',
+    emailLink: 'mailto:drios9107@gmail.com',
+    whatsapp: 'https://wa.me/+5354056199',
+    phone: '+53 54056199',
+    linkedin: 'https://www.linkedin.com/in/david-rios-9492001b2/',
+}
+
 const publicRoutes = [
     '/',
+    '/contact',
     '/login',
 ]
 const policyRoutes = [
@@ -48,4 +58,4 @@ const riseAnimation = keyframes`
   }
 `;
 
-export { getLineColor, publicRoutes, policyRoutes, combinedPublicRoutes, fadeInStyles, riseAnimation }
+export { getLineColor, publicRoutes, policyRoutes, combinedPublicRoutes, fadeInStyles, riseAnimation, profileInformation }
