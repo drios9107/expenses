@@ -2,17 +2,15 @@ import { Box, Typography } from '@mui/material'
 import Image from 'next/image'
 import React, { useMemo } from 'react'
 
-const LandingPageImageDescription = ({ alt = 'img', src, description, useImageOnLeft = true }) => {
+const LandingPageImageDescription = ({ alt = 'img', src, description, useImageOnLeft = true, children }) => {
     const getImage = useMemo(() => <Box sx={styles.imageContainer}>
-        <Box sx={styles.glowEffect} >
-            <Image src={src} alt={alt} width={100} height={100} style={styles.rowImage} />
-        </Box>
+        <Image src={src} alt={alt} width={100} height={100} style={styles.rowImage} />
     </Box>, [alt, src])
 
 
     return <Box sx={styles.row}>
         {useImageOnLeft && getImage}
-        <Typography sx={styles.rowItem}>{description}</Typography>
+        {children ?? <Typography sx={styles.rowItem}>{description}</Typography>}
         {!useImageOnLeft && getImage}
     </Box>
 }
