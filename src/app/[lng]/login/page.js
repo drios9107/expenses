@@ -1,13 +1,13 @@
 'use client';
-import { useT } from "@/app/i18n/client";
 import MuiTextfield from "@/components/inputs/MuiTextField";
 import { useTranslation } from "@/hooks/useTranslation";
 import { fadeInStyles } from "@/utils/helpers";
 import { messages } from "@/utils/messages";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { GitHub, Google } from "@mui/icons-material";
+import { GitHub } from "@mui/icons-material";
 import { Box, Button, Divider, IconButton, Paper, Typography } from "@mui/material";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
 import { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -70,7 +70,12 @@ const Login = ({ params }) => {
             options={{ label: t('login.password'), type: 'password', onKeyDown }}
         />
 
-        <Button variant='contained' onClick={handleSubmit(onSubmit)} disabled={!isDirty || !isValid} size="small" >{t('login.login')}</Button>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px' }}>
+            <Button variant='contained' onClick={handleSubmit(onSubmit)} disabled={!isDirty || !isValid} size="small" >{t('login.login')}</Button>
+            <Link href={`/${params?.lng}/`}>
+                <Typography color='info' variant="subtitle">{t('login.back')}</Typography>
+            </Link>
+        </Box>
         <Divider sx={{ width: '100%' }} />
 
         <Box sx={styles.providersContainer}>
