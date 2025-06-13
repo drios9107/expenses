@@ -2,6 +2,7 @@
     "login": {
         "email": "Email",
         "password": "Password",
-        "login": "Login"
+        "login": "Login",
+        "back": "Go back"
     }
 }

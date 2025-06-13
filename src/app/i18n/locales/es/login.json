@@ -2,6 +2,7 @@
     "login": {
         "email": "Correo",
         "password": "Contraseña",
-        "login": "Iniciar Sesión"
+        "login": "Iniciar Sesión",
+        "back": "Ir atrás"
     }
 }
