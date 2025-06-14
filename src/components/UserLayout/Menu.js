@@ -6,6 +6,7 @@ import { Account, ToyBrick } from 'mdi-material-ui';
 import { useParams } from 'next/navigation'
 import { useTranslation } from '@/hooks/useTranslation'
 import MenuAction from '../MenuAction'
+import { useSession } from 'next-auth/react';
 
 
 const Menu = () => {
@@ -13,6 +14,7 @@ const Menu = () => {
     const { t } = useTranslation(lng ?? 'en', 'common');
     const isMobile = useMediaQuery("@media (max-width:500px)");
     const [collapsed, setCollapsed] = useState(false);
+    const { data: session } = useSession()
 
     useEffect(() => {
         if (isMobile)
@@ -54,23 +56,23 @@ const Menu = () => {
             </MenuLink>
 
             <Divider sx={[styles.divider, collapsed ? { width: '100%' } : {}]} />
-            {/* {user.role?.name === 'admin' || true && <> */}
-            <MenuLink
-                href={`/${lng}/user`}
-                title={t('users')}
-                collapsed={collapsed}
-            >
-                <Account sx={styles.iconMenu} />
-            </MenuLink>
+            {session?.user?.role === 'Admin' && <>
+                <MenuLink
+                    href={`/${lng}/user`}
+                    title={t('users')}
+                    collapsed={collapsed}
+                >
+                    <Account sx={styles.iconMenu} />
+                </MenuLink>
 
-            <MenuLink
-                href={`/${lng}/role`}
-                title={t('roles')}
-                collapsed={collapsed}
-            >
-                <SecurityOutlined sx={styles.iconMenu} />
-            </MenuLink>
-            {/* </>} */}
+                <MenuLink
+                    href={`/${lng}/role`}
+                    title={t('roles')}
+                    collapsed={collapsed}
+                >
+                    <SecurityOutlined sx={styles.iconMenu} />
+                </MenuLink>
+            </>}
 
 
             <MenuLink
