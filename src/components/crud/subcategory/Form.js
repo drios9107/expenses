@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useList, useSubCategory } from '@/hooks';
+import { useCategory, useList, useSubCategory } from '@/hooks';
 import FormActionButtons from '@/components/FormActionButtons'
 import { useParams } from 'next/navigation'
 import { useTranslation } from '@/hooks/useTranslation'
@@ -28,12 +28,18 @@ const Form = ({ item, onClose = () => { } }) => {
     const params = useParams();
     const { t } = useTranslation(params?.lng ?? 'en', 'subCategory')
     const { categories } = useList();
+    const { getCategories } = useCategory();
     const { isLoading, createSubCategory, updateSubCategory } = useSubCategory();
     const [newCategory, setNewCategory] = useState()
 
     useEffect(() => {
         yup.setLocale(params?.lng === 'en' ? en : es)
     }, [params?.lng])
+
+    useEffect(() => {
+        getCategories();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     const { control, handleSubmit, setValue, watch, formState: { errors, isDirty, isValid }
     } = useForm({
@@ -47,7 +53,7 @@ const Form = ({ item, onClose = () => { } }) => {
             setValue('category', categories.find(i => i?._id === item?.category))
     }, [categories, item?.category, setValue])
 
-    const getCategories = useMemo(() => {
+    const getCategoriesList = useMemo(() => {
         if (newCategory)
             return [...categories, newCategory].sort((a, b) => b?.name?.localeCompare(a?.name));
 
@@ -93,7 +99,7 @@ const Form = ({ item, onClose = () => { } }) => {
             </Box>
             <Box sx={styles.container}>
                 <CategorySelect
-                    list={getCategories}
+                    list={getCategoriesList}
                     control={control}
                     errors={errors}
                     onCreateCategory={onCreateCategory}

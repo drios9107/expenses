@@ -20,19 +20,14 @@ const Subcategory = ({ params }) => {
     const [itemToUpdate, setItemToUpdate] = useState();
     const [itemToView, setItemToView] = useState();
 
-    const { isLoading: isLoadingCategories, getCategories } = useCategory();
+    const { isLoading: isLoadingCategories } = useCategory();
     const { isLoading, getSubCategories, deleteSubCategory } = useSubCategory();
-    const { categories, subCategories } = useList();
+    const { subCategories } = useList();
 
     useEffect(() => {
-        getCategories();
         getSubCategories();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    const getCategory = useCallback(row => {
-        return categories.find(i => i._id === row?.category)?.name
-    }, [categories])
 
     const onDelete = useCallback(() => {
         deleteSubCategory(itemToDelete?._id);
@@ -53,8 +48,8 @@ const Subcategory = ({ params }) => {
         field: "category",
         sortable: true,
         renderHeader: () => <ColumnHeader title={t('category')} />,
-        renderCell: ({ row }) => <Typography>{getCategory(row)}</Typography>,
-        valueGetter: (uid, row) => getCategory(row)
+        renderCell: ({ row }) => <Typography>{row?.category?.name}</Typography>,
+        valueGetter: (uid, row) => row?.category?.name
     },
     {
         minWidth: 180,
@@ -72,7 +67,7 @@ const Subcategory = ({ params }) => {
             onUpdate={() => { setItemToUpdate(row), setOpen(true) }}
             onDelete={() => setItemToDelete(row)}
         />
-    }], [getCategory, t])
+    }], [t])
 
     return (
         <>
