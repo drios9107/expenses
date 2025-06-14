@@ -21,6 +21,7 @@
     "transaction": "Transaction",
     "recurrentTransaction": "Recurrent",
     "users": "User",
+    "roles": "Role",
     "currentMonth": "Current Month",
     "balance": "Balance",
     "defaultDeleteText": "Are you sure you want to delete this?",

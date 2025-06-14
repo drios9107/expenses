@@ -21,6 +21,7 @@
     "transaction": "Transacciones",
     "users": "Usuario",
     "recurrentTransaction": "Recurrentes",
+    "roles": "Rol",
     "currentMonth": "Mes Actual",
     "balance": "Saldo",
     "defaultDeleteText": "¿Está seguro de que desea eliminar esto?",
