@@ -24,5 +24,9 @@
     "advanced": "Advanced",
     "native": "Native or bilingual",
     "spanish": "Spanish",
-    "english": "English"
+    "english": "English",
+    "wrongRecaptcha": "reCAPTCHA was not verified",
+    "send": "Send",
+    "cancel": "Cancel",
+    "clean": "Clean"
 }
