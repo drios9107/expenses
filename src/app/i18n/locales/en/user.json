@@ -1,5 +1,6 @@
 {
     "email": "Email",
+    "role": "Role",
     "password": "Password",
     "repeatPassword": "Repeat password",
     "created_at": "Created at",

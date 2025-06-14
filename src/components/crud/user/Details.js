@@ -16,6 +16,11 @@ const Details = ({ item, onClose = () => { } }) => {
         </Box>
 
         <Box sx={styles.row}>
+            <Typography variant="body1" sx={{ fontWeight: '600' }}>{t('role')}: </Typography>
+            <Typography variant="body1">{item?.role?.name}</Typography>
+        </Box>
+
+        <Box sx={styles.row}>
             <Typography variant="body1" sx={{ fontWeight: '600' }}>{t('created_at')}: </Typography>
             <Typography variant="body1">{moment(item?.created_at).format('YYYY-MM-DD')}</Typography>
         </Box>

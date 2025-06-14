@@ -62,7 +62,7 @@ export const authOptions = {
         },
         async jwt({ token, user }) {
             if (user) { //user received from backend
-                token = { accessToken: user?.token, _id: user?._id, email: user?.email };
+                token = { accessToken: user?.token, _id: user?._id, email: user?.email, role: user?.role };
             }
             return token;
         },
@@ -71,6 +71,7 @@ export const authOptions = {
                 user: {
                     _id: token?._id,
                     email: token?.email,
+                    role: token.role,
                     exp: token?.exp,
                     token: token?.accessToken,
                 }

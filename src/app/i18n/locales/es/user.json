@@ -1,5 +1,6 @@
 {
     "email": "Correo",
+    "role": "Rol",
     "password": "Contraseña",
     "repeatPassword": "Repetir Contraseña",
     "created_at": "Creado",

@@ -36,11 +36,18 @@ const Users = ({ params }) => {
 
     const columns = useMemo(() => [{
         flex: 1,
-        minWidth: 200,
+        minWidth: 250,
         field: "email",
         sortable: true,
         renderHeader: () => <ColumnHeader title={t('email')} />,
         renderCell: ({ row }) => <Typography>{row?.email}</Typography>
+    },
+    {
+        flex: 0.7,
+        field: "role",
+        sortable: true,
+        renderHeader: () => <ColumnHeader title={t('role')} />,
+        renderCell: ({ row }) => <Typography>{row?.role?.name}</Typography>
     },
     {
         flex: 1,
@@ -64,6 +71,7 @@ const Users = ({ params }) => {
         </Tooltip>,
         renderCell: ({ row }) => <ActionColumn
             onDetails={() => setItemToView(row)}
+            onUpdate={() => { setItemToUpdate(row); setOpen(true) }}
             onDelete={() => setItemToDelete(row)}
         />
     }], [t])
