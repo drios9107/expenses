@@ -1,0 +1,8 @@
+{
+    "email": "Correo",
+    "password": "Contraseña",
+    "repeatPassword": "Repetir Contraseña",
+    "created_at": "Creado",
+    "create": "Agregar",
+    "userList": "Lista de Usuarios"
+}

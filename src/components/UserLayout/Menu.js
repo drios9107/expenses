@@ -1,7 +1,7 @@
 import { Divider, Paper, useMediaQuery } from '@mui/material';
 import { useEffect, useState } from 'react';
 import MenuLink from '../MenuLink'
-import { CalendarMonth, Category, CurrencyExchange, Payments } from '@mui/icons-material';
+import { CalendarMonth, Category, CurrencyExchange, Payments, VerifiedUser } from '@mui/icons-material';
 import { ToyBrick } from 'mdi-material-ui';
 import { useParams } from 'next/navigation'
 import { useTranslation } from '@/hooks/useTranslation'
@@ -54,6 +54,15 @@ const Menu = () => {
             </MenuLink>
 
             <Divider sx={[styles.divider, collapsed ? { width: '100%' } : {}]} />
+
+            <MenuLink
+                href={`/${lng}/users`}
+                title={t('users')}
+                collapsed={collapsed}
+            >
+                <VerifiedUser sx={styles.iconMenu} />
+            </MenuLink>
+
 
             <MenuLink
                 href={`/${lng}/current-month`}

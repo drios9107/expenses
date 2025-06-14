@@ -7,6 +7,7 @@ import useRecurrentTransaction from "./useRecurrentTransaction";
 import useTransaction from "./useTransaction";
 import useDashboard from "./useDashboard";
 import useMessages from "./useMessages";
+import useUser from "./useUser";
 import { ListContext } from "@/contexts/ListContext";
 
 
@@ -14,4 +15,4 @@ const useList = () => useContext(ListContext);
 const useDashboardContext = () => useContext(DashboardContext);
 
 
-export { useCategory, useSubCategory, useRecurrentTransaction, useTransaction, useDashboard, useDashboardContext, useList, useSearch, useMessages };
+export { useCategory, useSubCategory, useRecurrentTransaction, useTransaction, useDashboard, useDashboardContext, useList, useSearch, useMessages, useUser };

@@ -19,6 +19,7 @@
     "category": "Categoría",
     "subCategory": "Subcategoría",
     "transaction": "Transacciones",
+    "users": "Usuario",
     "recurrentTransaction": "Recurrentes",
     "currentMonth": "Mes Actual",
     "balance": "Saldo",
