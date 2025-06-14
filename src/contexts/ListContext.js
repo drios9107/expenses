@@ -1,6 +1,8 @@
 import { createContext, useState } from "react";
 
 const defaultProvider = {
+  roles: [],
+  setRoles: () => [],
   users: [],
   setUsers: () => [],
   categories: [],
@@ -18,6 +20,7 @@ const defaultProvider = {
 const ListContext = createContext(defaultProvider);
 
 const ListProvider = ({ children }) => {
+  const [roles, setRoles] = useState(defaultProvider.roles);
   const [users, setUsers] = useState(defaultProvider.users);
   const [categories, setCategories] = useState(defaultProvider.categories);
   const [recurrentTransactions, setRecurrentTransactions] = useState(defaultProvider.recurrentTransactions);
@@ -26,6 +29,8 @@ const ListProvider = ({ children }) => {
   const [currentMonthTransactions, setCurrentMonthTransactions] = useState(defaultProvider.currentMonthTransactions);
 
   const values = {
+    roles,
+    setRoles,
     users,
     setUsers,
     categories,

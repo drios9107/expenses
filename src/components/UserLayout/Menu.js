@@ -1,8 +1,8 @@
 import { Divider, Paper, useMediaQuery } from '@mui/material';
 import { useEffect, useState } from 'react';
 import MenuLink from '../MenuLink'
-import { CalendarMonth, Category, CurrencyExchange, Payments, VerifiedUser } from '@mui/icons-material';
-import { ToyBrick } from 'mdi-material-ui';
+import { CalendarMonth, Category, CurrencyExchange, Payments, SecurityOutlined, VerifiedUser } from '@mui/icons-material';
+import { Account, ToyBrick } from 'mdi-material-ui';
 import { useParams } from 'next/navigation'
 import { useTranslation } from '@/hooks/useTranslation'
 import MenuAction from '../MenuAction'
@@ -54,14 +54,23 @@ const Menu = () => {
             </MenuLink>
 
             <Divider sx={[styles.divider, collapsed ? { width: '100%' } : {}]} />
-
+            {/* {user.role?.name === 'admin' || true && <> */}
             <MenuLink
-                href={`/${lng}/users`}
+                href={`/${lng}/user`}
                 title={t('users')}
                 collapsed={collapsed}
             >
-                <VerifiedUser sx={styles.iconMenu} />
+                <Account sx={styles.iconMenu} />
             </MenuLink>
+
+            <MenuLink
+                href={`/${lng}/role`}
+                title={t('roles')}
+                collapsed={collapsed}
+            >
+                <SecurityOutlined sx={styles.iconMenu} />
+            </MenuLink>
+            {/* </>} */}
 
 
             <MenuLink
