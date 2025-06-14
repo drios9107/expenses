@@ -61,7 +61,7 @@ const styles = {
   leftMenu: { display: 'flex', justifyContent: 'flex-start', alignItems: 'center', gap: '15px' },
   rightMenu: { display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '15px' },
   banner: { display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: '100px', backgroundImage: `url(${banner.src})`, backgroundSize: 'cover', width: '100%', py: '50px' },
-  titleContainer: { userSelect: 'none', display: 'flex', flexDirection: 'column', gap: '10px', justifyContent: 'center', alignItems: 'center', padding: '50px', '& > h4, & > h5': { textShadow: '1px 1px 3px rgba(0, 0, 0, 0.7)' } },
+  titleContainer: { textAlign: 'center', userSelect: 'none', display: 'flex', flexDirection: 'column', gap: '10px', justifyContent: 'center', alignItems: 'center', padding: '50px', '& > h4, & > h5': { textShadow: '1px 1px 3px rgba(0, 0, 0, 0.7)' } },
   button: { width: 'fit-content', borderRadius: '16px' },
   footer: { backgroundColor: '#02aba8', height: '100px', width: '100%' },
 

@@ -1,6 +1,6 @@
 'use client';
 import { useTranslation } from "@/hooks/useTranslation";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Typography, useMediaQuery } from "@mui/material";
 import avatar from '@/assets/avatar.jpg'
 import { profileInformation, riseAnimation } from "@/utils/helpers";
 import LandingLayout from "@/components/LandingLayout";
@@ -8,16 +8,30 @@ import Image from "next/image";
 import StarsRating from "@/components/StarsRating";
 import ContactLink from "@/components/ContactLink";
 import ContactForm from "@/components/ContactForm";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import RenderDividerOnlyForMobile from "@/components/RenderDividerOnlyForMobile";
 
 
 export default function Contact({ params }) {
     const { t } = useTranslation(params?.lng, 'contact')
     const [open, setOpen] = useState(false);
+    const isMobile = useMediaQuery("@media (max-width:500px)");
+
+    const getContainerStyles = useMemo(() => {
+        return { flexDirection: isMobile ? 'column' : 'row' }
+    }, [isMobile])
+
+    const getLeftSideStyles = useMemo(() => {
+        return { width: isMobile ? '100%' : 'unset' }
+    }, [isMobile])
+
+    const getLanguageSectionContainerStyles = useMemo(() => {
+        return { alignItems: isMobile ? 'flex-start' : 'center' };
+    }, [isMobile])
 
     return <LandingLayout >
-        <Box sx={styles.container}>
-            <Box sx={styles.leftSide}>
+        <Box sx={[styles.container, getContainerStyles]}>
+            <Box sx={[styles.leftSide, getLeftSideStyles]}>
                 <Box sx={styles.imageContainer}>
                     <Image src={avatar} alt={'avatar'} width={100} height={115} style={styles.rowImage} />
                 </Box>
@@ -32,7 +46,9 @@ export default function Contact({ params }) {
                     </Box>
                 </Box>
 
-                <Box sx={styles.sectionContainer}>
+                <RenderDividerOnlyForMobile />
+
+                <Box sx={[styles.sectionContainer, getLanguageSectionContainerStyles]}>
                     <Typography variant="button" sx={styles.rowItem}>{t('languages')}</Typography>
                     <Box>
                         <StarsRating title={t('spanish')} rating={5} />
@@ -40,6 +56,9 @@ export default function Contact({ params }) {
                     </Box>
                 </Box>
             </Box>
+
+            <RenderDividerOnlyForMobile />
+
             <Box sx={[styles.coverContainer, { justifyContent: 'space-between' }]}>
                 <Typography sx={styles.rowItem}>{t('cover1')}</Typography>
                 <Typography sx={styles.rowItem}>{t('cover2')}</Typography>
@@ -56,7 +75,7 @@ export default function Contact({ params }) {
 }
 
 const styles = {
-    container: { display: 'flex', flexDirection: 'row', gap: '30px', width: 'min(80%, 700px)', justifyContent: 'center', alignItems: 'flex-start', animation: `${riseAnimation} 1s ease-out forwards`, },
+    container: { display: 'flex', gap: '30px', width: 'min(80%, 700px)', justifyContent: 'center', alignItems: 'flex-start', animation: `${riseAnimation} 1s ease-out forwards`, },
     leftSide: { display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start', gap: '25px' },
     imageContainer: {
         display: 'flex',
