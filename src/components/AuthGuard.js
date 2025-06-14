@@ -3,7 +3,7 @@ import { useSession } from 'next-auth/react';
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useMemo } from 'react';
 import FallbackLoader from './FallbackLoader';
-import { combinedPublicRoutes, policyRoutes, publicRoutes } from '@/utils/helpers';
+import { combinedPublicRoutes, completeAdminRoutes, policyRoutes, publicRoutes } from '@/utils/helpers';
 import { setAuthToken } from '@/utils/AxiosInterceptor';
 
 export default function AuthGuard({ children, params }) {
@@ -41,6 +41,11 @@ export default function AuthGuard({ children, params }) {
 
     if (status === 'loading')
         return <FallbackLoader />
+
+    if (status === 'authenticated' && session?.user?.role !== 'Admin' && completeAdminRoutes?.includes(pathname)) {
+        router.push(`/${lng}/dashboard`)
+        return <FallbackLoader />
+    }
 
     if (status === 'authenticated' || combinedPublicRoutes?.includes(pathname))
         return <>{children}</>;

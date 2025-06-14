@@ -26,6 +26,13 @@ const policyRoutes = [
     '/privacy',
 ]
 
+const adminRoutes = [
+    '/user',
+    '/role'
+]
+
+const completeAdminRoutes = adminRoutes.map(i => [`/en${i}`, `/es${i}`, i]).flat();
+
 let combinedPublicRoutes = [...publicRoutes, ...policyRoutes].map(i => [`/en${i}`, `/es${i}`, i]);
 combinedPublicRoutes.push(['/en', '/es']);
 combinedPublicRoutes = combinedPublicRoutes.flat();
@@ -58,4 +65,4 @@ const riseAnimation = keyframes`
   }
 `;
 
-export { getLineColor, publicRoutes, policyRoutes, combinedPublicRoutes, fadeInStyles, riseAnimation, profileInformation }
+export { getLineColor, publicRoutes, policyRoutes, combinedPublicRoutes, fadeInStyles, riseAnimation, profileInformation, completeAdminRoutes }
