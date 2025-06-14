@@ -10,9 +10,7 @@ const useMessages = () => {
     const sendEmail = useCallback(async preparedData => {
         setIsLoading(true);
         axiosInstance.post(`/functions/send-email`, preparedData)
-            .then(({ data }) => {
-                toastInfo(messages.saved);
-            })
+            .then(({ data }) => toastInfo(messages.emailSent))
             .catch(() => { })
             .finally(() => setIsLoading(false))
     }, [toastInfo])

@@ -10,6 +10,7 @@ const messages = {
     'invalid-token': "Access denied",
     'welcome': "Welcome",
     'finishedRecurrence': "The recurrent transactions has been updated successfully",
+    'emailSent': "Email was sent successfully",
 }
 
 
