@@ -32,11 +32,13 @@ const Form = ({ item, onClose = () => { } }) => {
     const { control, handleSubmit, formState: { errors, isDirty, isValid }
     } = useForm({ defaultValues: item ?? defaultValues, mode: "onBlur", resolver: yupResolver(schema) });
 
-    const onSubmit = useCallback(preparedData => {
-        item ?
+    const onSubmit = useCallback(async preparedData => {
+        const response = await item ?
             updateUser(preparedData) :
             createUser(preparedData);
-        onClose();
+
+        if (response)
+            onClose();
     }, [createUser, item, onClose, updateUser])
 
     return <SimpleModal onClose={onClose} title={item ? t('edit') : t('create')} isLoading={isLoading}>

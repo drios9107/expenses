@@ -18,26 +18,28 @@ const useUser = () => {
             .finally(() => setIsLoading(false))
     }, [setUsers])
 
-    const createUser = useCallback(preparedData => {
+    const createUser = useCallback(async preparedData => {
         setIsLoading(true);
-        axiosInstance.post(`/users`, preparedData)
+        return axiosInstance.post(`/users`, preparedData)
             .then(({ data }) => {
                 setUsers([...users, data?.data])
                 toastInfo(messages.saved);
+                return true
             })
             .catch(() => { })
             .finally(() => setIsLoading(false))
     }, [users, setUsers, toastInfo])
 
-    const updateUser = useCallback(preparedData => {
+    const updateUser = useCallback(async preparedData => {
         setIsLoading(true);
-        axiosInstance.put(`/users/${preparedData?._id}`, preparedData)
+        return axiosInstance.put(`/users/${preparedData?._id}`, preparedData)
             .then(({ data }) => {
                 const index = users.findIndex(i => i._id === preparedData?._id)
                 const result = [...users];
                 result[index] = data?.data;
                 setUsers(result);
                 toastInfo(messages.saved);
+                return true
             })
             .catch(() => { })
             .finally(() => setIsLoading(false))
