@@ -11,7 +11,7 @@ const StarsRating = ({ title, rating = 5 }) => {
     const getStars = useMemo(() => {
         const stars = []
         for (let index = 0; index < 5; index++)
-            stars.push(<Star color={index < rating ? "warning" : "disabled"} sx={styles.star} />)
+            stars.push(<Star key={index} color={index < rating ? "warning" : "disabled"} sx={styles.star} />)
 
         return stars;
     }, [rating])

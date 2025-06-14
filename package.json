@@ -39,6 +39,7 @@
     "react-chartjs-2": "^5.2.0",
     "react-cookie-consent": "^9.0.0",
     "react-dom": "^18",
+    "react-google-recaptcha": "^3.1.0",
     "react-hook-form": "^7.53.0",
     "react-hot-toast": "^2.4.1",
     "react-i18next": "^15.4.1",

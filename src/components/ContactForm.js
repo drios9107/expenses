@@ -7,9 +7,11 @@ import FormActionButtons from './FormActionButtons';
 import MuiSingleSelectField from './inputs/MuiSingleSelectField';
 import { useTranslation } from '@/hooks/useTranslation';
 import { useParams } from 'next/navigation';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import SimpleModal from './SimpleModal';
 import { useMessages } from '@/hooks';
+import ReCAPTCHA from 'react-google-recaptcha';
+import { useToast } from '@/hooks/useToast';
 
 const contactSchema = yup.object().shape({
     name: yup.string().required('Name is required'),
@@ -31,6 +33,10 @@ const ContactForm = ({ onClose = () => { } }) => {
     const params = useParams();
     const { t } = useTranslation(params?.lng, 'contact')
     const { sendEmail } = useMessages();
+    const { toastError } = useToast();
+
+    const [isRecaptchaVerified, setIsRecaptchaVerified] = useState(false);
+    const recaptchaRef = useRef();
 
     const inquiryOptions = useMemo(() => [
         { _id: 'job', name: t('jobOpportunity') },
@@ -42,16 +48,22 @@ const ContactForm = ({ onClose = () => { } }) => {
     const { handleSubmit, control, reset, formState: { errors }, } = useForm({ resolver: yupResolver(contactSchema), defaultValues });
 
     const onSubmit = useCallback(async (data) => {
-        console.log('***Form data:', data);
+        const recaptchaValue = recaptchaRef.current.getValue();
+        if (!recaptchaValue) {
+            toastError(t('wrongRecaptcha'));
+            return;
+        }
+
         const response = await sendEmail(data);
 
         if (response)
             onClose();
-    }, [onClose, sendEmail]);
+    }, [onClose, sendEmail, toastError, t]);
 
-    const onClear = useCallback(() => {
+    const onCancel = useCallback(() => {
         reset(defaultValues)
-    }, [reset])
+        onClose()
+    }, [onClose, reset])
 
     return <SimpleModal onClose={onClose} title={t('contactMe')}>
         <Box sx={styles.container}>
@@ -100,7 +112,15 @@ const ContactForm = ({ onClose = () => { } }) => {
                     options={{ label: t('message'), multiline: true }}
                 />
             </Box>
-            <FormActionButtons onClose={onClear} onCloseTitle={t('clean')} onClickTitle={t('send')} onClick={handleSubmit(onSubmit)} />
+
+            <Box sx={{ mt: 2, mb: 2, width: '100%', display: 'flex', justifyContent: 'center' }}>
+                <ReCAPTCHA
+                    ref={recaptchaRef}
+                    sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                    onChange={(token) => setIsRecaptchaVerified(!!token)}
+                />
+            </Box>
+            <FormActionButtons onClose={onCancel} onCloseTitle={t('cancel')} onClickTitle={t('send')} onClick={handleSubmit(onSubmit)} onClickProps={{ disabled: !isRecaptchaVerified }} />
         </Box>
     </SimpleModal>
 };
