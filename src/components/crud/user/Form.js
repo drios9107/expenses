@@ -49,7 +49,7 @@ const Form = ({ item, onClose = () => { } }) => {
     }, [])
 
     const { control, handleSubmit, formState: { errors, isDirty, isValid }
-    } = useForm({ defaultValues: item ?? defaultValues, mode: "onBlur", resolver: yupResolver(schema) });
+    } = useForm({ defaultValues: { ...item, role: item?.role?._id } ?? defaultValues, mode: "onBlur", resolver: yupResolver(schema) });
 
     const onSubmit = useCallback(async preparedData => {
         if (item) {
