@@ -2,9 +2,9 @@ import { Typography } from '@mui/material'
 import Link from 'next/link'
 import React from 'react'
 
-const ContactLink = ({ href, title }) => {
-    return <Link href={href}>
-        <Typography sx={styles.rowItem}>{title}</Typography>
+const ContactLink = ({ href, title, icon }) => {
+    return <Link href={href} className='download-icon'>
+        {icon} <Typography sx={styles.rowItem}>{title}</Typography>
     </Link>
 }
 

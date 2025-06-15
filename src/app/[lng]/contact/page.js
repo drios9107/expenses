@@ -8,8 +8,11 @@ import Image from "next/image";
 import StarsRating from "@/components/StarsRating";
 import ContactLink from "@/components/ContactLink";
 import ContactForm from "@/components/ContactForm";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import RenderDividerOnlyForMobile from "@/components/RenderDividerOnlyForMobile";
+import { Download, Email, LinkedIn } from "@mui/icons-material";
+import DownloadButton from "@/components/DownloadButton";
+import { Whatsapp } from "mdi-material-ui";
 
 
 export default function Contact({ params }) {
@@ -29,6 +32,22 @@ export default function Contact({ params }) {
         return { alignItems: isMobile ? 'flex-start' : 'center' };
     }, [isMobile])
 
+    const handleDownload = useCallback(async () => {
+        try {
+            const response = await fetch('/api/cv')
+            const blob = await response.blob()
+            const url = window.URL.createObjectURL(blob)
+            const a = document.createElement('a')
+            a.href = url
+            a.download = 'John_Doe_CV.pdf'
+            document.body.appendChild(a)
+            a.click()
+            a.remove()
+        } catch (error) {
+            console.error('Download failed:', error)
+        }
+    }, [])
+
     return <LandingLayout >
         <Box sx={[styles.container, getContainerStyles]}>
             <Box sx={[styles.leftSide, getLeftSideStyles]}>
@@ -37,12 +56,12 @@ export default function Contact({ params }) {
                 </Box>
 
                 <Box sx={styles.sectionContainer}>
-                    <Typography variant="button" sx={styles.rowItem}>{t('info')}</Typography>
+                    <Typography variant="button" sx={styles.rowItem}>{profileInformation.name}</Typography>
                     <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                        <Typography sx={styles.rowItem}>{profileInformation.name}</Typography>
-                        <ContactLink href={profileInformation.whatsapp} title={profileInformation.phone} />
-                        <ContactLink href={profileInformation.emailLink} title={profileInformation.email} />
-                        <ContactLink href={profileInformation.linkedin} title={t('linkedinProfile')} />
+                        <ContactLink href={profileInformation.whatsapp} title={profileInformation.phone} icon={<Whatsapp />} />
+                        <ContactLink href={profileInformation.emailLink} title={profileInformation.email} icon={<Email />} />
+                        <ContactLink href={profileInformation.linkedin} title={t('linkedinProfile')} icon={<LinkedIn />} />
+                        <DownloadButton />
                     </Box>
                 </Box>
 
