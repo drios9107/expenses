@@ -24,6 +24,8 @@ const publicRoutes = [
 ]
 const policyRoutes = [
     '/privacy',
+    '/cookies',
+    '/terms'
 ]
 
 const adminRoutes = [
@@ -34,6 +36,7 @@ const adminRoutes = [
 const completeAdminRoutes = adminRoutes.map(i => [`/en${i}`, `/es${i}`, i]).flat();
 
 let combinedPublicRoutes = [...publicRoutes, ...policyRoutes].map(i => [`/en${i}`, `/es${i}`, i]);
+let policyRoutesWithLanguage = policyRoutes.map(i => [`/en${i}`, `/es${i}`, i]).flat();
 combinedPublicRoutes.push(['/en', '/es']);
 combinedPublicRoutes = combinedPublicRoutes.flat();
 
@@ -65,4 +68,4 @@ const riseAnimation = keyframes`
   }
 `;
 
-export { getLineColor, publicRoutes, policyRoutes, combinedPublicRoutes, fadeInStyles, riseAnimation, profileInformation, completeAdminRoutes }
+export { getLineColor, publicRoutes, policyRoutes, policyRoutesWithLanguage, combinedPublicRoutes, fadeInStyles, riseAnimation, profileInformation, completeAdminRoutes }

@@ -7,6 +7,10 @@
     "subtitle": "A simple, powerful way to manage household spending and save more money.",
     "dashboard": "Dashboard",
     "contactMe": "Contact me",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "cookiePolicy": "Cookie Policy",
+    "allRightsReserved": "All rights reserved.",
     "login": "Login",
     "loginNow": "Login now"
 }

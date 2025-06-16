@@ -3,7 +3,7 @@ import { useSession } from 'next-auth/react';
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useMemo } from 'react';
 import FallbackLoader from './FallbackLoader';
-import { combinedPublicRoutes, completeAdminRoutes, policyRoutes, publicRoutes } from '@/utils/helpers';
+import { combinedPublicRoutes, completeAdminRoutes, policyRoutes, policyRoutesWithLanguage, publicRoutes } from '@/utils/helpers';
 import { setAuthToken } from '@/utils/AxiosInterceptor';
 
 export default function AuthGuard({ children, params }) {
@@ -19,20 +19,21 @@ export default function AuthGuard({ children, params }) {
         return url ? decodeURIComponent(url) : `/${lng}`;
     }, [lng, searchParams]);
 
-    const pathIsLoginWithoutCallback = useMemo(() => pathname === `/${lng}/login`, [lng, pathname])
+    const pathIsStrictLogin = useMemo(() => pathname === `/${lng}/login`, [lng, pathname])
     const pathIsLandingPage = useMemo(() => pathname === `/${lng}`, [lng, pathname])
     const pathIsContactPage = useMemo(() => pathname === `/${lng}/contact`, [lng, pathname])
+    const pathIsPoliciesPage = useMemo(() => policyRoutesWithLanguage.includes(pathname), [pathname])
 
     useEffect(() => {
-        if (!pathIsLandingPage && !pathIsContactPage) {
-            if (status === 'unauthenticated' && !pathIsLoginWithoutCallback)
+        if (!pathIsLandingPage && !pathIsContactPage && !pathIsPoliciesPage) {
+            if (status === 'unauthenticated' && publicRoutes)
                 router.push(`/${lng}/login?callbackUrl=${encodeURIComponent(pathname)}`);
             else if (status === 'authenticated' && searchParams.has('callbackUrl'))
                 router.push(callbackUrl)
-            else if (status === 'authenticated' && pathIsLoginWithoutCallback)
+            else if (status === 'authenticated' && pathIsStrictLogin)
                 router.push(`/${lng}`);
         }
-    }, [callbackUrl, lng, pathIsContactPage, pathIsLandingPage, pathIsLoginWithoutCallback, pathname, router, searchParams, status]);
+    }, [callbackUrl, lng, pathIsContactPage, pathIsLandingPage, pathIsPoliciesPage, pathIsStrictLogin, pathname, router, searchParams, status]);
 
     useEffect(() => {
         if (session?.user?.token)
