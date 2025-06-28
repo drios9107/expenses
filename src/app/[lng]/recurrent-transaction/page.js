@@ -11,12 +11,12 @@ import { Add, Check, DoNotDisturb } from "@mui/icons-material";
 import Form from "@/components/crud/transaction/Form";
 import DeleteModal from "@/components/DeleteModal";
 import moment from "moment";
-import { typeList } from "@/components/crud/transaction/Form";
 import { useCategory, useSubCategory, useRecurrentTransaction, useList } from "@/hooks";
 import { PowerOn, PowerOff } from "mdi-material-ui";
 import { useFormat } from "@/hooks/useFormat";
 import { t } from "i18next";
 import { useTranslation } from "@/hooks/useTranslation";
+import { typeList } from "@/utils/helpers";
 
 const RecurrentTransaction = ({ params }) => {
     const { t } = useTranslation(params?.lng ?? 'en', 'transactions')

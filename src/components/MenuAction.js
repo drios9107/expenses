@@ -1,8 +1,7 @@
 import { IconButton, Tooltip, Typography } from "@mui/material";
-import { MenuLeftOutline, MenuRightOutline } from "mdi-material-ui";
 
 
-const MenuAction = ({ onClick, collapsed, title }) => {
+const MenuAction = ({ onClick, collapsed, title, children }) => {
     return (
         <Tooltip title={collapsed ? title : ''} placement="right" arrow>
             <IconButton
@@ -10,9 +9,9 @@ const MenuAction = ({ onClick, collapsed, title }) => {
                 sx={collapsed ? styles.collapsedItem : styles.item}
             >
                 {collapsed ?
-                    <MenuRightOutline sx={styles.iconMenu} /> :
+                    children :
                     <>
-                        <MenuLeftOutline sx={styles.iconMenu} />
+                        {children}
                         <Typography style={styles.menuText}>{!collapsed ? title : ''}</Typography>
                     </>}
             </IconButton>

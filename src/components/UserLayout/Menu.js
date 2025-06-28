@@ -1,12 +1,14 @@
 import { Divider, Paper, useMediaQuery } from '@mui/material';
 import { useEffect, useState } from 'react';
 import MenuLink from '../MenuLink'
-import { CalendarMonth, Category, CurrencyExchange, Payments, SecurityOutlined, VerifiedUser } from '@mui/icons-material';
-import { Account, ToyBrick } from 'mdi-material-ui';
+import { CalendarMonth, Category, CurrencyExchange, Payments, SecurityOutlined } from '@mui/icons-material';
+import { Account, CurrencyUsd, ToyBrick } from 'mdi-material-ui';
 import { useParams } from 'next/navigation'
 import { useTranslation } from '@/hooks/useTranslation'
-import MenuAction from '../MenuAction'
 import { useSession } from 'next-auth/react';
+import ContractMenuAction from '../ContractMenuAction';
+import MenuAction from '../MenuAction';
+import ConversionCurrency from '../ConversionCurrency';
 
 
 const Menu = () => {
@@ -14,6 +16,7 @@ const Menu = () => {
     const { t } = useTranslation(lng ?? 'en', 'common');
     const isMobile = useMediaQuery("@media (max-width:500px)");
     const [collapsed, setCollapsed] = useState(false);
+    const [openConvertCurrencyForm, setOpenConvertCurrencyForm] = useState(false);
     const { data: session } = useSession()
 
     useEffect(() => {
@@ -83,11 +86,22 @@ const Menu = () => {
                 <CalendarMonth sx={styles.iconMenu} />
             </MenuLink>
 
-            {!isMobile && <MenuAction
+            <MenuAction
+                onClick={() => setOpenConvertCurrencyForm(!openConvertCurrencyForm)}
+                collapsed={collapsed}
+                title={t('convertCurrency')}
+            >
+                <CurrencyUsd sx={styles.iconMenu} />
+            </MenuAction>
+
+            {!isMobile && <ContractMenuAction
                 onClick={() => setCollapsed(!collapsed)}
                 collapsed={collapsed}
                 title={t(collapsed ? 'expandMenu' : 'smallMenu2')}
             />}
+
+            {openConvertCurrencyForm &&
+                <ConversionCurrency onClose={() => setOpenConvertCurrencyForm(false)} />}
         </Paper>
     );
 };

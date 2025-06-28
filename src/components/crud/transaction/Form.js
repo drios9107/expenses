@@ -20,6 +20,7 @@ import { en, es } from 'yup-locales';
 import CategorySelect from '@/components/CategorySelect';
 import { ObjectId } from 'bson';
 import SubCategorySelect from '@/components/SubCategorySelect';
+import { typeList } from '@/utils/helpers';
 
 const schema = yup.object().shape({
     category: yup.object().shape({
@@ -45,12 +46,6 @@ const defaultValues = {
     isExpense: true,
     isRecurrent: false
 }
-export const typeList = [
-    { _id: 'cup', name: 'CUP' },
-    { _id: 'mlc', name: 'MLC' },
-    { _id: 'usd', name: 'USD' },
-    { _id: 'usdt', name: 'USDT' }
-]
 
 export const frequencyList = [
     { _id: 'daily' },

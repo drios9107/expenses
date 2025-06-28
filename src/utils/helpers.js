@@ -8,6 +8,13 @@ const getLineColor = (row, normalColor = 'textSecondary') => {
     return 'success'
 };
 
+const typeList = [
+    { _id: 'cup', name: 'CUP' },
+    { _id: 'mlc', name: 'MLC' },
+    { _id: 'usd', name: 'USD' },
+    { _id: 'usdt', name: 'USDT' }
+]
+
 const profileInformation = {
     name: 'David Rios Peña',
     email: 'drios9107@gmail.com',
@@ -68,4 +75,4 @@ const riseAnimation = keyframes`
   }
 `;
 
-export { getLineColor, publicRoutes, policyRoutes, policyRoutesWithLanguage, combinedPublicRoutes, fadeInStyles, riseAnimation, profileInformation, completeAdminRoutes }
+export { typeList, getLineColor, publicRoutes, policyRoutes, policyRoutesWithLanguage, combinedPublicRoutes, fadeInStyles, riseAnimation, profileInformation, completeAdminRoutes }
