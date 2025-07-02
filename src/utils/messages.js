@@ -11,6 +11,7 @@ const messages = {
     'welcome': "Welcome",
     'finishedRecurrence': "The recurrent transactions has been updated successfully",
     'emailSent': "Email was sent successfully",
+    'convertedCurrency': "Currency was converted successfully",
 }
 
 
