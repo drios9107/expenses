@@ -25,8 +25,9 @@ const schema = yup.object().shape({
 });
 
 const defaultValues = {
-    fromType: '',
-    toType: '',
+    date: moment().valueOf(),
+    fromType: 'usdt',
+    toType: 'cup',
     sourceAmount: 1,
     finalAmount: 1,
     description: '',
@@ -44,7 +45,7 @@ const ConversionCurrency = ({ onClose = () => { } }) => {
 
     const onSubmit = useCallback(async (data) => {
         const response = await convertCurrency(data);
-
+        console.log('***response', response)
         if (response)
             onClose();
     }, [convertCurrency, onClose]);

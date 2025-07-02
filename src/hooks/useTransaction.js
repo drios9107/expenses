@@ -47,7 +47,7 @@ const useTransaction = () => {
         setIsLoading(true);
         return axiosInstance.post(`/transactions`, preparedData)
             .then(({ data }) => {
-                setTransactions([...transactions, data?.data])
+                setTransactions([data?.data, ...transactions])
                 toastInfo(messages.saved);
                 if (preparedData?.newCategory)
                     setCategories(previous => [...previous, preparedData?.newCategory]);
