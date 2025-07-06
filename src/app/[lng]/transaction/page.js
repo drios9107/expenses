@@ -10,7 +10,7 @@ import { Add, Check, DoNotDisturb } from "@mui/icons-material";
 import Form from "@/components/crud/transaction/Form";
 import DeleteModal from "@/components/DeleteModal";
 import moment from "moment";
-import { useTransaction } from "@/hooks";
+import { useList, useTransaction } from "@/hooks";
 import { getLineColor, typeList } from "@/utils/helpers";
 import { useFormat } from "@/hooks/useFormat";
 import { useTranslation } from "@/hooks/useTranslation";
@@ -24,6 +24,7 @@ const Transaction = ({ params }) => {
 
     const { isLoading, deleteTransaction } = useTransaction();
     const { currencyFormat } = useFormat();
+    const { transactions, setTransactions } = useList();
     const { t } = useTranslation(params?.lng ?? 'en', 'transactions')
 
     const onDelete = useCallback(() => {
@@ -121,6 +122,8 @@ const Transaction = ({ params }) => {
             <DataListAdvancedSearch
                 title={t('transactionList')}
                 columns={columns}
+                rows={transactions}
+                setRows={setTransactions}
             />
             {open && <Form item={itemToUpdate} onClose={() => { setOpen(false); setItemToUpdate() }} />}
             {itemToView && <Details item={itemToView} onClose={() => setItemToView()} />}

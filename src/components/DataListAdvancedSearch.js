@@ -4,9 +4,8 @@ import { useSearch } from '@/hooks';
 import DatalistToolbar from './DatalistToolbar';
 import useDebounce from '@/hooks/useDebounce';
 
-const DataListAdvancedSearch = ({ model = 'transactions', title = '', columns, ...datagridOptions }) => {
+const DataListAdvancedSearch = ({ rows = [], setRows = () => { }, model = 'transactions', title = '', columns, filters, ...datagridOptions }) => {
     const [page, setPage] = useState(0);
-    const [rows, setRows] = useState([]);
     const { advancedSearch, isLoading } = useSearch();
 
     const [searchTerm, setSearchTerm] = useState();
@@ -16,8 +15,6 @@ const DataListAdvancedSearch = ({ model = 'transactions', title = '', columns, .
     const [paginationToken, setPaginationToken] = useState();
     const [sortField, setSortField] = useState('date');
     const [sortDirection, setSortDirection] = useState('desc');
-    const [isExpense, setIsExpense] = useState();
-    const [isRecurrent, setIsRecurrent] = useState();
 
     const fetchData = useCallback(async (params = {}) => {
         const payload = {
@@ -25,8 +22,7 @@ const DataListAdvancedSearch = ({ model = 'transactions', title = '', columns, .
             limit: pageSize,
             sortField,
             sortDirection,
-            isExpense,
-            isRecurrent,
+            ...filters,
             ...params
         }
         console.log('***params', payload)
@@ -40,7 +36,7 @@ const DataListAdvancedSearch = ({ model = 'transactions', title = '', columns, .
             if (response?.total)
                 setRowCount(response?.total)
         }
-    }, [advancedSearch, isExpense, isRecurrent, model, pageSize, searchTermDebounced, sortDirection, sortField])
+    }, [advancedSearch, filters, model, pageSize, searchTermDebounced, setRows, sortDirection, sortField])
 
     const onPaginationModelChange = useCallback(async (model) => {
         console.log('***new pagination model', model)
