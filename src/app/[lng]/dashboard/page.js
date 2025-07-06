@@ -73,7 +73,7 @@ export default function Home({ params }) {
           getPreviousMonth={getPreviousMonth}
           getNextMonth={getNextMonth}
         />
-        <Button variant='contained' onClick={handleRecurrence} sx={styles.blinkingButton}>{t('runRecurrence')}</Button>
+        <Button variant='contained' onClick={handleRecurrence} sx={needToRunRecurrence ? styles.blinkingButton : {}}>{t('runRecurrence')}</Button>
       </Box>
       <ExpensesCard />
     </Paper>
