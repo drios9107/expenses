@@ -44,8 +44,11 @@ const ConversionCurrency = ({ onClose = () => { } }) => {
     const amountOptions = useMemo(() => ({ label: t('amount'), type: 'number', slotProps: { htmlInput: { min: 0 } } }), [t]);
 
     const onSubmit = useCallback(async (data) => {
-        const response = await convertCurrency(data);
-        console.log('***response', response)
+        const preparedData = {
+            ...data,
+            date: moment(data.date).valueOf()
+        }
+        const response = await convertCurrency(preparedData);
         if (response)
             onClose();
     }, [convertCurrency, onClose]);
