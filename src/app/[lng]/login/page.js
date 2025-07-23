@@ -6,9 +6,10 @@ import { messages } from "@/utils/messages";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { GitHub } from "@mui/icons-material";
 import { Box, Button, Divider, IconButton, Paper, Typography } from "@mui/material";
+import { Eye, EyeOff } from "mdi-material-ui";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import * as yup from "yup";
@@ -26,6 +27,7 @@ const schema = yup.object().shape({
 
 const Login = ({ params }) => {
     const { t } = useTranslation(params?.lng, 'login')
+    const [show, setShow] = useState()
 
     useEffect(() => {
         yup.setLocale(params?.lng === 'en' ? en : es)
@@ -55,6 +57,12 @@ const Login = ({ params }) => {
             handleSubmit(onSubmit)()
     }, [handleSubmit, onSubmit])
 
+    const getEndAdornment = useMemo(() => {
+        const icon = show ? <EyeOff fontSize="small" /> : <Eye fontSize="small" />
+        return <IconButton size="small" onClick={() => setShow(!show)}>{icon}
+        </IconButton>
+    }, [show])
+
     return <Paper sx={styles.topSection}>
         <Typography variant='h6'>{t('login.login')}</Typography>
         <MuiTextfield
@@ -67,7 +75,7 @@ const Login = ({ params }) => {
             control={control}
             errors={errors}
             fieldName={'password'}
-            options={{ label: t('login.password'), type: 'password', onKeyDown }}
+            options={{ label: t('login.password'), type: show ? 'text' : 'password', onKeyDown, endAdornment: getEndAdornment }}
         />
 
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px' }}>

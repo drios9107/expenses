@@ -1,5 +1,5 @@
 import ShowFieldErrors from '@/components/ShowFieldErrors'
-import { FormControl, TextField } from '@mui/material';
+import { FormControl, InputAdornment, TextField } from '@mui/material';
 import { Controller } from 'react-hook-form'
 
 const MuiTextfield = ({ fieldName, control, errors, options = {}, rules = {} }) => {
@@ -12,9 +12,15 @@ const MuiTextfield = ({ fieldName, control, errors, options = {}, rules = {} }) 
                 <TextField
                     {...field}
                     size='small'
-                    {...options}
                     error={Boolean(error)}
                     rows={options?.multiline ? options?.rows ?? 3 : 1}
+                    slotProps={{
+                        input: {
+                            endAdornment: options?.endAdornment ? <InputAdornment position="end">{options?.endAdornment}</InputAdornment> : null,
+                            startAdornment: options?.startAdornment ? <InputAdornment position="start">{options?.startAdornment}</InputAdornment> : null
+                        },
+                    }}
+                    {...options}
                 />
             )}
         />
