@@ -78,10 +78,10 @@ const Login = ({ params }) => {
             options={{ label: t('login.password'), type: show ? 'text' : 'password', onKeyDown, endAdornment: getEndAdornment }}
         />
 
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
             <Button variant='contained' onClick={handleSubmit(onSubmit)} disabled={!isDirty || !isValid} size="small" >{t('login.login')}</Button>
             <Link href={`/${params?.lng}/`}>
-                <Typography color='info' variant="subtitle">{t('login.back')}</Typography>
+                <Typography color='textSecondary' variant="subtitle">{t('login.back')}</Typography>
             </Link>
         </Box>
         <Divider sx={{ width: '100%' }} />
