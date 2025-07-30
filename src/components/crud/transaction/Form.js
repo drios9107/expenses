@@ -54,7 +54,7 @@ const frequencyList = [
     { _id: 'daysMonth' }
 ]
 
-const Form = ({ item, onClose = () => { } }) => {
+const Form = ({ predefinedDay, item, onClose = () => { } }) => {
     const params = useParams();
     const { t } = useTranslation(params?.lng ?? 'en', ['common', 'transactions'])
     const pathName = usePathname()
@@ -89,6 +89,11 @@ const Form = ({ item, onClose = () => { } }) => {
         if (item?.category)
             setValue('category', categories.find(i => i?._id === item?.category?._id))
     }, [categories, item?.category, setValue])
+
+    useEffect(() => {
+        if (!item && predefinedDay)
+            setValue('date', moment(predefinedDay).toDate())
+    }, [item, predefinedDay, setValue])
 
     useEffect(() => {
         if (item?.subCategory)
