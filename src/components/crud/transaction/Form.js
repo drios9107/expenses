@@ -47,7 +47,7 @@ const defaultValues = {
     isRecurrent: false
 }
 
-export const frequencyList = [
+const frequencyList = [
     { _id: 'daily' },
     { _id: 'twoDays' },
     { _id: 'daysWeek' },
@@ -270,7 +270,7 @@ const Form = ({ item, onClose = () => { } }) => {
             </Box>
             <FormActionButtons onClose={onClose} onClick={handleSubmit(onSubmit)} />
         </Box>
-    </SimpleModal >
+    </SimpleModal>
 }
 
 export default Form

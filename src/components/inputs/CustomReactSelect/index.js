@@ -202,7 +202,7 @@ const CustomReactSelect = ({ onCreateOption, canCreate, fieldName, setValue = ()
       placeholder: '',
       cacheOptions: false,
       getOptionLabel: value => value?.[value.__isNew__ ? 'label' : labelOption],
-      filterOption: (option, inputValue) => inputValue ? option?.label?.toLowerCase()?.includes(inputValue) : true,
+      filterOption: (option, inputValue) => inputValue ? option?.label?.toLowerCase()?.includes(inputValue?.toLowerCase()) : true,
       getOptionValue: o => o?._id ?? o?._id ?? o?.value ?? o?.id,
       ...remainingOptions
     }
