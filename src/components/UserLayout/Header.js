@@ -49,8 +49,8 @@ const Header = () => {
             {getPrivacyLink}
         </Box>
         <Box sx={styles.rightSection}>
-            <Balance />
             <LanguageSelector />
+            <Balance />
             <Box sx={[styles.opacity, { cursor: 'pointer', display: 'flex', alignItems: 'center' }]}>
                 <Tooltip title={t('singOut')}>
                     <Logout sx={styles.iconMenu} onClick={handleSignOut} />
