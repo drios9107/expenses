@@ -8,7 +8,7 @@ import { setAuthToken } from '@/utils/AxiosInterceptor';
 
 export default function AuthGuard({ children, params }) {
     const { data: session, status } = useSession()
-    console.log('***session', session)
+
     const router = useRouter();
     const pathname = usePathname();
     const { lng } = useParams()

@@ -1,6 +1,6 @@
 'use client';
 import { useTranslation } from "@/hooks/useTranslation";
-import { Box, Button, Container, Divider, Grid, TextField, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import banner from '@/assets/banner3.jpg'
 import { useParams, useRouter } from "next/navigation";
 import { useMemo } from "react";
