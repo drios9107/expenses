@@ -58,6 +58,14 @@ const Menu = () => {
                 <CurrencyExchange sx={styles.iconMenu} />
             </MenuLink>
 
+            <MenuAction
+                onClick={() => setOpenConvertCurrencyForm(!openConvertCurrencyForm)}
+                collapsed={collapsed}
+                title={t('convertCurrency')}
+            >
+                <CurrencyUsd sx={styles.iconMenu} />
+            </MenuAction>
+
             <Divider sx={[styles.divider, collapsed ? { width: '100%' } : {}]} />
             {session?.user?.role === 'Admin' && <>
                 <MenuLink
@@ -77,22 +85,13 @@ const Menu = () => {
                 </MenuLink>
             </>}
 
-
-            <MenuLink
+            {/* <MenuLink
                 href={`/${lng}/current-month`}
                 title={t('currentMonth')}
                 collapsed={collapsed}
             >
                 <CalendarMonth sx={styles.iconMenu} />
-            </MenuLink>
-
-            <MenuAction
-                onClick={() => setOpenConvertCurrencyForm(!openConvertCurrencyForm)}
-                collapsed={collapsed}
-                title={t('convertCurrency')}
-            >
-                <CurrencyUsd sx={styles.iconMenu} />
-            </MenuAction>
+            </MenuLink> */}
 
             {!isMobile && <ContractMenuAction
                 onClick={() => setCollapsed(!collapsed)}
