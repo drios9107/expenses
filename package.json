@@ -44,6 +44,7 @@
     "react-hot-toast": "^2.4.1",
     "react-i18next": "^15.4.1",
     "react-select": "^5.10.1",
+    "react-world-flags": "^1.6.0",
     "yup": "^1.4.0",
     "yup-locales": "^1.2.28"
   },
