@@ -1,11 +1,12 @@
 import ShowFieldErrors from "@/components/ShowFieldErrors";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
-const MuiSingleSelectFieldWithoutControl = ({ fieldName, state, setState, errors = {}, options = {}, list = [], extraclasses = {} }) => {
+const MuiSingleSelectFieldWithoutControl = ({ defaultValue, fieldName, state, setState, errors = {}, options = {}, list = [], extraclasses = {} }) => {
     return (
         <FormControl fullWidth size="small" sx={extraclasses}>
             <InputLabel error={Boolean(errors?.[fieldName])}>{options?.label}</InputLabel>
             <Select
+                defaultValue={defaultValue}
                 value={state}
                 onChange={setState}
                 size="small"
@@ -15,11 +16,12 @@ const MuiSingleSelectFieldWithoutControl = ({ fieldName, state, setState, errors
                 renderValue={(v) => list?.find((item) => item._id == v)?.name}
                 {...options}
             >
-                {list?.map((item) => (
-                    <MenuItem key={item?._id} value={item?._id}>
-                        {item?.name}
-                    </MenuItem>
-                ))}
+                {options?.renderedList ??
+                    list?.map((item) => (
+                        <MenuItem key={item?._id} value={item?._id}>
+                            {item?.name}
+                        </MenuItem>
+                    ))}
             </Select>
             <ShowFieldErrors errors={errors} fieldName={fieldName} />
         </FormControl>

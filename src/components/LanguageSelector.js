@@ -3,6 +3,7 @@ import MuiSingleSelectFieldWithoutControl from './inputs/MuiSingleSelectFieldWit
 import { useParams, usePathname, useRouter } from 'next/navigation';
 import { useTranslation } from '@/hooks/useTranslation';
 import Flag from "react-world-flags";
+import { MenuItem } from '@mui/material';
 
 const LanguageSelector = ({ options = {} }) => {
     const { lng = 'en' } = useParams()
@@ -21,6 +22,14 @@ const LanguageSelector = ({ options = {} }) => {
         return languageList.find(i => i?._id === id)
     }, [languageList])
 
+    const renderedList = useMemo(() => {
+        return languageList.map((item) => (
+            <MenuItem key={item?._id} value={item?._id} sx={{ gap: '5px' }}>
+                <Flag code={getLanguage(item?._id)?.code} height={20} width={25} /> {item?.name}
+            </MenuItem>
+        ))
+    }, [getLanguage, languageList])
+
     const onChange = useCallback((v) => {
         const value = v?.target?.value;
         const splittedPath = pathname?.split('/')
@@ -37,6 +46,7 @@ const LanguageSelector = ({ options = {} }) => {
         setState={onChange}
         list={languageList}
         options={{
+            renderedList,
             sx: styles.selector,
             renderValue: v => <Flag code={getLanguage(v)?.code} height={20} width={25} />,
             ...options
