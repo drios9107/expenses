@@ -5,6 +5,8 @@
         "daysWeek": "En los días de la semana seleccionados",
         "daysMonth": "En los días del mes seleccionados"
     },
+    "es": "Español",
+    "en": "Inglés",
     "bigMenu": "Expandir",
     "expandMenu": "Expandir Menú",
     "smallMenu": "Contraer",

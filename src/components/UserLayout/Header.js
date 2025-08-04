@@ -1,6 +1,6 @@
 import { Box, Paper, Tooltip, useMediaQuery } from '@mui/material'
 import Link from 'next/link'
-import React, { useCallback, useMemo } from 'react'
+import { useCallback, useMemo } from 'react';
 import Balance from '../Balance'
 import { Home, Logout, Policy } from '@mui/icons-material'
 import { signOut } from 'next-auth/react'
@@ -8,6 +8,7 @@ import { useLayoutStyles } from '@/hooks/useLayoutStyles'
 import { setAuthToken } from '@/utils/AxiosInterceptor'
 import { useParams } from 'next/navigation'
 import { useTranslation } from '@/hooks/useTranslation'
+import LanguageSelector from '../LanguageSelector';
 
 const Header = () => {
     const { conditionalTopSectionStyles } = useLayoutStyles();
@@ -49,6 +50,7 @@ const Header = () => {
         </Box>
         <Box sx={styles.rightSection}>
             <Balance />
+            <LanguageSelector />
             <Box sx={[styles.opacity, { cursor: 'pointer', display: 'flex', alignItems: 'center' }]}>
                 <Tooltip title={t('singOut')}>
                     <Logout sx={styles.iconMenu} onClick={handleSignOut} />
