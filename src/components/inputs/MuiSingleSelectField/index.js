@@ -19,7 +19,7 @@ const MuiSingleSelectField = ({ fieldName, control, errors, options = {}, list =
               fullWidth
               error={Boolean(errors[fieldName])}
               {...options}
-              MenuProps={{ style: { maxHeight: '400px' } }}
+              MenuProps={{ style: { maxHeight: '400px' }, disableScrollLock: true }}
               renderValue={(v) => list?.find((item) => item._id == v)?.name}
             >
               {list?.map((item) => (

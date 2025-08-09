@@ -12,7 +12,7 @@ const MuiSingleSelectFieldWithoutControl = ({ defaultValue, fieldName, state, se
                 size="small"
                 fullWidth
                 error={Boolean(errors?.[fieldName])}
-                MenuProps={{ style: { maxHeight: '400px' } }}
+                MenuProps={{ style: { maxHeight: '400px' }, disableScrollLock: true }}
                 renderValue={(v) => list?.find((item) => item._id == v)?.name}
                 {...options}
             >

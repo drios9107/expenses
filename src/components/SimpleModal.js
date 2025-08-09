@@ -11,6 +11,7 @@ import Loader from './Loader';
 
 const SimpleModal = ({ title = '', onClose, maxWidth = "sm", extraclasses, children, isLoading }) => {
     return <Dialog
+        disableScrollLock
         maxWidth={maxWidth}
         fullWidth
         onClose={onClose}
