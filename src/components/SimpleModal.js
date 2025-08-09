@@ -23,7 +23,7 @@ const SimpleModal = ({ title = '', onClose, maxWidth = "sm", extraclasses, child
             </Typography>
             <CloseFormButton onClick={onClose} />
         </DialogTitle>
-        <DialogContent sx={{ py: '10px' }}>
+        <DialogContent sx={{ py: '10px', overflowY: 'hidden' }}>
             {children}
             {isLoading && <Loader isLoading />}
         </DialogContent>
