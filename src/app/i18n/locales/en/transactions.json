@@ -12,7 +12,8 @@
     "enable": "Enable",
     "disable": "Disable",
     "changeStatus": "Cambiar estado",
-    "changeStatusText": "¿Esta seguro de que desea cambiar el estado?",
+    "changeStatusText": "Are you sure you want to change the status?",
     "transactionList": "Transaction list",
-    "recurrentTransactionList": "Recurrent Transaction list"
+    "recurrentTransactionList": "Recurrent Transaction list",
+    "defaultTransactionValueList": "Default Transaction Value list"
 }

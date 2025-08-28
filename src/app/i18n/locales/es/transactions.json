@@ -12,7 +12,8 @@
     "enable": "Habilitar",
     "disable": "Deshabilitar",
     "changeStatus": "Change status",
-    "changeStatusText": "Are you sure you want to change the status?",
+    "changeStatusText": "Está seguro de que desea cambiar el estado?",
     "transactionList": "Lista de Transacciones",
-    "recurrentTransactionList": "Lista de Transacciones Recurrentes"
+    "recurrentTransactionList": "Lista de Transacciones Recurrentes",
+    "defaultTransactionValueList": "Default Transaction Value list"
 }
