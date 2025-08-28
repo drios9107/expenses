@@ -1,7 +1,7 @@
 import { Divider, Paper, useMediaQuery } from '@mui/material';
 import { useEffect, useState } from 'react';
 import MenuLink from '../MenuLink'
-import { CalendarMonth, Category, CurrencyExchange, Payments, SecurityOutlined } from '@mui/icons-material';
+import { ArrowCircleRight, CalendarMonth, Category, CurrencyExchange, Payments, SecurityOutlined } from '@mui/icons-material';
 import { Account, CurrencyUsd, ToyBrick } from 'mdi-material-ui';
 import { useParams } from 'next/navigation'
 import { useTranslation } from '@/hooks/useTranslation'
@@ -56,6 +56,14 @@ const Menu = () => {
                 collapsed={collapsed}
             >
                 <CurrencyExchange sx={styles.iconMenu} />
+            </MenuLink>
+
+            <MenuLink
+                href={`/${lng}/default-transaction-value`}
+                title={t('defaultTransactionValue')}
+                collapsed={collapsed}
+            >
+                <ArrowCircleRight sx={styles.iconMenu} />
             </MenuLink>
 
             <MenuAction
