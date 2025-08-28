@@ -30,6 +30,7 @@ const schema = yup.object().shape({
 
 const defaultValues = {
     category: '',
+    subCategory: '',
     amount: 0,
     description: '',
 }
