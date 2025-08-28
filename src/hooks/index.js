@@ -10,11 +10,24 @@ import useMessages from "./useMessages";
 import useCurrencies from "./useCurrencies";
 import useUser from "./useUser";
 import useRole from "./useRole";
+import useDefaultTransactionValue from "./useDefaultTransactionValue";
 import { ListContext } from "@/contexts/ListContext";
-
 
 const useList = () => useContext(ListContext);
 const useDashboardContext = () => useContext(DashboardContext);
 
-
-export { useCategory, useSubCategory, useRecurrentTransaction, useTransaction, useDashboard, useDashboardContext, useList, useSearch, useMessages, useCurrencies, useUser, useRole };
+export {
+    useDefaultTransactionValue,
+    useCategory,
+    useSubCategory,
+    useRecurrentTransaction,
+    useTransaction,
+    useDashboard,
+    useDashboardContext,
+    useList,
+    useSearch,
+    useMessages,
+    useCurrencies,
+    useUser,
+    useRole,
+};

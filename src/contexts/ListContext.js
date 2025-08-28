@@ -11,6 +11,8 @@ const defaultProvider = {
   setRecurrentTransactions: () => [],
   subCategories: [],
   setSubCategories: () => [],
+  defaultTransactionValues: [],
+  setDefaultTransactionValues: () => [],
   transactions: [],
   setTransactions: () => [],
   currentMonthTransactions: [],
@@ -27,6 +29,7 @@ const ListProvider = ({ children }) => {
   const [subCategories, setSubCategories] = useState(defaultProvider.subCategories);
   const [transactions, setTransactions] = useState(defaultProvider.transactions);
   const [currentMonthTransactions, setCurrentMonthTransactions] = useState(defaultProvider.currentMonthTransactions);
+  const [defaultTransactionValues, setDefaultTransactionValues] = useState(defaultProvider.defaultTransactionValues);
 
   const values = {
     roles,
@@ -41,6 +44,8 @@ const ListProvider = ({ children }) => {
     setSubCategories,
     transactions,
     setTransactions,
+    defaultTransactionValues,
+    setDefaultTransactionValues,
     currentMonthTransactions,
     setCurrentMonthTransactions,
   };
