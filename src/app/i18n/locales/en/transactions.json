@@ -15,5 +15,5 @@
     "changeStatusText": "Are you sure you want to change the status?",
     "transactionList": "Transaction list",
     "recurrentTransactionList": "Recurrent Transaction list",
-    "defaultTransactionValueList": "Default Transaction Value list"
+    "defaultTransactionValueList": "Transaction Value list"
 }

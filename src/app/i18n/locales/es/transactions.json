@@ -15,5 +15,5 @@
     "changeStatusText": "Está seguro de que desea cambiar el estado?",
     "transactionList": "Lista de Transacciones",
     "recurrentTransactionList": "Lista de Transacciones Recurrentes",
-    "defaultTransactionValueList": "Lista de Valores de Transacciones por Defecto"
+    "defaultTransactionValueList": "Valores de Transacciones por Defecto"
 }
