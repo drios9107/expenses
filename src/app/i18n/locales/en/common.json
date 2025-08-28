@@ -28,6 +28,7 @@
     "subCategory": "Subcategory",
     "transaction": "Transaction",
     "recurrentTransaction": "Recurrent",
+    "defaultTransactionValue": "Transaction Values",
     "users": "User",
     "roles": "Role",
     "currentMonth": "Current Month",

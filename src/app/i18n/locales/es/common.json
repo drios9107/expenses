@@ -29,6 +29,7 @@
     "transaction": "Transacciones",
     "users": "Usuario",
     "recurrentTransaction": "Recurrentes",
+    "defaultTransactionValue": "Valores de Transacciones",
     "roles": "Rol",
     "currentMonth": "Mes Actual",
     "balance": "Saldo",
