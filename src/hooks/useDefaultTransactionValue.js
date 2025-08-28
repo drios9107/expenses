@@ -10,6 +10,14 @@ const useDefaultTransactionValue = () => {
     const { toastInfo } = useToast();
     const [isLoading, setIsLoading] = useState(false);
 
+    const getDefaultTransactionValuesByCategoryAndSubCategory = useCallback(async (categoryId, subCategoryId) => {
+        setIsLoading(true);
+        return axiosInstance.get(`/default-transaction-values/defaults?category=${categoryId}&subcategory=${subCategoryId}`)
+            .then(({ data }) => data?.data)
+            .catch(() => { })
+            .finally(() => setIsLoading(false))
+    }, [])
+
     const getDefaultTransactionValues = useCallback(() => {
         setIsLoading(true);
         axiosInstance.get(`/default-transaction-values`)
@@ -67,7 +75,8 @@ const useDefaultTransactionValue = () => {
         getDefaultTransactionValues,
         createDefaultTransactionValues,
         updateDefaultTransactionValues,
-        deleteDefaultTransactionValues
+        deleteDefaultTransactionValues,
+        getDefaultTransactionValuesByCategoryAndSubCategory
     }
 }
 

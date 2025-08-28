@@ -9,7 +9,7 @@ import MuiDatePicker from '@/components/inputs/MuiDatePicker'
 import moment from 'moment'
 import MuiSingleSelectField from '@/components/inputs/MuiSingleSelectField'
 import MuiSwitch from '@/components/inputs/MuiSwitch'
-import { useCategory, useList, useRecurrentTransaction, useSubCategory, useTransaction } from '@/hooks';
+import { useCategory, useDefaultTransactionValue, useList, useRecurrentTransaction, useSubCategory, useTransaction } from '@/hooks';
 import BoxRow from '@/components/BoxRow'
 import WeekDayList from '@/components/WeekDayList'
 import MonthDayList from '@/components/MonthDayList'
@@ -61,6 +61,7 @@ const Form = ({ predefinedDay, item, onClose = () => { } }) => {
     const { isLoading, updateTransaction, createTransaction } = useTransaction();
     const { isLoading: isLoadingCategory, getCategories } = useCategory();
     const { isLoading: isLoadingSubCategory, getSubCategories } = useSubCategory();
+    const { getDefaultTransactionValuesByCategoryAndSubCategory } = useDefaultTransactionValue();
     const { isLoading: isLoadingRecurrentTransaction, updateRecurrentTransaction, createRecurrentTransaction } = useRecurrentTransaction();
     const { categories, subCategories } = useList();
     const [newCategory, setNewCategory] = useState()
@@ -101,10 +102,27 @@ const Form = ({ predefinedDay, item, onClose = () => { } }) => {
     }, [item?.subCategory, setValue, subCategories])
 
     const categoryWatcher = watch('category');
+    const subCategoryWatcher = watch('subCategory');
     const isRecurrentWatcher = watch('isRecurrent');
     const isExpenseWatcher = watch('isExpense');
     const frequencyWatcher = watch('frequency');
     const dateWatcher = watch('date');
+
+    const getDefaultValues = useCallback(async () => {
+        const response = await getDefaultTransactionValuesByCategoryAndSubCategory(categoryWatcher?._id, subCategoryWatcher?._id)
+        if (response) {
+            if (response?.amount >= 0)
+                setValue('amount', response?.amount)
+
+            if (response?.description && response?.description !== '')
+                setValue('description', response?.description)
+        }
+    }, [categoryWatcher?._id, getDefaultTransactionValuesByCategoryAndSubCategory, setValue, subCategoryWatcher?._id])
+
+    useEffect(() => {
+        if (categoryWatcher?._id && subCategoryWatcher?._id && !item)
+            getDefaultValues()
+    }, [categoryWatcher?._id, getDefaultValues, item, subCategoryWatcher?._id])
 
     const getCategoriesList = useMemo(() => {
         let tempCategories = [...categories];
