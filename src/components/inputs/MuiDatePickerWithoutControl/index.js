@@ -9,6 +9,7 @@ const MuiDatePickerWithoutControl = ({ fieldName, state, setState = () => { }, e
             onChange={setState}
             inputFormat='dd/MM/y'
             allowSameDateSelection
+            slotProps={{ textField: { size: 'small' } }}
             {...options}
         />
         <ShowFieldErrors errors={errors} fieldName={fieldName} />
