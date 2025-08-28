@@ -1,8 +1,14 @@
 import { Divider, Paper, useMediaQuery } from '@mui/material';
 import { useEffect, useState } from 'react';
 import MenuLink from '../MenuLink'
-import { ArrowCircleRight, CalendarMonth, Category, CurrencyExchange, Payments, SecurityOutlined } from '@mui/icons-material';
-import { Account, CurrencyUsd, ToyBrick } from 'mdi-material-ui';
+import {
+    ArrowCircleRightOutlined,
+    CategoryOutlined,
+    CurrencyExchange,
+    PaymentsOutlined,
+    SecurityOutlined,
+} from '@mui/icons-material';
+import { AccountOutline, CurrencyUsd, ToyBrickOutline } from 'mdi-material-ui';
 import { useParams } from 'next/navigation'
 import { useTranslation } from '@/hooks/useTranslation'
 import { useSession } from 'next-auth/react';
@@ -31,7 +37,7 @@ const Menu = () => {
                 title={t('category')}
                 collapsed={collapsed}
             >
-                <Category sx={styles.iconMenu} />
+                <CategoryOutlined sx={styles.iconMenu} />
             </MenuLink>
 
             <MenuLink
@@ -39,7 +45,7 @@ const Menu = () => {
                 title={t('subCategory')}
                 collapsed={collapsed}
             >
-                <ToyBrick sx={styles.iconMenu} />
+                <ToyBrickOutline sx={styles.iconMenu} />
             </MenuLink>
 
             <MenuLink
@@ -47,7 +53,7 @@ const Menu = () => {
                 title={t('transaction')}
                 collapsed={collapsed}
             >
-                <Payments sx={styles.iconMenu} />
+                <PaymentsOutlined sx={styles.iconMenu} />
             </MenuLink>
 
             <MenuLink
@@ -63,7 +69,7 @@ const Menu = () => {
                 title={t('defaultTransactionValue')}
                 collapsed={collapsed}
             >
-                <ArrowCircleRight sx={styles.iconMenu} />
+                <ArrowCircleRightOutlined sx={styles.iconMenu} />
             </MenuLink>
 
             <MenuAction
@@ -81,7 +87,7 @@ const Menu = () => {
                     title={t('users')}
                     collapsed={collapsed}
                 >
-                    <Account sx={styles.iconMenu} />
+                    <AccountOutline sx={styles.iconMenu} />
                 </MenuLink>
 
                 <MenuLink
@@ -119,8 +125,8 @@ const styles = {
     menu: {
         backgroundColor: '#fff',
         borderRadius: '16px',
-        minWidth: '200px',
-        width: '200px',
+        minWidth: '250px',
+        width: '250px',
         minHeight: '250px',
         height: 'fit-content',
         display: 'flex',
