@@ -12,7 +12,7 @@ const useDefaultTransactionValue = () => {
 
     const getDefaultTransactionValues = useCallback(() => {
         setIsLoading(true);
-        axiosInstance.get(`/defaultTransactionValues`)
+        axiosInstance.get(`/default-transaction-values`)
             .then(({ data }) => setDefaultTransactionValues(data?.data ?? []))
             .catch(() => { })
             .finally(() => setIsLoading(false))
@@ -20,7 +20,7 @@ const useDefaultTransactionValue = () => {
 
     const createDefaultTransactionValues = useCallback(async preparedData => {
         setIsLoading(true);
-        return axiosInstance.post(`/defaultTransactionValues`, preparedData)
+        return axiosInstance.post(`/default-transaction-values`, preparedData)
             .then(({ data }) => {
                 setDefaultTransactionValues([data?.data, ...defaultTransactionValues])
                 toastInfo(messages.saved);
@@ -33,7 +33,7 @@ const useDefaultTransactionValue = () => {
 
     const updateDefaultTransactionValues = useCallback(async preparedData => {
         setIsLoading(true);
-        return axiosInstance.put(`/defaultTransactionValues/${preparedData?._id}`, preparedData)
+        return axiosInstance.put(`/default-transaction-values/${preparedData?._id}`, preparedData)
             .then(({ data }) => {
                 const index = defaultTransactionValues.findIndex(i => i._id === preparedData?._id)
                 if (index > -1) {
@@ -51,7 +51,7 @@ const useDefaultTransactionValue = () => {
 
     const deleteDefaultTransactionValues = useCallback(id => {
         setIsLoading(true);
-        axiosInstance.delete(`/defaultTransactionValues/${id}`)
+        axiosInstance.delete(`/default-transaction-values/${id}`)
             .then(({ data }) => {
                 setDefaultTransactionValues(defaultTransactionValues.filter(i => i?._id !== id))
                 toastInfo(messages.deleted);
