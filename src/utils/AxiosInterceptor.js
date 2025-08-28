@@ -13,10 +13,15 @@ axiosInstance.interceptors.response.use(response => response, error => {
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx
         const { status, data } = error.response;
+        console.log('***interceptor error', { status, code: data?.code });
         if (['missing-token', 'invalid-token'].includes(data?.code)) {
             signOut();
             return;
         }
+
+        if (data?.code === 'no-error-needed')
+            return;
+
         toast.error(messages[data?.code ?? 'default']);
 
         // switch (status) {
