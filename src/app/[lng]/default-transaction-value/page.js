@@ -1,6 +1,6 @@
 'use client';
 // ** React Imports
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { IconButton, Tooltip, Typography } from "@mui/material";
 import ColumnHeader from "@/components/ColumnHeader";
 import ActionColumn from "@/components/ActionColumn";
@@ -10,10 +10,9 @@ import { Add } from "@mui/icons-material";
 import Form from "@/components/crud/defaultTransactionValue/Form";
 import DeleteModal from "@/components/DeleteModal";
 import { useList, useDefaultTransactionValue } from "@/hooks";
-import { getLineColor, typeList } from "@/utils/helpers";
 import { useFormat } from "@/hooks/useFormat";
 import { useTranslation } from "@/hooks/useTranslation";
-import DataListAdvancedSearch from "@/components/DataListAdvancedSearch";
+import DataList from "@/components/DataList";
 
 const DefaultTransactionValue = ({ params }) => {
     const [open, setOpen] = useState(false);
@@ -21,19 +20,20 @@ const DefaultTransactionValue = ({ params }) => {
     const [itemToUpdate, setItemToUpdate] = useState();
     const [itemToView, setItemToView] = useState();
 
-    const { isLoading, deleteDefaultTransactionValue } = useDefaultTransactionValue();
+    const { isLoading, deleteDefaultTransactionValue, getDefaultTransactionValues } = useDefaultTransactionValue();
     const { currencyFormat } = useFormat();
-    const { defaultTransactionValue, setDefaultTransactionValues } = useList();
+    const { defaultTransactionValues, setDefaultTransactionValues } = useList();
     const { t } = useTranslation(params?.lng ?? 'en', 'transactions')
+
+    useEffect(() => {
+        getDefaultTransactionValues();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     const onDelete = useCallback(() => {
         deleteDefaultTransactionValue(itemToDelete?._id);
         setItemToDelete();
     }, [deleteDefaultTransactionValue, itemToDelete?._id])
-
-    const getType = useCallback(row => {
-        return typeList.find(i => i._id === row?.type)?.name
-    }, [])
 
     const columns = useMemo(() => [{
         flex: 2,
@@ -42,7 +42,7 @@ const DefaultTransactionValue = ({ params }) => {
         sortable: true,
         renderHeader: () => <ColumnHeader title={t('category')} />,
         renderCell: ({ row }) => <Tooltip title={row?.description}>
-            <Typography variant='body1' color={getLineColor(row)}>{row?.category?.name}</Typography>
+            <Typography variant='body1'>{row?.category?.name}</Typography>
         </Tooltip>,
         valueGetter: (uid, row) => row?.category?.name
     },
@@ -52,7 +52,7 @@ const DefaultTransactionValue = ({ params }) => {
         field: "subCategory",
         sortable: true,
         renderHeader: () => <ColumnHeader title={t('subCategory')} />,
-        renderCell: ({ row }) => <Typography variant='body1' color={getLineColor(row)}>{row?.subCategory?.name}</Typography>,
+        renderCell: ({ row }) => <Typography variant='body1'>{row?.subCategory?.name}</Typography>,
         valueGetter: (uid, row) => row?.subCategory?.name
     },
     {
@@ -61,7 +61,7 @@ const DefaultTransactionValue = ({ params }) => {
         field: "amount",
         sortable: true,
         renderHeader: () => <ColumnHeader title={t('amount')} />,
-        renderCell: ({ row }) => <Typography variant='body1' color={getLineColor(row)}>{currencyFormat(row?.amount)}</Typography>,
+        renderCell: ({ row }) => <Typography variant='body1'>{currencyFormat(row?.amount)}</Typography>,
         valueGetter: (uid, row) => row?.amount
     },
     {
@@ -75,7 +75,7 @@ const DefaultTransactionValue = ({ params }) => {
                 <Add sx={styles.icon} />
             </IconButton>
         </Tooltip>,
-        renderCell: ({ row }) => <ActionColumn iconColor={getLineColor(row)}
+        renderCell: ({ row }) => <ActionColumn
             onDetails={() => setItemToView(row)}
             onUpdate={() => { setItemToUpdate(row), setOpen(true) }}
             onDelete={() => setItemToDelete(row)}
@@ -84,10 +84,10 @@ const DefaultTransactionValue = ({ params }) => {
 
     return (
         <>
-            <DataListAdvancedSearch
+            <DataList
                 title={t('defaultTransactionValueList')}
                 columns={columns}
-                rows={defaultTransactionValue}
+                rows={defaultTransactionValues}
                 setRows={setDefaultTransactionValues}
             />
             {open && <Form item={itemToUpdate} onClose={() => { setOpen(false); setItemToUpdate() }} />}
