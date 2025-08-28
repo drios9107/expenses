@@ -1,12 +1,14 @@
 import { Box, Divider, Drawer, Typography } from '@mui/material'
 import React from 'react'
 
-const DetailsDrawer = ({ children, onClose = () => { } }) => {
+const DetailsDrawer = ({ children, onClose = () => { }, extraclasses = {} }) => {
     return <Drawer open onClose={onClose}>
         <Box sx={styles.container}>
             <Typography sx={{ alignSelf: 'center' }}>Details</Typography>
             <Divider />
-            {children}
+            <Box sx={extraclasses}>
+                {children}
+            </Box>
         </Box>
     </Drawer>
 }
