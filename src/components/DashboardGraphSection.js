@@ -22,41 +22,6 @@ const DashboardGraphSection = ({ conditionalGraphStyles, isHover1, setIsHover1,
 
 export default DashboardGraphSection
 
-const borderColor = 'rgb(169 212 250)';
 const styles = {
-    monthNavigatorContainer: { display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', height: '80px', flex: 1 },
-    blinkingButton: {
-        whiteSpace: 'nowrap',
-        fontSize: '0.8rem',
-        position: 'relative',
-        overflow: 'visible',
-        margin: '6px',
-        '&::after': {
-            content: '""',
-            position: 'absolute',
-            top: '-6px',
-            left: '-6px',
-            right: '-6px',
-            bottom: '-6px',
-            border: `2px solid ${borderColor}`,
-            borderRadius: 'inherit',
-            animation: 'blink 1.5s infinite',
-            pointerEvents: 'none',
-            zIndex: 1,
-        },
-        '@keyframes blink': {
-            '0%': {
-                opacity: 1,
-                transform: 'scale(1)',
-            },
-            '50%': {
-                opacity: 0,
-                transform: 'scale(1.05)',
-            },
-            '100%': {
-                opacity: 1,
-                transform: 'scale(1)',
-            },
-        }
-    },
+    graph: { height: '300px', flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' },
 }

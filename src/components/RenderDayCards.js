@@ -26,11 +26,3 @@ const RenderDayCards = ({ days = {} }) => {
 }
 
 export default RenderDayCards
-
-
-const styles = {
-    cardContainer: {
-        display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly', flex: 1, minWidth: '200px',
-        gap: '10px', p: '16px', borderRadius: '16px', cursor: 'pointer', '&:hover': { opacity: 0.7 }
-    },
-}

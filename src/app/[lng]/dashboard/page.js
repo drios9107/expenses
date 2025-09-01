@@ -38,11 +38,3 @@ export default function Home({ params }) {
     <RenderDayCards days={days} />
   </Box>
 }
-
-
-const styles = {
-  container: { flex: 1, flexWrap: 'wrap', display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' },
-  graphContainer: { display: 'flex', flexDirection: 'row', flexWrap: 'wrap' },
-  daysContainer: { display: 'flex', flexDirection: 'row', flexWrap: 'wrap', width: '100%', justifyContent: 'flex-start' },
-  graph: { height: '300px', flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' },
-}
