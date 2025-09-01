@@ -21,7 +21,7 @@ export default IncomeExpensesContainer
 
 const styles = {
     container: {
-        width: '250px', height: '80px', px: '16px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between',
+        minWidth: '250px', height: '80px', px: '16px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between',
         alignItems: 'center', gap: '15px', backgroundColor: '#D6E6FF', '&:hover': { opacity: 0.7 },
         ...fadeInStyles()
     },
