@@ -1,8 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import DayCard from './DayCard';
-import { Paper, Typography } from '@mui/material';
+import { Grid2, Paper, Typography } from '@mui/material';
 import { useTranslation } from '@/hooks/useTranslation';
 import { useParams } from 'next/navigation';
+import { fadeInStyles } from '@/utils/helpers';
 
 const RenderDayCards = ({ days = {} }) => {
     const params = useParams()
@@ -19,7 +20,9 @@ const RenderDayCards = ({ days = {} }) => {
         setAllCards(cards);
     }, [days])
 
-    return allCards
+    return <Grid2 container spacing={2} sx={fadeInStyles()}>
+        {allCards}
+    </Grid2>
 }
 
 export default RenderDayCards

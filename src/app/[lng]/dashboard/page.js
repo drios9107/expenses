@@ -37,9 +37,7 @@ export default function Home({ params }) {
       </Grid2>
     </Grid2>
 
-    <Grid2 container spacing={2} sx={fadeInStyles()}>
-      <RenderDayCards days={days} />
-    </Grid2>
+    <RenderDayCards days={days} />
   </Box>
 }
 
