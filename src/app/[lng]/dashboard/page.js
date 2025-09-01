@@ -2,13 +2,10 @@
 import DashboardGraphSection from "@/components/DashboardGraphSection";
 import DashboardSkeleton from "@/components/DashboardSkeleton";
 import DashboardTopSection from "@/components/DashboardTopSection";
-import DashboardBarGraph from "@/components/graphs/DashboardBarGraph";
-import DashboardPieGraph from "@/components/graphs/DashboardPieGraph";
 import RenderDayCards from "@/components/RenderDayCards";
 import { useDashboard, useDashboardContext } from "@/hooks";
 import { useTranslation } from "@/hooks/useTranslation";
-import { fadeInStyles } from "@/utils/helpers";
-import { Box, Grid2, Paper, useMediaQuery } from "@mui/material";
+import { Box, useMediaQuery } from "@mui/material";
 
 export default function Home({ params }) {
   const { t } = useTranslation(params?.lng, 'dashboard')
@@ -38,7 +35,6 @@ export default function Home({ params }) {
       currentMonth={currentMonth}
       currentYear={currentYear}
     />
-
     <RenderDayCards days={days} />
   </Box>
 }
