@@ -77,14 +77,20 @@ export default function Home({ params }) {
       </Box>
       <ExpensesCard />
     </Paper>
-    <Box sx={[styles.graphContainer, conditionalGraphContainerStyles]}>
-      <Paper sx={[styles.graph, conditionalGraphStyles, fadeInStyles()]} elevation={isHover1 ? 3 : 1} onMouseEnter={() => setIsHover1(true)} onMouseLeave={() => setIsHover1(false)}>
-        <DashboardBarGraph currentMonth={currentMonth} currentYear={currentYear} />
-      </Paper>
-      <Paper sx={[styles.graph, conditionalGraphStyles, fadeInStyles()]} elevation={isHover2 ? 3 : 1} onMouseEnter={() => setIsHover2(true)} onMouseLeave={() => setIsHover2(false)}>
-        <DashboardPieGraph currentMonth={currentMonth} currentYear={currentYear} />
-      </Paper>
-    </Box>
+    <Grid2 container spacing={2} sx={fadeInStyles()}>
+      <Grid2 item size={{ xs: 12, md: 6 }}>
+        <Paper sx={[styles.graph, conditionalGraphStyles, fadeInStyles()]} elevation={isHover1 ? 3 : 1} onMouseEnter={() => setIsHover1(true)} onMouseLeave={() => setIsHover1(false)}>
+          <DashboardBarGraph currentMonth={currentMonth} currentYear={currentYear} />
+        </Paper>
+      </Grid2>
+      <Grid2 item size={{ xs: 12, md: 6 }}>
+        <Paper sx={[styles.graph, conditionalGraphStyles, fadeInStyles()]} elevation={isHover2 ? 3 : 1} onMouseEnter={() => setIsHover2(true)} onMouseLeave={() => setIsHover2(false)}>
+          <DashboardPieGraph currentMonth={currentMonth} currentYear={currentYear} />
+        </Paper>
+      </Grid2>
+    </Grid2>
+    {/* <Box sx={[styles.graphContainer, conditionalGraphContainerStyles]}> */}
+    {/* </Box> */}
     <Grid2 container spacing={2} sx={fadeInStyles()}>
       <RenderDayCards days={days} />
     </Grid2>
