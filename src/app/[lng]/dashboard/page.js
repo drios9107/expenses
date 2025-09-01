@@ -11,7 +11,7 @@ import { useDashboard, useDashboardContext, useRecurrentTransaction } from "@/ho
 import { useTranslation } from "@/hooks/useTranslation";
 import GetStorage from "@/utils/GetStorage";
 import { fadeInStyles } from "@/utils/helpers";
-import { Box, Button, Paper, Typography, useMediaQuery } from "@mui/material";
+import { Box, Button, Grid2, Paper, Typography, useMediaQuery } from "@mui/material";
 import moment from "moment";
 // import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -85,9 +85,11 @@ export default function Home({ params }) {
         <DashboardPieGraph currentMonth={currentMonth} currentYear={currentYear} />
       </Paper>
     </Box>
-    <Box sx={[styles.daysContainer, conditionalGraphContainerStyles, fadeInStyles()]}>
+    <Grid2 container spacing={2} sx={fadeInStyles()}>
       <RenderDayCards days={days} />
-    </Box>
+    </Grid2>
+    {/* <Box sx={[styles.daysContainer, conditionalGraphContainerStyles, fadeInStyles()]}>
+    </Box> */}
   </Box>
 }
 

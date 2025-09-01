@@ -1,4 +1,4 @@
-import { Paper, Typography } from '@mui/material'
+import { Grid2, Paper, Typography } from '@mui/material'
 import moment from 'moment'
 import { useMemo, useState } from 'react';
 import DayCardModal from './DayCardModal'
@@ -20,10 +20,12 @@ const DayCard = ({ title, day }) => {
     const getBackgroundColor = useMemo(() => isExpensive ? { backgroundColor: 'rgb(248 74 74)' } : {}, [isExpensive])
 
     return <>
-        <Paper sx={[styles.container, getBackgroundColor]} elevation={isHover ? 3 : 1} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)} onClick={() => setIsOpen(true)}>
-            <Typography sx={{ width: '100%', textAlign: 'left', userSelect: 'none' }}>{moment(title).format('dddd DD')}</Typography>
-            <Typography sx={{ width: '100%', textAlign: 'right', fontWeight: 600 }}>{currencyFormat(total)} $</Typography>
-        </Paper>
+        <Grid2 size={{ lg: 3, md: 6, xs: 12 }} >
+            <Paper sx={[styles.container, getBackgroundColor]} elevation={isHover ? 3 : 1} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)} onClick={() => setIsOpen(true)}>
+                <Typography sx={{ width: '100%', textAlign: 'left', userSelect: 'none' }}>{moment(title).format('dddd DD')}</Typography>
+                <Typography sx={{ width: '100%', textAlign: 'right', fontWeight: 600 }}>{currencyFormat(total)} $</Typography>
+            </Paper>
+        </Grid2>
         {isOpen && <DayCardModal onClose={() => setIsOpen()} title={title} day={day} />}
     </>
 }

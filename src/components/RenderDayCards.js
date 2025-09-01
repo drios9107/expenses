@@ -16,11 +16,6 @@ const RenderDayCards = ({ days = {} }) => {
             return <DayCard key={index} title={item} day={days[item]} />
         })
 
-        // cards.push(<Paper sx={[styles.cardContainer]} elevation={3}>
-        //     <Typography sx={{ width: '100%', textAlign: 'left', userSelect: 'none' }}>{t('monthlyTotal')}</Typography>
-        //     <Typography sx={{ width: '100%', textAlign: 'right', fontWeight: 600 }}>{sum} $</Typography>
-        // </Paper>)
-
         setAllCards(cards);
     }, [days])
 
