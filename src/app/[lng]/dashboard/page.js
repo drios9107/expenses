@@ -1,4 +1,5 @@
 'use client';
+import DashboardGraphSection from "@/components/DashboardGraphSection";
 import DashboardSkeleton from "@/components/DashboardSkeleton";
 import DashboardTopSection from "@/components/DashboardTopSection";
 import DashboardBarGraph from "@/components/graphs/DashboardBarGraph";
@@ -22,20 +23,21 @@ export default function Home({ params }) {
     return <DashboardSkeleton />
 
   return <Box sx={{ display: 'flex', flexDirection: 'column', gap: isMobile ? '10px' : '25px' }}>
-    <DashboardTopSection currentMonth={currentMonth} currentYear={currentYear} getPreviousMonth={getPreviousMonth} getNextMonth={getNextMonth} t={t} conditionalContainerStyles={conditionalContainerStyles} />
-
-    <Grid2 container spacing={2} sx={fadeInStyles()}>
-      <Grid2 item size={{ xs: 12, md: 6 }}>
-        <Paper sx={[styles.graph, conditionalGraphStyles]} elevation={isHover1 ? 3 : 1} onMouseEnter={() => setIsHover1(true)} onMouseLeave={() => setIsHover1(false)}>
-          <DashboardBarGraph currentMonth={currentMonth} currentYear={currentYear} />
-        </Paper>
-      </Grid2>
-      <Grid2 item size={{ xs: 12, md: 6 }}>
-        <Paper sx={[styles.graph, conditionalGraphStyles]} elevation={isHover2 ? 3 : 1} onMouseEnter={() => setIsHover2(true)} onMouseLeave={() => setIsHover2(false)}>
-          <DashboardPieGraph currentMonth={currentMonth} currentYear={currentYear} />
-        </Paper>
-      </Grid2>
-    </Grid2>
+    <DashboardTopSection
+      currentMonth={currentMonth}
+      currentYear={currentYear}
+      getPreviousMonth={getPreviousMonth}
+      getNextMonth={getNextMonth} t={t} conditionalContainerStyles={conditionalContainerStyles}
+    />
+    <DashboardGraphSection
+      conditionalGraphStyles={conditionalGraphStyles}
+      isHover1={isHover1}
+      setIsHover1={setIsHover1}
+      isHover2={isHover2}
+      setIsHover2={setIsHover2}
+      currentMonth={currentMonth}
+      currentYear={currentYear}
+    />
 
     <RenderDayCards days={days} />
   </Box>
