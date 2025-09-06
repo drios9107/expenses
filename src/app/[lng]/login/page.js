@@ -1,5 +1,6 @@
 'use client';
 import MuiTextfield from "@/components/inputs/MuiTextField";
+import Loader from "@/components/Loader";
 import { useTranslation } from "@/hooks/useTranslation";
 import { fadeInStyles } from "@/utils/helpers";
 import { messages } from "@/utils/messages";
@@ -28,6 +29,7 @@ const schema = yup.object().shape({
 const Login = ({ params }) => {
     const { t } = useTranslation(params?.lng, 'login')
     const [show, setShow] = useState()
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
         yup.setLocale(params?.lng === 'en' ? en : es)
@@ -37,11 +39,13 @@ const Login = ({ params }) => {
     } = useForm({ defaultValues, mode: "onChange", resolver: yupResolver(schema) });
 
     const onSubmit = useCallback(data => {
+        setIsLoading(true)
         signIn('credentials', { ...data, redirect: false })
             .then(res => {
                 if (res?.error)
                     toast.error(messages[res.error])
             })
+            .finally(() => setIsLoading(false))
     }, [])
 
     const callProvider = useCallback(provider => {
@@ -90,6 +94,7 @@ const Login = ({ params }) => {
             <IconButton onClick={() => callProvider('github')}><GitHub color="info" /> </IconButton>
             {/* <IconButton onClick={() => callProvider('google')}><Google color="info" /> </IconButton> */}
         </Box>
+        {isLoading && <Loader loading />}
     </Paper>
 }
 
