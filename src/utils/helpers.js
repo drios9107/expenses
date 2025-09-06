@@ -8,6 +8,14 @@ const getLineColor = (row, normalColor = 'textSecondary') => {
     return 'success'
 };
 
+const getPersonFullName = row => {
+    let fullname = row?.name;
+    if (row?.lastname)
+        fullname += ` ${row?.lastname}`
+
+    return fullname?.trim();
+}
+
 const typeList = [
     { _id: 'cup', name: 'CUP' },
     { _id: 'mlc', name: 'MLC' },
@@ -75,4 +83,4 @@ const riseAnimation = keyframes`
   }
 `;
 
-export { typeList, getLineColor, publicRoutes, policyRoutes, policyRoutesWithLanguage, combinedPublicRoutes, fadeInStyles, riseAnimation, profileInformation, completeAdminRoutes }
+export { getPersonFullName, typeList, getLineColor, publicRoutes, policyRoutes, policyRoutesWithLanguage, combinedPublicRoutes, fadeInStyles, riseAnimation, profileInformation, completeAdminRoutes }

@@ -1,0 +1,10 @@
+{
+    "person": "Person",
+    "date": "Date",
+    "amount": "Amount",
+    "type": "Type",
+    "isMyDebt": "Is My Debt?",
+    "created_at": "Created At",
+    "create": "Add",
+    "debtList": "Debt List"
+}

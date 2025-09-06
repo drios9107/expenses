@@ -1,0 +1,10 @@
+{
+    "person": "Persona",
+    "date": "Fecha",
+    "amount": "Cantidad",
+    "type": "Tipo",
+    "isMyDebt": "¿Deuda mía?",
+    "created_at": "Creado",
+    "create": "Agregar",
+    "debtList": "Lista de Deudas"
+}
