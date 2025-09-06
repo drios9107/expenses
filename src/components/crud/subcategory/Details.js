@@ -1,22 +1,16 @@
+import DetailsDataRow from '@/components/DetailsDataRow'
 import DetailsDrawer from '@/components/DetailsDrawer'
-import { Box, Typography } from '@mui/material'
+import { useTranslation } from '@/hooks/useTranslation'
+import { useParams } from 'next/navigation'
 
 const Details = ({ item, onClose = () => { } }) => {
-    return <DetailsDrawer onClose={onClose}>
-        <Box sx={styles.row}>
-            <Typography variant="body1" sx={{ fontWeight: '600' }}>Name: </Typography>
-            <Typography variant="body1">{item.name}</Typography>
-        </Box>
+    const params = useParams();
+    const { t } = useTranslation(params?.lng ?? 'en', 'subCategory');
 
-        <Box sx={styles.row}>
-            <Typography variant="body1" sx={{ fontWeight: '600' }}>Category: </Typography>
-            <Typography variant="body1">{item.category?.name}</Typography>
-        </Box>
+    return <DetailsDrawer onClose={onClose} extraclasses={{ display: 'flex', gap: '10px', flexDirection: 'column' }}>
+        <DetailsDataRow value={item?.name} title={t('name')} />
+        <DetailsDataRow value={item?.category?.name} title={t('category')} />
     </DetailsDrawer>
 }
 
 export default Details
-
-const styles = {
-    row: { display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', gap: '5px' },
-}
