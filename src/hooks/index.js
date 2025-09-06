@@ -10,6 +10,7 @@ import useMessages from "./useMessages";
 import useCurrencies from "./useCurrencies";
 import useUser from "./useUser";
 import useRole from "./useRole";
+import usePerson from "./usePerson";
 import useDefaultTransactionValue from "./useDefaultTransactionValue";
 import { ListContext } from "@/contexts/ListContext";
 
@@ -30,4 +31,5 @@ export {
     useCurrencies,
     useUser,
     useRole,
+    usePerson,
 };

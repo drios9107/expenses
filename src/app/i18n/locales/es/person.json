@@ -1,0 +1,7 @@
+{
+    "name": "Nombre",
+    "lastname": "Apellido",
+    "created_at": "Creado",
+    "create": "Agregar",
+    "roleList": "Lista de Personas"
+}

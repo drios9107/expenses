@@ -1,6 +1,8 @@
 import { createContext, useState } from "react";
 
 const defaultProvider = {
+  persons: [],
+  setPersons: () => [],
   roles: [],
   setRoles: () => [],
   users: [],
@@ -22,6 +24,7 @@ const defaultProvider = {
 const ListContext = createContext(defaultProvider);
 
 const ListProvider = ({ children }) => {
+  const [persons, setPersons] = useState(defaultProvider.persons);
   const [roles, setRoles] = useState(defaultProvider.roles);
   const [users, setUsers] = useState(defaultProvider.users);
   const [categories, setCategories] = useState(defaultProvider.categories);
@@ -32,6 +35,8 @@ const ListProvider = ({ children }) => {
   const [defaultTransactionValues, setDefaultTransactionValues] = useState(defaultProvider.defaultTransactionValues);
 
   const values = {
+    persons,
+    setPersons,
     roles,
     setRoles,
     users,
