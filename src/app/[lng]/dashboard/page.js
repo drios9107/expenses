@@ -1,4 +1,5 @@
 'use client';
+import DashboardDebtSection from "@/components/DashboardDebtSection";
 import DashboardGraphSection from "@/components/DashboardGraphSection";
 import DashboardSkeleton from "@/components/DashboardSkeleton";
 import DashboardTopSection from "@/components/DashboardTopSection";
@@ -11,7 +12,7 @@ export default function Home({ params }) {
   const { t } = useTranslation(params?.lng, 'dashboard')
   const { isLoading, conditionalContainerStyles, currentMonth, currentYear,
     getPreviousMonth, getNextMonth, conditionalGraphContainerStyles,
-    conditionalGraphStyles, isHover1, setIsHover1, isHover2, setIsHover2 } = useDashboard(true);
+    conditionalGraphStyles, isHover1, setIsHover1, isHover2, setIsHover2, personsDebt } = useDashboard(true);
   const { days } = useDashboardContext()
   const isMobile = useMediaQuery("@media (max-width:500px)");
 
@@ -26,6 +27,7 @@ export default function Home({ params }) {
       getPreviousMonth={getPreviousMonth}
       getNextMonth={getNextMonth} t={t} conditionalContainerStyles={conditionalContainerStyles}
     />
+    <DashboardDebtSection conditionalContainerStyles={conditionalContainerStyles} personsDebt={personsDebt} />
     <DashboardGraphSection
       conditionalGraphStyles={conditionalGraphStyles}
       isHover1={isHover1}
