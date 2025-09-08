@@ -35,7 +35,7 @@ const defaultValues = {
     amount: 0,
     type: 'cup',
     description: '',
-    isMyDebt: true,
+    isMyDebt: false,
 }
 
 const Form = ({ item, onClose = () => { } }) => {
@@ -59,7 +59,7 @@ const Form = ({ item, onClose = () => { } }) => {
     } = useForm({ defaultValues: item ?? defaultValues, mode: "onBlur", resolver: yupResolver(schema) });
 
     const getPersonList = useMemo(() => {
-        return persons.map(i => getPersonFullName(i))
+        return persons.map(i => ({ _id: i?._id, name: getPersonFullName(i) }))
     }, [persons])
 
     const onSubmit = useCallback(async data => {
