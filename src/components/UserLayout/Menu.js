@@ -8,7 +8,7 @@ import {
     PaymentsOutlined,
     SecurityOutlined,
 } from '@mui/icons-material';
-import { AccountOutline, CurrencyUsd, ToyBrickOutline } from 'mdi-material-ui';
+import { AccountOutline, BankOff, CurrencyUsd, Human, ToyBrickOutline } from 'mdi-material-ui';
 import { useParams } from 'next/navigation'
 import { useTranslation } from '@/hooks/useTranslation'
 import { useSession } from 'next-auth/react';
@@ -65,11 +65,11 @@ const Menu = () => {
             </MenuLink>
 
             <MenuLink
-                href={`/${lng}/default-transaction-value`}
-                title={t('defaultTransactionValue')}
+                href={`/${lng}/debt`}
+                title={t('debts')}
                 collapsed={collapsed}
             >
-                <ArrowCircleRightOutlined sx={styles.iconMenu} />
+                <BankOff sx={styles.iconMenu} />
             </MenuLink>
 
             <MenuAction
@@ -81,6 +81,16 @@ const Menu = () => {
             </MenuAction>
 
             <Divider sx={[styles.divider, collapsed ? { width: '100%' } : {}]} />
+
+            <MenuLink
+                href={`/${lng}/person`}
+                title={t('persons')}
+
+                collapsed={collapsed}
+            >
+                <Human sx={styles.iconMenu} />
+            </MenuLink>
+
             {session?.user?.role === 'Admin' && <>
                 <MenuLink
                     href={`/${lng}/user`}
@@ -98,6 +108,14 @@ const Menu = () => {
                     <SecurityOutlined sx={styles.iconMenu} />
                 </MenuLink>
             </>}
+
+            <MenuLink
+                href={`/${lng}/default-transaction-value`}
+                title={t('defaultTransactionValue')}
+                collapsed={collapsed}
+            >
+                <ArrowCircleRightOutlined sx={styles.iconMenu} />
+            </MenuLink>
 
             {/* <MenuLink
                 href={`/${lng}/current-month`}
