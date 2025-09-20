@@ -1,11 +1,13 @@
 import { Grid2, Paper, Typography } from '@mui/material';
 import { fadeInStyles } from '@/utils/helpers';
 import IncomeExpensesContainer from './IncomeExpensesContainer';
+import InDevelopmentBadge from './InDevelopmentBadge';
 
 
 const DashboardDebtSection = ({ t, conditionalContainerStyles, personsDebt = [] }) => {
 
-    return <Paper sx={[conditionalContainerStyles, { display: 'flex', flexDirection: 'column', gap: '25px' }]} >
+    return <Paper sx={[conditionalContainerStyles, { display: 'flex', flexDirection: 'column', gap: '25px', position: 'relative' }]} >
+        <InDevelopmentBadge />
         <Grid2 container spacing={2} sx={fadeInStyles()}>
             {personsDebt.map(i => <Grid2
                 key={i?.person?._id}
