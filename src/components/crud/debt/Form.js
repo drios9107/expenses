@@ -27,6 +27,7 @@ const schema = yup.object().shape({
     amount: yup.number().min(0).required(),
     type: yup.string().required(),
     description: yup.string().nullable(),
+    transferId: yup.string().required(),
 });
 
 const defaultValues = {
@@ -36,6 +37,7 @@ const defaultValues = {
     type: 'cup',
     description: '',
     isMyDebt: false,
+    transferId: 'cash'
 }
 
 const Form = ({ item, onClose = () => { } }) => {
@@ -106,6 +108,12 @@ const Form = ({ item, onClose = () => { } }) => {
                 />
             </BoxRow>
             <BoxRow>
+                <MuiTextfield
+                    control={control}
+                    errors={errors}
+                    fieldName={'transferId'}
+                    options={{ label: t('transferId') }}
+                />
                 <MuiSwitch
                     control={control}
                     fieldName={'isMyDebt'}

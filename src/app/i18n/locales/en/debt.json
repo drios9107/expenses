@@ -4,6 +4,8 @@
     "amount": "Amount",
     "type": "Type",
     "isMyDebt": "Is My Debt?",
+    "description": "Description",
+    "transferId": "Transfer Id",
     "created_at": "Created At",
     "create": "Add",
     "edit": "Edit",

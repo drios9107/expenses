@@ -15,6 +15,7 @@ const Details = ({ item, onClose = () => { } }) => {
         <DetailsDataRow value={item.amount} title={t('amount')} />
         <DetailsDataRow value={item.type} title={t('type')} />
         <DetailsDataRow value={item.isMyDebt} title={t('isMyDebt')} />
+        {item?.transferId && <DetailsDataRow value={item.transferId} title={t('transferId')} />}
     </DetailsDrawer>
 }
 

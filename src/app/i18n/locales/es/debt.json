@@ -4,6 +4,8 @@
     "amount": "Cantidad",
     "type": "Tipo",
     "isMyDebt": "¿Deuda mía?",
+    "description": "Descripción",
+    "transferId": "Id Transferencia",
     "created_at": "Creado",
     "create": "Agregar",
     "edit": "Editar",
