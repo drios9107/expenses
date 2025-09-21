@@ -11,7 +11,7 @@ import { useParams } from 'next/navigation'
 import { useTranslation } from '@/hooks/useTranslation'
 import { en, es } from 'yup-locales'
 import CategorySelect from '@/components/CategorySelect'
-import { ObjectId } from 'bson';
+import { ObjectId } from 'bson-objectid';
 
 
 const schema = yup.object().shape({
@@ -61,7 +61,7 @@ const Form = ({ item, onClose = () => { } }) => {
     }, [categories, newCategory])
 
     const onCreateCategory = useCallback(v => {
-        const newItem = { name: v, _id: new ObjectId().toString() };
+        const newItem = { name: v, _id: new ObjectId().toHexString() };
         setNewCategory(newItem);
     }, [])
 
