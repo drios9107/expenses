@@ -6,12 +6,12 @@ import InDevelopmentBadge from './InDevelopmentBadge';
 
 const DashboardDebtSection = ({ t, conditionalContainerStyles, personsDebt = [] }) => {
 
-    return <Paper sx={[conditionalContainerStyles, { display: 'flex', flexDirection: 'column', gap: '25px', position: 'relative' }]} >
+    return <Paper sx={[conditionalContainerStyles, styles.paper]} >
         <InDevelopmentBadge />
-        <Grid2 container spacing={2} sx={fadeInStyles()}>
+        <Grid2 container spacing={2} sx={[fadeInStyles(), { minWidth: '250px' }]}>
             {personsDebt.map(i => <Grid2
                 key={i?.person?._id}
-                size={{ xs: 12, sm: 6, md: 4 }}
+                size={{ xs: 12, sm: 12, md: 6, lg: 4 }}
                 sx={{ justifySelf: 'flex-end' }}
             >
                 <IncomeExpensesContainer
@@ -28,6 +28,7 @@ export default DashboardDebtSection
 
 const borderColor = 'rgb(169 212 250)';
 const styles = {
+    paper: { display: 'flex', flexDirection: 'column', gap: '25px', position: 'relative' },
     monthNavigatorContainer: { display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', height: '80px', flex: 1 },
     blinkingButton: {
         whiteSpace: 'nowrap',

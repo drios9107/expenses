@@ -8,6 +8,8 @@ import { useCallback, useEffect, useState } from 'react';
 import moment from 'moment';
 import GetStorage from '@/utils/GetStorage';
 
+const commonSize = { xs: 12, sm: 12, md: 6, lg: 4 }
+
 const DashboardTopSection = ({ t, conditionalContainerStyles, currentMonth, currentYear, getPreviousMonth, getNextMonth }) => {
     const { runTransactions } = useRecurrentTransaction()
     const { getFromStorage } = GetStorage()
@@ -29,7 +31,7 @@ const DashboardTopSection = ({ t, conditionalContainerStyles, currentMonth, curr
     return <Paper sx={conditionalContainerStyles}>
         <Grid2 container spacing={2} sx={fadeInStyles()}>
             <Grid2
-                size={{ xs: 12, sm: 6, md: 4 }}
+                size={commonSize}
                 sx={{
                     minWidth: { sm: '250px' },
                     justifySelf: 'flex-start'
@@ -39,7 +41,7 @@ const DashboardTopSection = ({ t, conditionalContainerStyles, currentMonth, curr
             </Grid2>
 
             <Grid2
-                size={{ xs: 12, sm: 6, md: 4 }}
+                size={commonSize}
                 sx={{
                     minWidth: { sm: '250px' },
                     justifySelf: 'center'
@@ -57,7 +59,7 @@ const DashboardTopSection = ({ t, conditionalContainerStyles, currentMonth, curr
             </Grid2>
 
             <Grid2
-                size={{ xs: 12, sm: 6, md: 4 }}
+                size={commonSize}
                 sx={{ justifySelf: 'flex-end' }}
             >
                 <ExpensesCard />
