@@ -12,8 +12,8 @@ const Details = ({ item, onClose = () => { } }) => {
     return <DetailsDrawer onClose={onClose} extraclasses={{ display: 'flex', gap: '10px', flexDirection: 'column' }}>
         <DetailsDataRow value={getPersonFullName(item?.person)} title={t('person')} />
         <DetailsDataRow value={moment(item?.date).format('YYYY-MM-DD')} title={t('date')} />
-        <DetailsDataRow value={`${item.amount}$`} title={t('amount')} />
-        <DetailsDataRow value={`${item.paid}$`} title={t('paid')} />
+        <DetailsDataRow value={`${item.amount ?? 0}$`} title={t('amount')} />
+        <DetailsDataRow value={`${item.paid ?? 0}$`} title={t('paid')} />
         <DetailsDataRow value={item.type} title={t('type')} />
         <DetailsDataRow value={item.isMyDebt} title={t('isMyDebt')} />
         {item?.transferId && <DetailsDataRow value={item.transferId} title={t('transferId')} />}

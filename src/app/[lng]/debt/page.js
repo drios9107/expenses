@@ -66,7 +66,7 @@ const Debts = ({ params }) => {
         field: "amount",
         sortable: true,
         renderHeader: () => <ColumnHeader title={t('amount')} />,
-        renderCell: ({ row }) => <Typography variant='body1'>{currencyFormat(row?.amount)}</Typography>,
+        renderCell: ({ row }) => <Typography variant='body1'>{currencyFormat(row?.amount ?? 0)}</Typography>,
         valueGetter: (uid, row) => row?.amount
     },
     {
@@ -75,7 +75,7 @@ const Debts = ({ params }) => {
         field: "paid",
         sortable: true,
         renderHeader: () => <ColumnHeader title={t('paid')} />,
-        renderCell: ({ row }) => <Typography variant='body1'>{currencyFormat(row?.paid)}</Typography>,
+        renderCell: ({ row }) => <Typography variant='body1'>{currencyFormat(row?.paid ?? 0)}</Typography>,
         valueGetter: (uid, row) => row?.paid
     },
     {

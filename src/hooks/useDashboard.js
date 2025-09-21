@@ -13,28 +13,7 @@ const useDashboard = (useDashboardData = false) => {
     const [isHover2, setIsHover2] = useState(false);
 
 
-    const [personsDebt, setPersonsDebt] = useState([
-        {
-            person: {
-                _id: 1,
-                name: 'sauniel'
-            },
-            debts: {
-                cup: 22000,
-                mlc: 54,
-            }
-        },
-        {
-            person: {
-                _id: 1,
-                name: 'walter'
-            },
-            debts: {
-                cup: 580,
-                mlc: 22,
-            }
-        }
-    ])
+    const [personsDebt, setPersonsDebt] = useState([])
     const [currentMonth, setCurrentMonth] = useState(moment().month())
     const [currentYear, setCurrentYear] = useState(moment().year())
     const [isLoading, setIsLoading] = useState(false);
@@ -65,8 +44,8 @@ const useDashboard = (useDashboardData = false) => {
                 if (data?.days)
                     setDays(data.days)
 
-                if (data?.personsDebt)
-                    setPersonsDebt(data.personsDebt)
+                if (data?.debtSection)
+                    setPersonsDebt(data.debtSection)
 
             })
             .catch(() => { })
