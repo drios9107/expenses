@@ -25,6 +25,7 @@ const schema = yup.object().shape({
     }).required(),
     date: yup.date().max(moment().set('days', moment().day() + 1).toDate()).required(),
     amount: yup.number().min(0).required(),
+    paid: yup.number().min(0).required(),
     type: yup.string().required(),
     description: yup.string().nullable(),
     transferId: yup.string().required(),
@@ -34,9 +35,11 @@ const defaultValues = {
     person: "",
     date: moment().toDate(),
     amount: 0,
+    paid: 0,
     type: 'cup',
     description: '',
     isMyDebt: false,
+    isCompleted: false,
     transferId: 'cash'
 }
 
@@ -57,8 +60,15 @@ const Form = ({ item, onClose = () => { } }) => {
         yup.setLocale(params?.lng === 'en' ? en : es)
     }, [params?.lng])
 
-    const { control, handleSubmit, formState: { errors, isDirty, isValid }
+    const { control, handleSubmit, setValue, formState: { errors, isDirty, isValid }, watch
     } = useForm({ defaultValues: item ?? defaultValues, mode: "onBlur", resolver: yupResolver(schema) });
+
+    const amountWatcher = watch('amount')
+    const paidWatcher = watch('paid')
+
+    useEffect(() => {
+        setValue('isCompleted', amountWatcher === paidWatcher && amountWatcher > 0)
+    }, [amountWatcher, paidWatcher, setValue])
 
     const getPersonList = useMemo(() => {
         return persons.map(i => ({ _id: i?._id, name: getPersonFullName(i) }))
@@ -99,6 +109,21 @@ const Form = ({ item, onClose = () => { } }) => {
                     fieldName={'amount'}
                     options={{ label: t('amount'), type: 'number', slotProps: { htmlInput: { min: 0 } } }}
                 />
+                <MuiTextfield
+                    control={control}
+                    errors={errors}
+                    fieldName={'paid'}
+                    options={{ label: t('paid'), type: 'number', slotProps: { htmlInput: { min: 0, max: amountWatcher } } }}
+                />
+
+            </BoxRow>
+            <BoxRow>
+                <MuiTextfield
+                    control={control}
+                    errors={errors}
+                    fieldName={'transferId'}
+                    options={{ label: t('transferId') }}
+                />
                 <MuiSingleSelectField
                     control={control}
                     errors={errors}
@@ -108,16 +133,15 @@ const Form = ({ item, onClose = () => { } }) => {
                 />
             </BoxRow>
             <BoxRow>
-                <MuiTextfield
-                    control={control}
-                    errors={errors}
-                    fieldName={'transferId'}
-                    options={{ label: t('transferId') }}
-                />
                 <MuiSwitch
                     control={control}
                     fieldName={'isMyDebt'}
                     options={{ label: t('isMyDebt') }}
+                />
+                <MuiSwitch
+                    control={control}
+                    fieldName={'isCompleted'}
+                    options={{ label: t('isCompleted') }}
                 />
             </BoxRow>
             <Box sx={styles.container}>

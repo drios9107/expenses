@@ -48,9 +48,9 @@ const Debts = ({ params }) => {
         sortable: true,
         renderHeader: () => <ColumnHeader title={t('person')} />,
         renderCell: ({ row }) => <Tooltip title={row?.description}>
-            <Typography variant='body1'>{getPersonFullName(row)}</Typography>
+            <Typography variant='body1'>{getPersonFullName(row?.person)}</Typography>
         </Tooltip>,
-        valueGetter: (uid, row) => getPersonFullName(row)
+        valueGetter: (uid, row) => getPersonFullName(row?.person)
     }, {
         flex: 1,
         minWidth: 120,
@@ -68,6 +68,15 @@ const Debts = ({ params }) => {
         renderHeader: () => <ColumnHeader title={t('amount')} />,
         renderCell: ({ row }) => <Typography variant='body1'>{currencyFormat(row?.amount)}</Typography>,
         valueGetter: (uid, row) => row?.amount
+    },
+    {
+        flex: 1,
+        minWidth: 100,
+        field: "paid",
+        sortable: true,
+        renderHeader: () => <ColumnHeader title={t('paid')} />,
+        renderCell: ({ row }) => <Typography variant='body1'>{currencyFormat(row?.paid)}</Typography>,
+        valueGetter: (uid, row) => row?.paid
     },
     {
         flex: 1,
