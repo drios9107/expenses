@@ -13,8 +13,9 @@ import DeleteModal from "@/components/DeleteModal";
 import { useList, useDebt } from "@/hooks";
 import { useTranslation } from "@/hooks/useTranslation";
 import moment from "moment";
-import { getPersonFullName, typeList } from "@/utils/helpers";
+import { typeList, getDebtLineColor, getPersonFullName } from "@/utils/helpers";
 import { useFormat } from "@/hooks/useFormat";
+import TypographyIconCell from "@/components/TypographyIconCell";
 
 const Debts = ({ params }) => {
     const { t } = useTranslation(params?.lng ?? 'en', 'debt')
@@ -48,7 +49,7 @@ const Debts = ({ params }) => {
         sortable: true,
         renderHeader: () => <ColumnHeader title={t('person')} />,
         renderCell: ({ row }) => <Tooltip title={row?.description}>
-            <Typography variant='body1'>{getPersonFullName(row?.person)}</Typography>
+            <Typography variant='body1' color={getDebtLineColor(row)}>{getPersonFullName(row?.person)}</Typography>
         </Tooltip>,
         valueGetter: (uid, row) => getPersonFullName(row?.person)
     }, {
@@ -57,7 +58,7 @@ const Debts = ({ params }) => {
         field: "date",
         sortable: true,
         renderHeader: () => <ColumnHeader title={t('date')} />,
-        renderCell: ({ row }) => <Typography variant='body1'>{moment(row?.date).format('YYYY-MM-DD')}</Typography>,
+        renderCell: ({ row }) => <Typography variant='body1' color={getDebtLineColor(row)}>{moment(row?.date).format('YYYY-MM-DD')}</Typography>,
         valueGetter: (uid, row) => moment(row?.date).format('YYYY-MM-DD')
     },
     {
@@ -66,7 +67,7 @@ const Debts = ({ params }) => {
         field: "amount",
         sortable: true,
         renderHeader: () => <ColumnHeader title={t('amount')} />,
-        renderCell: ({ row }) => <Typography variant='body1'>{currencyFormat(row?.amount ?? 0)}</Typography>,
+        renderCell: ({ row }) => <Typography variant='body1' color={getDebtLineColor(row)}>$ {currencyFormat(row?.amount ?? 0)}</Typography>,
         valueGetter: (uid, row) => row?.amount
     },
     {
@@ -75,7 +76,7 @@ const Debts = ({ params }) => {
         field: "paid",
         sortable: true,
         renderHeader: () => <ColumnHeader title={t('paid')} />,
-        renderCell: ({ row }) => <Typography variant='body1'>{currencyFormat(row?.paid ?? 0)}</Typography>,
+        renderCell: ({ row }) => <Typography variant='body1' color={getDebtLineColor(row)}>$ {currencyFormat(row?.paid ?? 0)}</Typography>,
         valueGetter: (uid, row) => row?.paid
     },
     {
@@ -84,7 +85,7 @@ const Debts = ({ params }) => {
         field: "type",
         sortable: true,
         renderHeader: () => <ColumnHeader title={t('type')} />,
-        renderCell: ({ row }) => <Typography variant='body1'>{getType(row)}</Typography>,
+        renderCell: ({ row }) => <Typography variant='body1' color={getDebtLineColor(row)}>{getType(row)}</Typography>,
         valueGetter: (uid, row) => getType(row)
     },
     {
@@ -93,16 +94,15 @@ const Debts = ({ params }) => {
         field: "isMyDebt",
         sortable: true,
         renderHeader: () => <ColumnHeader title={t('isMyDebt')} />,
-        renderCell: ({ row }) => <Typography sx={{ width: '100%', textAlign: 'center' }}>{row?.isMyDebt ? <Check sx={styles.icon} /> : <DoNotDisturb sx={styles.icon} />}</Typography>,
+        renderCell: ({ row }) => <TypographyIconCell color={getDebtLineColor(row)}>{row?.isMyDebt ? <Check sx={styles.icon} /> : <DoNotDisturb sx={styles.icon} />}</TypographyIconCell>,
     },
     {
         flex: 1,
-        minWidth: 120,
-        field: "created_at",
+        minWidth: 110,
+        field: "isCompleted",
         sortable: true,
-        renderHeader: () => <ColumnHeader title={t('created_at')} />,
-        renderCell: ({ row }) => <Typography variant='body1'>{moment(row?.created_at).format('YYYY-MM-DD')}</Typography>,
-        valueGetter: (uid, row) => moment(row?.created_at).format('YYYY-MM-DD')
+        renderHeader: () => <ColumnHeader title={t('isCompleted')} />,
+        renderCell: ({ row }) => <TypographyIconCell color={getDebtLineColor(row)}>{row?.isCompleted ? <Check sx={styles.icon} /> : <DoNotDisturb sx={styles.icon} />}</TypographyIconCell>,
     },
     {
         minWidth: 180,
@@ -115,7 +115,7 @@ const Debts = ({ params }) => {
                 <Add color="#7e7e7e" sx={{ height: "20px", width: "20px" }} />
             </IconButton>
         </Tooltip>,
-        renderCell: ({ row }) => <ActionColumn
+        renderCell: ({ row }) => <ActionColumn iconColor={getDebtLineColor(row)}
             onDetails={() => setItemToView(row)}
             onUpdate={() => { setItemToUpdate(row); setOpen(true) }}
             onDelete={() => setItemToDelete(row)}

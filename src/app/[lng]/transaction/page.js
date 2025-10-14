@@ -15,6 +15,7 @@ import { getLineColor, typeList } from "@/utils/helpers";
 import { useFormat } from "@/hooks/useFormat";
 import { useTranslation } from "@/hooks/useTranslation";
 import DataListAdvancedSearch from "@/components/DataListAdvancedSearch";
+import TypographyIconCell from "@/components/TypographyIconCell";
 
 const Transaction = ({ params }) => {
     const [open, setOpen] = useState(false);
@@ -71,7 +72,7 @@ const Transaction = ({ params }) => {
         field: "amount",
         sortable: true,
         renderHeader: () => <ColumnHeader title={t('amount')} />,
-        renderCell: ({ row }) => <Typography variant='body1' color={getLineColor(row)}>{currencyFormat(row?.amount)}</Typography>,
+        renderCell: ({ row }) => <Typography variant='body1' color={getLineColor(row)}>$ {currencyFormat(row?.amount ?? 0)}</Typography>,
         valueGetter: (uid, row) => row?.amount
     },
     {
@@ -89,7 +90,7 @@ const Transaction = ({ params }) => {
         field: "isExpense",
         sortable: true,
         renderHeader: () => <ColumnHeader title={t('isExpense')} />,
-        renderCell: ({ row }) => <Typography sx={{ width: '100%', textAlign: 'center' }} color={getLineColor(row)}>{row?.isExpense ? <Check sx={styles.icon} /> : <DoNotDisturb sx={styles.icon} />}</Typography>,
+        renderCell: ({ row }) => <TypographyIconCell sx={{ width: '100%', textAlign: 'center' }} color={getLineColor(row)}>{row?.isExpense ? <Check sx={styles.icon} /> : <DoNotDisturb sx={styles.icon} />}</TypographyIconCell>,
     },
     {
         flex: 1,
@@ -97,7 +98,7 @@ const Transaction = ({ params }) => {
         field: "isRecurrent",
         sortable: true,
         renderHeader: () => <ColumnHeader title={t('isRecurrent')} />,
-        renderCell: ({ row }) => <Typography sx={{ width: '100%', textAlign: 'center' }} color={getLineColor(row)}>{row?.isRecurrent ? <Check sx={styles.icon} /> : <DoNotDisturb sx={styles.icon} />}</Typography>,
+        renderCell: ({ row }) => <TypographyIconCell sx={{ width: '100%', textAlign: 'center' }} color={getLineColor(row)}>{row?.isRecurrent ? <Check sx={styles.icon} /> : <DoNotDisturb sx={styles.icon} />}</TypographyIconCell>,
     },
     {
         minWidth: 180,
