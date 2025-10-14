@@ -8,6 +8,10 @@ const getLineColor = (row, normalColor = 'textSecondary') => {
     return 'success'
 };
 
+const getDebtLineColor = (row) => {
+    return row?.isCompleted ? 'success' : 'error'
+};
+
 const getPersonFullName = row => {
     let fullname = row?.name;
     if (row?.lastname)
@@ -83,4 +87,4 @@ const riseAnimation = keyframes`
   }
 `;
 
-export { getPersonFullName, typeList, getLineColor, publicRoutes, policyRoutes, policyRoutesWithLanguage, combinedPublicRoutes, fadeInStyles, riseAnimation, profileInformation, completeAdminRoutes }
+export { getDebtLineColor, getPersonFullName, typeList, getLineColor, publicRoutes, policyRoutes, policyRoutesWithLanguage, combinedPublicRoutes, fadeInStyles, riseAnimation, profileInformation, completeAdminRoutes }
