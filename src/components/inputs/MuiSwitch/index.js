@@ -3,14 +3,14 @@ import React from 'react'
 import { Controller } from 'react-hook-form'
 
 const MuiSwitch = ({ control, fieldName, options, rules = {} }) => {
-    return <FormControl fullWidth size="small">
+    return <FormControl fullWidth size="small" >
         <Controller
             name={fieldName}
             control={control}
             rules={{ required: false, ...rules }}
             defaultValue={false}
             render={({ field: { value, onChange } }) => <FormControlLabel
-                control={<Switch size="small" checked={value} sx={(options?.disabled && options?.customDisabledStyles) ? styles.customDisabledSwitch : {}} onChange={onChange} disabled={options?.disabled} />}
+                control={<Switch size="small" checked={value} sx={(options?.disabled && options?.customDisabledStyles) ? styles.customDisabledSwitch : {}} onChange={onChange} disabled={options?.disabled} onClick={options?.onClick} />}
                 label={options?.label}
                 sx={{ ml: "5px", userSelect: 'none' }}
             />}

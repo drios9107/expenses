@@ -65,6 +65,7 @@ const Form = ({ item, onClose = () => { } }) => {
 
     const amountWatcher = watch('amount')
     const paidWatcher = watch('paid')
+    const isCompletedWatcher = watch('isCompleted')
 
     useEffect(() => {
         setValue('isCompleted', amountWatcher === paidWatcher && amountWatcher > 0)
@@ -73,6 +74,11 @@ const Form = ({ item, onClose = () => { } }) => {
     const getPersonList = useMemo(() => {
         return persons.map(i => ({ _id: i?._id, name: getPersonFullName(i) }))
     }, [persons])
+
+    const onClickIsCompleted = useCallback(() => {
+        if (amountWatcher > 0 && !isCompletedWatcher)
+            setValue('paid', amountWatcher)
+    }, [amountWatcher, isCompletedWatcher, setValue])
 
     const onSubmit = useCallback(async data => {
         const preparedData = { ...data, date: moment(data?.date).set({ h: 8, m: 0, s: 0, milliseconds: 0 }).valueOf() }
@@ -107,7 +113,7 @@ const Form = ({ item, onClose = () => { } }) => {
                     control={control}
                     errors={errors}
                     fieldName={'amount'}
-                    options={{ label: t('amount'), type: 'number', slotProps: { htmlInput: { min: 0 } } }}
+                    options={{ label: t('amount'), type: 'number', slotProps: { htmlInput: { min: 0, max: paidWatcher } } }}
                 />
                 <MuiTextfield
                     control={control}
@@ -141,7 +147,7 @@ const Form = ({ item, onClose = () => { } }) => {
                 <MuiSwitch
                     control={control}
                     fieldName={'isCompleted'}
-                    options={{ label: t('isCompleted') }}
+                    options={{ label: t('isCompleted'), onClick: onClickIsCompleted }}
                 />
             </BoxRow>
             <Box sx={styles.container}>
