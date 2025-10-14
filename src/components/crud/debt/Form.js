@@ -105,7 +105,7 @@ const Form = ({ item, onClose = () => { } }) => {
                     control={control}
                     errors={errors}
                     fieldName={'date'}
-                    options={{ label: t('date'), maxDate: moment().toDate() }}
+                    options={{ label: t('date'), maxDate: moment().toDate(), readOnly: item }}
                 />
             </Box>
             <BoxRow>
@@ -113,7 +113,7 @@ const Form = ({ item, onClose = () => { } }) => {
                     control={control}
                     errors={errors}
                     fieldName={'amount'}
-                    options={{ label: t('amount'), type: 'number', slotProps: { htmlInput: { min: 0, max: paidWatcher } } }}
+                    options={{ label: t('amount'), type: 'number', slotProps: { htmlInput: { min: 0, readOnly: item } } }}
                 />
                 <MuiTextfield
                     control={control}
@@ -134,7 +134,7 @@ const Form = ({ item, onClose = () => { } }) => {
                     control={control}
                     errors={errors}
                     fieldName={'type'}
-                    options={{ label: t('type') }}
+                    options={{ label: t('type'), readOnly: item }}
                     list={typeList}
                 />
             </BoxRow>
@@ -142,7 +142,7 @@ const Form = ({ item, onClose = () => { } }) => {
                 <MuiSwitch
                     control={control}
                     fieldName={'isMyDebt'}
-                    options={{ label: t('isMyDebt') }}
+                    options={{ label: t('isMyDebt'), readOnly: item }}
                 />
                 <MuiSwitch
                     control={control}

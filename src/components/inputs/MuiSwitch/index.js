@@ -10,7 +10,7 @@ const MuiSwitch = ({ control, fieldName, options, rules = {} }) => {
             rules={{ required: false, ...rules }}
             defaultValue={false}
             render={({ field: { value, onChange } }) => <FormControlLabel
-                control={<Switch size="small" checked={value} sx={(options?.disabled && options?.customDisabledStyles) ? styles.customDisabledSwitch : {}} onChange={onChange} disabled={options?.disabled} onClick={options?.onClick} />}
+                control={<Switch size="small" checked={value} sx={(options?.disabled && options?.customDisabledStyles) ? styles.customDisabledSwitch : {}} onChange={onChange} disabled={options?.disabled} onClick={options?.onClick} readOnly={options?.readOnly} />}
                 label={options?.label}
                 sx={{ ml: "5px", userSelect: 'none' }}
             />}
