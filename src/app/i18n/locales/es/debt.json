@@ -11,5 +11,7 @@
     "created_at": "Creado",
     "create": "Agregar",
     "edit": "Editar",
-    "debtList": "Lista de Deudas"
+    "debtList": "Lista de Deudas",
+    "yes": "Sí",
+    "no": "No"
 }

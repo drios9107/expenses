@@ -11,5 +11,7 @@
     "created_at": "Created At",
     "create": "Add",
     "edit": "Edit",
-    "debtList": "Debt List"
+    "debtList": "Debt List",
+    "yes": "Yes",
+    "no": "No"
 }

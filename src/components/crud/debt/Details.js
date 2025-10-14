@@ -7,15 +7,16 @@ import { useParams } from 'next/navigation'
 
 const Details = ({ item, onClose = () => { } }) => {
     const params = useParams();
-    const { t } = useTranslation(params?.lng ?? 'en', 'debt');
+    const { t } = useTranslation(params?.lng ?? 'en', ['debt']);
 
     return <DetailsDrawer onClose={onClose} extraclasses={{ display: 'flex', gap: '10px', flexDirection: 'column' }}>
         <DetailsDataRow value={getPersonFullName(item?.person)} title={t('person')} />
         <DetailsDataRow value={moment(item?.date).format('YYYY-MM-DD')} title={t('date')} />
-        <DetailsDataRow value={`${item.amount ?? 0}$`} title={t('amount')} />
-        <DetailsDataRow value={`${item.paid ?? 0}$`} title={t('paid')} />
+        <DetailsDataRow value={`$ ${item.amount ?? 0}`} title={t('amount')} />
+        <DetailsDataRow value={`$ ${item.paid ?? 0}`} title={t('paid')} />
         <DetailsDataRow value={item.type} title={t('type')} />
-        <DetailsDataRow value={item.isMyDebt} title={t('isMyDebt')} />
+        <DetailsDataRow value={t(item.isMyDebt ? 'yes' : 'no')} title={t('isMyDebt')} />
+        <DetailsDataRow value={t(item.isCompleted ? 'yes' : 'no')} title={t('isCompleted')} />
         {item?.transferId && <DetailsDataRow value={item.transferId} title={t('transferId')} />}
     </DetailsDrawer>
 }

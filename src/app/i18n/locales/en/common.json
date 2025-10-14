@@ -39,5 +39,7 @@
     "confirm": "Confirm",
     "cancel": "Cancel",
     "singOut": "Sign out",
-    "save": "Save"
+    "save": "Save",
+    "yes": "Yes",
+    "no": "No"
 }
