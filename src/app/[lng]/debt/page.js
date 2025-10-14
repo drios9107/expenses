@@ -42,6 +42,11 @@ const Debts = ({ params }) => {
         setItemToDelete();
     }, [deleteDebt, itemToDelete?._id])
 
+    const onUpdate = useCallback(row => {
+        setItemToUpdate(row);
+        setOpen(true)
+    }, [])
+
     const columns = useMemo(() => [{
         flex: 2,
         minWidth: 150,
@@ -115,12 +120,12 @@ const Debts = ({ params }) => {
                 <Add color="#7e7e7e" sx={{ height: "20px", width: "20px" }} />
             </IconButton>
         </Tooltip>,
-        renderCell: ({ row }) => <ActionColumn iconColor={getDebtLineColor(row)}
+        renderCell: ({ row }) => <ActionColumn iconColor={getDebtLineColor(row)} actionsContainerExtraclasses={{ justifyContent: 'flex-end' }}
             onDetails={() => setItemToView(row)}
-            onUpdate={() => { setItemToUpdate(row); setOpen(true) }}
+            onUpdate={!row?.isCompleted ? () => onUpdate(row) : null}
             onDelete={() => setItemToDelete(row)}
         />
-    }], [currencyFormat, getType, t])
+    }], [currencyFormat, getType, onUpdate, t])
 
     return (
         <>

@@ -10,15 +10,15 @@ const ActionColumn = ({ iconColor = '#000000', onDetails, onUpdate, onDelete, ac
 
     return (
         <Box justifyContent={'center'} sx={[styles.actionsContainer, actionsContainerExtraclasses]}>
-            {onDetails && <Tooltip title={t('details')}>
-                <IconButton onClick={onDetails}>
-                    <Eye color={iconColor} sx={{ height: "20px", width: "20px" }} />
-                </IconButton>
-            </Tooltip>}
-
             {onUpdate && <Tooltip title={t('edit')}>
                 <IconButton onClick={onUpdate}>
                     <ModeEditOutline color={iconColor} sx={{ height: "20px", width: "20px" }} />
+                </IconButton>
+            </Tooltip>}
+
+            {onDetails && <Tooltip title={t('details')}>
+                <IconButton onClick={onDetails}>
+                    <Eye color={iconColor} sx={{ height: "20px", width: "20px" }} />
                 </IconButton>
             </Tooltip>}
 

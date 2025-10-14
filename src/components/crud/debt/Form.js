@@ -147,7 +147,7 @@ const Form = ({ item, onClose = () => { } }) => {
                 <MuiSwitch
                     control={control}
                     fieldName={'isCompleted'}
-                    options={{ label: t('isCompleted'), onClick: onClickIsCompleted }}
+                    options={{ label: t('isCompleted'), onClick: onClickIsCompleted, readOnly: item?.isCompleted }}
                 />
             </BoxRow>
             <Box sx={styles.container}>
