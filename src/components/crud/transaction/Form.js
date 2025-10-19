@@ -18,7 +18,7 @@ import { useTranslation } from '@/hooks/useTranslation';
 import FormActionButtons from '@/components/FormActionButtons';
 import { en, es } from 'yup-locales';
 import CategorySelect from '@/components/CategorySelect';
-import { ObjectId } from 'bson-objectid';
+import objectId from 'bson-objectid';
 import SubCategorySelect from '@/components/SubCategorySelect';
 import { typeList } from '@/utils/helpers';
 
@@ -147,7 +147,7 @@ const Form = ({ predefinedDay, item, onClose = () => { } }) => {
     }, [t])
 
     const onCreateCategory = useCallback(v => {
-        const newItem = { name: v, _id: new ObjectId().toHexString() };
+        const newItem = { name: v, _id: objectId().toHexString() };
         setNewCategory(newItem);
     }, [])
 
@@ -158,7 +158,7 @@ const Form = ({ predefinedDay, item, onClose = () => { } }) => {
 
 
     const onCreateSubCategory = useCallback(v => {
-        const newItem = { name: v, _id: new ObjectId().toHexString() };
+        const newItem = { name: v, _id: objectId().toHexString() };
         setNewSubCategory(newItem);
     }, [])
 
