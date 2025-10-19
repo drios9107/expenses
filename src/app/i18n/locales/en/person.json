@@ -2,6 +2,7 @@
     "name": "Name",
     "lastname": "Lastname",
     "created_at": "Created at",
+    "user": "User",
     "create": "Create",
     "edit": "Edit",
     "personList": "Person List"

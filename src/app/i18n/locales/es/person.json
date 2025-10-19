@@ -2,6 +2,7 @@
     "name": "Nombre",
     "lastname": "Apellido",
     "created_at": "Creado",
+    "user": "Usuario",
     "create": "Agregar",
     "edit": "Editar",
     "personList": "Lista de Personas"
