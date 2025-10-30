@@ -27,7 +27,7 @@ export default function Home({ params }) {
       getPreviousMonth={getPreviousMonth}
       getNextMonth={getNextMonth} t={t} conditionalContainerStyles={conditionalContainerStyles}
     />
-    <DashboardDebtSection conditionalContainerStyles={conditionalContainerStyles} personsDebt={personsDebt} />
+    {personsDebt.length > 0 && <DashboardDebtSection t={t} conditionalContainerStyles={conditionalContainerStyles} personsDebt={personsDebt} />}
     <DashboardGraphSection
       conditionalGraphStyles={conditionalGraphStyles}
       isHover1={isHover1}
