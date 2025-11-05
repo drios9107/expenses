@@ -15,8 +15,6 @@ export default function LandingLayout({ children }) {
   const lng = useMemo(() => params?.lng ?? 'en', [params?.lng])
   const router = useRouter();
 
-  console.log('***params', params)
-
   return <Box sx={styles.container}>
 
     <Box sx={styles.banner}>

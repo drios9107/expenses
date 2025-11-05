@@ -1,8 +1,12 @@
 {
     "feature1": "Comprende tus hábitos de gasto de un vistazo con gráficos y tendencias coloridas. Encuentra exactamente a dónde va tu dinero cada mes para que puedas ajustar presupuestos y ahorrar más eficientemente.",
-    "feature2": "¡No más conversiones manuales! Rastrea todos los gastos del hogar: facturas de servicios, suscripciones internacionales o costos de vacaciones, convertidos y organizados automáticamente en tu moneda preferida.",
+    "feature2": "Rastrea todos los gastos del hogar: facturas de servicios, suscripciones internacionales o costos de vacaciones, convertidos y organizados automáticamente en tu moneda preferida.",
     "feature3": "Crea categorías personalizadas como 'Alimentos' o 'Niños' para presupuestos ultra detallados. Adáptalo a tu estilo de vida, no al revés.",
     "feature4": "¿Perdiste un recibo? Busca transacciones por fecha, monto o notas personalizadas, encuentra cualquier cosa en segundos, sin desplazarte sin fin.",
+    "feature5": "Registra y organiza tanto el dinero que tú prestas como el que te deben. Establece fechas de pago, añade recordatorios automáticos y lleva un historial claro de cada transacción. Nunca más se te pase cobrar o pagar.",
+    "feature6": "¿Intercambiaste USD por CUP? Nuestro sistema se adapta a la economía informal. Simplemente ingresa la moneda, la cantidad y la tasa de cambio que manejaste. Automáticamente se crearán las transacciones de ingreso y gasto en cada moneda, reflejando con precisión tus movimientos reales de dinero.",
+    "feature7": "Ideal para familias o equipos. Crea usuarios, asigna roles personalizados (como 'Solo Lectura' o 'Editor') y define qué puede ver y hacer cada persona. La seguridad y la privacidad son lo primero.",
+    "feature8": "¿Cansado de categorizar manualmente? Define combinaciones predeterminadas de categoría y subcategoría. Al crear una transacción, el sistema sugerirá automáticamente la clasificación, ahorrándote tiempo y asegurando consistencia.",
     "title": "Toma el Control de tus Finanzas – Rastrea Gastos sin Esfuerzo",
     "subtitle": "Una forma simple y poderosa de gestionar los gastos del hogar y ahorrar más dinero.",
     "dashboard": "Panel de Control",
