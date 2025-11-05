@@ -1,6 +1,6 @@
 import { Box, Button, Divider, Typography } from '@mui/material';
 import SimpleModal from './SimpleModal'
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useFormat } from '@/hooks/useFormat';
 import { useParams } from 'next/navigation';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -12,6 +12,11 @@ const DayCardModal = ({ title = '', day, maxWidth, onClose = () => { }, extracla
     const { t } = useTranslation(params?.lng ?? 'en', 'dashboard')
     const [openTransaction, setOpenTransaction] = useState(false);
     const [predefinedDay, setPredefinedDay] = useState();
+    const [localDay, setLocalDay] = useState(day)
+
+    useEffect(() => {
+        setLocalDay(day)
+    }, [day])
 
     const getText = useCallback(item => {
         const subCategory = item?.subCategory ?? '';
@@ -25,15 +30,29 @@ const DayCardModal = ({ title = '', day, maxWidth, onClose = () => { }, extracla
         setOpenTransaction(true)
     }, [day])
 
-    const onCloseTransaction = useCallback(() => {
+    const onCloseTransaction = useCallback((data) => {
         setOpenTransaction(false)
         setPredefinedDay()
-    }, [])
+        if (data) {
+            const dayValue = {
+                date: data?.date,
+                category: data?.category,
+                subCategory: data?.subCategory,
+                amount: data?.amount ?? 0,
+                description: data?.description
+            }
+            setLocalDay(values => [...values, dayValue].sort((a, b) => b.amount - a.amount))
+        }
+    }, [setLocalDay])
+
+    const onCloseCardModal = useCallback(() => {
+        onClose(localDay.length !== day.length)
+    }, [day.length, localDay.length, onClose])
 
     return <>
-        <SimpleModal onClose={onClose} title={title} maxWidth={maxWidth} extraclasses={extraclasses}>
+        <SimpleModal onClose={onCloseCardModal} title={title} maxWidth={maxWidth} extraclasses={extraclasses}>
             <Box sx={styles.dataContainer}>
-                {day?.map((item, index) => <Box key={index} >
+                {localDay?.map((item, index) => <Box key={index} >
                     <Box sx={styles.row}>
                         <Typography>{getText(item)}</Typography>
                         <Typography sx={{ fontWeight: 600, textShadow: `1px 2px 3px ${item?.amount >= 1000 ? 'salmon' : 'primary'}` }}>{currencyFormat(item?.amount)} $</Typography>
@@ -49,7 +68,7 @@ const DayCardModal = ({ title = '', day, maxWidth, onClose = () => { }, extracla
             </Box>
             <Box sx={styles.actionsContainer}>
                 <Button variant='contained' onClick={onOpenTransaction}>{t('createTransaction')}</Button>
-                <Button variant='outlined' onClick={onClose}>{t('close')}</Button>
+                <Button variant='outlined' onClick={onCloseCardModal}>{t('close')}</Button>
             </Box>
         </SimpleModal>
 

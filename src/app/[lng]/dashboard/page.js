@@ -3,7 +3,7 @@ import DashboardDebtSection from "@/components/DashboardDebtSection";
 import DashboardGraphSection from "@/components/DashboardGraphSection";
 import DashboardSkeleton from "@/components/DashboardSkeleton";
 import DashboardTopSection from "@/components/DashboardTopSection";
-import RenderDayCards from "@/components/RenderDayCards";
+import DailyExpenseSection from "@/components/DailyExpenseSection";
 import { useDashboard, useDashboardContext } from "@/hooks";
 import { useTranslation } from "@/hooks/useTranslation";
 import { Box, useMediaQuery } from "@mui/material";
@@ -12,7 +12,7 @@ export default function Home({ params }) {
   const { t } = useTranslation(params?.lng, 'dashboard')
   const { isLoading, conditionalContainerStyles, currentMonth, currentYear,
     getPreviousMonth, getNextMonth, conditionalGraphContainerStyles,
-    conditionalGraphStyles, isHover1, setIsHover1, isHover2, setIsHover2, personsDebt } = useDashboard(true);
+    conditionalGraphStyles, isHover1, setIsHover1, isHover2, setIsHover2, personsDebt, getDashboard } = useDashboard(true);
   const { days } = useDashboardContext()
   const isMobile = useMediaQuery("@media (max-width:500px)");
 
@@ -37,6 +37,6 @@ export default function Home({ params }) {
       currentMonth={currentMonth}
       currentYear={currentYear}
     />
-    <RenderDayCards days={days} />
+    <DailyExpenseSection days={days} getDashboard={() => getDashboard({ currentMonth, currentYear })} />
   </Box>
 }
