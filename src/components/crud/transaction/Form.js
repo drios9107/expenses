@@ -212,6 +212,8 @@ const Form = ({ predefinedDay, item, onClose = () => { } }) => {
             setNewSubCategory();
             if (window.location.href.includes('/dashboard'))
                 onClose({ ...preparedData, category: newSubCategory?.name ?? data?.subCategory?.name, subCategory: newSubCategory?.name ?? data?.subCategory?.name });
+            else
+                onClose()
         }
     }, [createRecurrentTransaction, createTransaction, item, newCategory, newSubCategory, onClose, updateRecurrentTransaction, updateTransaction])
 
