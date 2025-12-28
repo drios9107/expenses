@@ -44,7 +44,8 @@ export default function LandingLayout({ children }) {
         <Typography variant="h5" color="#fff">{t('subtitle')}</Typography>
       </Box>
 
-      <Button variant='contained' onClick={() => router.push(`/${params?.lng}/login`)} sx={styles.button}>{t('loginNow')}</Button>
+      {status !== 'authenticated' &&
+        <Button variant='contained' onClick={() => router.push(`/${params?.lng}/login`)} sx={styles.button}>{t('loginNow')}</Button>}
     </Box>
 
     {children}
