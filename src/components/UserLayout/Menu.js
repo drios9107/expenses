@@ -20,7 +20,7 @@ import ConversionCurrency from '../ConversionCurrency';
 const Menu = () => {
     const { lng } = useParams();
     const { t } = useTranslation(lng ?? 'en', 'common');
-    const isMobile = useMediaQuery("@media (max-width:500px)");
+    const isMobile = useMediaQuery("@media (max-width:640px)");
     const [collapsed, setCollapsed] = useState(false);
     const [openConvertCurrencyForm, setOpenConvertCurrencyForm] = useState(false);
     const { data: session } = useSession()

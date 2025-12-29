@@ -16,5 +16,5 @@ const Footer = () => {
 export default Footer
 
 const styles = {
-    footerSection: { backgroundColor: '#fff', minHeight: '60px', display: 'flex', justifyContent: 'flex-start', alignItems: 'center' },
+    footerSection: { backgroundColor: '#fff', minHeight: '60px', display: 'flex', justifyContent: 'flex-start', alignItems: 'center', borderBottomRightRadius: 0, borderBottomLeftRadius: 0 },
 }
