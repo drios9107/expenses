@@ -1,58 +1,34 @@
-import { messages } from "@/utils/messages";
 import { useCallback, useState } from "react";
-import { useToast } from "./useToast";
 import { useList } from ".";
-import axiosInstance from "@/utils/AxiosInterceptor";
+import useCrud from "./useCrud";
+
+const model = 'categories';
 
 const useCategory = () => {
-    const { categories, setCategories } = useList();
+    const { setCategories } = useList();
+    const { getAll, createItem, updateItem, deleteItem } = useCrud();
 
-    const { toastInfo } = useToast();
     const [isLoading, setIsLoading] = useState(false);
 
-    const getCategories = useCallback(() => {
-        setIsLoading(true);
-        axiosInstance.get(`/categories`)
-            .then(({ data }) => setCategories(data?.data ?? []))
+    const getCategories = useCallback(async () => {
+        await getAll(model, setCategories, setIsLoading)
             .catch(() => { })
-            .finally(() => setIsLoading(false))
-    }, [setCategories])
+    }, [getAll, setCategories, setIsLoading])
 
-    const createCategory = useCallback(preparedData => {
-        setIsLoading(true);
-        axiosInstance.post(`/categories`, preparedData)
-            .then(({ data }) => {
-                setCategories([...categories, data?.data])
-                toastInfo(messages.saved);
-            })
+    const createCategory = useCallback(async preparedData => {
+        return createItem(model, preparedData, setIsLoading, getCategories)
             .catch(() => { })
-            .finally(() => setIsLoading(false))
-    }, [categories, setCategories, toastInfo])
+    }, [createItem, setIsLoading, getCategories])
 
-    const updateCategory = useCallback(preparedData => {
-        setIsLoading(true);
-        axiosInstance.put(`/categories/${preparedData?._id}`, preparedData)
-            .then(({ data }) => {
-                const index = categories.findIndex(i => i._id === preparedData?._id)
-                const result = [...categories];
-                result[index] = data?.data;
-                setCategories(result);
-                toastInfo(messages.saved);
-            })
+    const updateCategory = useCallback(async preparedData => {
+        return updateItem(model, preparedData, setIsLoading, getCategories)
             .catch(() => { })
-            .finally(() => setIsLoading(false))
-    }, [categories, setCategories, toastInfo])
+    }, [updateItem, setIsLoading, getCategories])
 
-    const deleteCategory = useCallback(id => {
-        setIsLoading(true);
-        axiosInstance.delete(`/categories/${id}`)
-            .then(({ data }) => {
-                setCategories(categories.filter(i => i?._id !== id))
-                toastInfo(messages.deleted);
-            })
+    const deleteCategory = useCallback(async id => {
+        return deleteItem(model, id, setIsLoading, getCategories)
             .catch(() => { })
-            .finally(() => setIsLoading(false))
-    }, [categories, setCategories, toastInfo])
+    }, [deleteItem, setIsLoading, getCategories])
 
 
     return {

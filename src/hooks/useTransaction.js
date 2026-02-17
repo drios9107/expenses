@@ -1,35 +1,27 @@
-import { messages } from "@/utils/messages";
 import { useCallback, useState } from "react";
-import { useToast } from "./useToast";
-import axios from "axios";
 import { useList } from ".";
 import axiosInstance from "@/utils/AxiosInterceptor";
+import useCrud from "./useCrud";
+
+const model = 'transactions'
 
 const useTransaction = () => {
-    const { transactions, setTransactions, setCurrentMonthTransactions, setCategories, setSubCategories } = useList();
+    const { setTransactions, setCurrentMonthTransactions, setCategories, setSubCategories } = useList();
+    const { getAll, createItem, updateItem, deleteItem } = useCrud();
 
-    const { toastInfo } = useToast();
     const [isLoading, setIsLoading] = useState(false);
 
     const getCurrentMonthTransactions = useCallback(() => {
         setIsLoading(true);
-        axiosInstance.get(`/transactions/currentMonth`)
+        axiosInstance.get(`/${model}/currentMonth`)
             .then(({ data }) => setCurrentMonthTransactions(data?.data ?? []))
             .catch(() => { })
             .finally(() => setIsLoading(false))
     }, [setCurrentMonthTransactions])
 
-    const getTransactions = useCallback(() => {
-        setIsLoading(true);
-        axiosInstance.get(`/transactions`)
-            .then(({ data }) => setTransactions(data?.data ?? []))
-            .catch(() => { })
-            .finally(() => setIsLoading(false))
-    }, [setTransactions])
-
     const getTransactionsByCategory = useCallback(async (categoryName, currentMonth, currentYear) => {
         setIsLoading(true);
-        return axiosInstance.get(`/transactions/by-category-in-period/${encodeURIComponent(categoryName)}/${encodeURIComponent(currentMonth)}/${currentYear}`)
+        return axiosInstance.get(`/${model}/by-category-in-period/${encodeURIComponent(categoryName)}/${encodeURIComponent(currentMonth)}/${currentYear}`)
             .then(({ data }) => data?.data ?? [])
             .catch(() => { })
             .finally(() => setIsLoading(false))
@@ -37,61 +29,46 @@ const useTransaction = () => {
 
     const getTransactionsByCategoryAndSubCategory = useCallback(async (categoryName, subCategoryName, currentMonth, currentYear) => {
         setIsLoading(true);
-        return axiosInstance.get(`/transactions/by-category-and-subcategory-in-period/${encodeURIComponent(categoryName)}/${encodeURIComponent(subCategoryName)}/${currentMonth}/${currentYear}`)
+        return axiosInstance.get(`/${model}/by-category-and-subcategory-in-period/${encodeURIComponent(categoryName)}/${encodeURIComponent(subCategoryName)}/${currentMonth}/${currentYear}`)
             .then(({ data }) => data?.data ?? [])
             .catch(() => { })
             .finally(() => setIsLoading(false))
     }, [])
 
-    const createTransaction = useCallback(async preparedData => {
-        setIsLoading(true);
-        return axiosInstance.post(`/transactions`, preparedData)
-            .then(({ data }) => {
-                setTransactions([data?.data, ...transactions])
-                toastInfo(messages.saved);
-                if (preparedData?.newCategory)
-                    setCategories(previous => [...previous, preparedData?.newCategory]);
-                if (preparedData?.newSubCategory)
-                    setSubCategories(previous => [...previous, { ...preparedData?.newSubCategory, category: preparedData?.newCategory?._id }]);
+    const updateCategoryAndSubcategory = useCallback((preparedData) => {
+        if (preparedData?.newCategory)
+            setCategories(previous => [...previous, preparedData?.newCategory]);
+        if (preparedData?.newSubCategory)
+            setSubCategories(previous => [...previous, { ...preparedData?.newSubCategory, category: preparedData?.newCategory?._id }]);
+    }, [setCategories, setSubCategories])
 
-                return true;
+    const getTransactions = useCallback(async () => {
+        await getAll(model, setTransactions, setIsLoading)
+            .catch(() => { })
+    }, [getAll, setTransactions, setIsLoading])
+
+    const createTransaction = useCallback(async preparedData => {
+        return createItem(model, preparedData, setIsLoading, getTransactions)
+            .then(res => {
+                updateCategoryAndSubcategory(preparedData)
+                return true
             })
             .catch(() => { })
-            .finally(() => setIsLoading(false))
-    }, [setCategories, setSubCategories, setTransactions, toastInfo, transactions])
+    }, [createItem, getTransactions, updateCategoryAndSubcategory])
 
     const updateTransaction = useCallback(async preparedData => {
-        setIsLoading(true);
-        return axiosInstance.put(`/transactions/${preparedData?._id}`, preparedData)
-            .then(({ data }) => {
-                const index = transactions.findIndex(i => i._id === preparedData?._id)
-                if (index > -1) {
-                    const result = [...transactions];
-                    result[index] = data?.data;
-                    setTransactions(result);
-                }
-                toastInfo(messages.saved);
-                if (preparedData?.newCategory)
-                    setCategories(previous => [...previous, preparedData?.newCategory]);
-                if (preparedData?.newSubCategory)
-                    setSubCategories(previous => [...previous, { ...preparedData?.newSubCategory, category: preparedData?.newCategory?._id }]);
-
-                return true;
+        return updateItem(model, preparedData, setIsLoading, getTransactions)
+            .then(res => {
+                updateCategoryAndSubcategory(preparedData)
+                return true
             })
             .catch(() => { })
-            .finally(() => setIsLoading(false))
-    }, [setCategories, setSubCategories, setTransactions, toastInfo, transactions])
+    }, [updateItem, getTransactions, updateCategoryAndSubcategory])
 
-    const deleteTransaction = useCallback(id => {
-        setIsLoading(true);
-        axiosInstance.delete(`/transactions/${id}`)
-            .then(({ data }) => {
-                setTransactions(transactions.filter(i => i?._id !== id))
-                toastInfo(messages.deleted);
-            })
+    const deleteTransaction = useCallback(async id => {
+        return deleteItem(model, id, setIsLoading, getTransactions)
             .catch(() => { })
-            .finally(() => setIsLoading(false))
-    }, [setTransactions, toastInfo, transactions])
+    }, [deleteItem, setIsLoading, getTransactions])
 
 
     return {

@@ -1,60 +1,34 @@
-import { messages } from "@/utils/messages";
 import { useCallback, useState } from "react";
-import { useToast } from "./useToast";
 import { useList } from ".";
-import axiosInstance from "@/utils/AxiosInterceptor";
+import useCrud from "./useCrud";
+
+const model = 'roles';
 
 const useRole = () => {
-    const { roles, setRoles } = useList();
+    const { setRoles } = useList();
+    const { getAll, createItem, updateItem, deleteItem } = useCrud();
 
-    const { toastInfo } = useToast();
     const [isLoading, setIsLoading] = useState(false);
 
-    const getRoles = useCallback(() => {
-        setIsLoading(true);
-        axiosInstance.get(`/roles`)
-            .then(({ data }) => setRoles(data?.data ?? []))
+    const getRoles = useCallback(async () => {
+        await getAll(model, setRoles, setIsLoading)
             .catch(() => { })
-            .finally(() => setIsLoading(false))
-    }, [setRoles])
+    }, [getAll, setRoles, setIsLoading])
 
     const createRole = useCallback(async preparedData => {
-        setIsLoading(true);
-        return axiosInstance.post(`/roles`, preparedData)
-            .then(({ data }) => {
-                setRoles([...roles, data?.data])
-                toastInfo(messages.saved);
-                return true
-            })
+        return createItem(model, preparedData, setIsLoading, getRoles)
             .catch(() => { })
-            .finally(() => setIsLoading(false))
-    }, [roles, setRoles, toastInfo])
+    }, [createItem, setIsLoading, getRoles])
 
     const updateRole = useCallback(async preparedData => {
-        setIsLoading(true);
-        return axiosInstance.put(`/roles/${preparedData?._id}`, preparedData)
-            .then(({ data }) => {
-                const index = roles.findIndex(i => i._id === preparedData?._id)
-                const result = [...roles];
-                result[index] = data?.data;
-                setRoles(result);
-                toastInfo(messages.saved);
-                return true
-            })
+        return updateItem(model, preparedData, setIsLoading, getRoles)
             .catch(() => { })
-            .finally(() => setIsLoading(false))
-    }, [roles, setRoles, toastInfo])
+    }, [updateItem, setIsLoading, getRoles])
 
-    const deleteRole = useCallback(id => {
-        setIsLoading(true);
-        axiosInstance.delete(`/roles/${id}`)
-            .then(({ data }) => {
-                setRoles(roles.filter(i => i?._id !== id))
-                toastInfo(messages.deleted);
-            })
+    const deleteRole = useCallback(async id => {
+        return deleteItem(model, id, setIsLoading, getRoles)
             .catch(() => { })
-            .finally(() => setIsLoading(false))
-    }, [roles, setRoles, toastInfo])
+    }, [deleteItem, setIsLoading, getRoles])
 
 
     return {

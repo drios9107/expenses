@@ -1,13 +1,14 @@
-import { messages } from "@/utils/messages";
 import { useCallback, useState } from "react";
-import { useToast } from "./useToast";
 import { useList } from ".";
 import axiosInstance from "@/utils/AxiosInterceptor";
+import useCrud from "./useCrud";
+
+const model = 'default-transaction-values';
 
 const useDefaultTransactionValue = () => {
-    const { defaultTransactionValues, setDefaultTransactionValues } = useList();
+    const { setDefaultTransactionValues } = useList();
+    const { getAll, createItem, updateItem, deleteItem } = useCrud();
 
-    const { toastInfo } = useToast();
     const [isLoading, setIsLoading] = useState(false);
 
     const getDefaultTransactionValuesByCategoryAndSubCategory = useCallback(async (categoryId, subCategoryId) => {
@@ -18,55 +19,25 @@ const useDefaultTransactionValue = () => {
             .finally(() => setIsLoading(false))
     }, [])
 
-    const getDefaultTransactionValues = useCallback(() => {
-        setIsLoading(true);
-        axiosInstance.get(`/default-transaction-values`)
-            .then(({ data }) => setDefaultTransactionValues(data?.data ?? []))
+    const getDefaultTransactionValues = useCallback(async () => {
+        await getAll(model, setDefaultTransactionValues, setIsLoading)
             .catch(() => { })
-            .finally(() => setIsLoading(false))
-    }, [setDefaultTransactionValues])
+    }, [getAll, setDefaultTransactionValues, setIsLoading])
 
     const createDefaultTransactionValues = useCallback(async preparedData => {
-        setIsLoading(true);
-        return axiosInstance.post(`/default-transaction-values`, preparedData)
-            .then(({ data }) => {
-                setDefaultTransactionValues([data?.data, ...defaultTransactionValues])
-                toastInfo(messages.saved);
-
-                return true;
-            })
+        return createItem(model, preparedData, setIsLoading, getDefaultTransactionValues)
             .catch(() => { })
-            .finally(() => setIsLoading(false))
-    }, [setDefaultTransactionValues, toastInfo, defaultTransactionValues])
+    }, [createItem, setIsLoading, getDefaultTransactionValues])
 
     const updateDefaultTransactionValues = useCallback(async preparedData => {
-        setIsLoading(true);
-        return axiosInstance.put(`/default-transaction-values/${preparedData?._id}`, preparedData)
-            .then(({ data }) => {
-                const index = defaultTransactionValues.findIndex(i => i._id === preparedData?._id)
-                if (index > -1) {
-                    const result = [...defaultTransactionValues];
-                    result[index] = data?.data;
-                    setDefaultTransactionValues(result);
-                }
-                toastInfo(messages.saved);
-
-                return true;
-            })
+        return updateItem(model, preparedData, setIsLoading, getDefaultTransactionValues)
             .catch(() => { })
-            .finally(() => setIsLoading(false))
-    }, [setDefaultTransactionValues, toastInfo, defaultTransactionValues])
+    }, [updateItem, setIsLoading, getDefaultTransactionValues])
 
-    const deleteDefaultTransactionValues = useCallback(id => {
-        setIsLoading(true);
-        axiosInstance.delete(`/default-transaction-values/${id}`)
-            .then(({ data }) => {
-                setDefaultTransactionValues(defaultTransactionValues.filter(i => i?._id !== id))
-                toastInfo(messages.deleted);
-            })
+    const deleteDefaultTransactionValues = useCallback(async id => {
+        return deleteItem(model, id, setIsLoading, getDefaultTransactionValues)
             .catch(() => { })
-            .finally(() => setIsLoading(false))
-    }, [setDefaultTransactionValues, toastInfo, defaultTransactionValues])
+    }, [deleteItem, setIsLoading, getDefaultTransactionValues])
 
 
     return {

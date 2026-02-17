@@ -1,60 +1,34 @@
-import { messages } from "@/utils/messages";
 import { useCallback, useState } from "react";
-import { useToast } from "./useToast";
 import { useList } from ".";
-import axiosInstance from "@/utils/AxiosInterceptor";
+import useCrud from "./useCrud";
+
+const model = 'debts';
 
 const useDebt = () => {
-    const { debts, setDebts } = useList();
+    const { setDebts } = useList();
+    const { getAll, createItem, updateItem, deleteItem } = useCrud();
 
-    const { toastInfo } = useToast();
     const [isLoading, setIsLoading] = useState(false);
 
-    const getDebts = useCallback(() => {
-        setIsLoading(true);
-        axiosInstance.get(`/debts`)
-            .then(({ data }) => setDebts(data?.data ?? []))
+    const getDebts = useCallback(async () => {
+        await getAll(model, setDebts, setIsLoading)
             .catch(() => { })
-            .finally(() => setIsLoading(false))
-    }, [setDebts])
+    }, [getAll, setDebts, setIsLoading])
 
     const createDebt = useCallback(async preparedData => {
-        setIsLoading(true);
-        return axiosInstance.post(`/debts`, preparedData)
-            .then(({ data }) => {
-                setDebts([...debts, data?.data])
-                toastInfo(messages.saved);
-                return true
-            })
+        return createItem(model, preparedData, setIsLoading, getDebts)
             .catch(() => { })
-            .finally(() => setIsLoading(false))
-    }, [debts, setDebts, toastInfo])
+    }, [createItem, setIsLoading, getDebts])
 
     const updateDebt = useCallback(async preparedData => {
-        setIsLoading(true);
-        return axiosInstance.put(`/debts/${preparedData?._id}`, preparedData)
-            .then(({ data }) => {
-                const index = debts.findIndex(i => i._id === preparedData?._id)
-                const result = [...debts];
-                result[index] = data?.data;
-                setDebts(result);
-                toastInfo(messages.saved);
-                return true
-            })
+        return updateItem(model, preparedData, setIsLoading, getDebts)
             .catch(() => { })
-            .finally(() => setIsLoading(false))
-    }, [debts, setDebts, toastInfo])
+    }, [updateItem, setIsLoading, getDebts])
 
-    const deleteDebt = useCallback(id => {
-        setIsLoading(true);
-        axiosInstance.delete(`/debts/${id}`)
-            .then(({ data }) => {
-                setDebts(debts.filter(i => i?._id !== id))
-                toastInfo(messages.deleted);
-            })
+    const deleteDebt = useCallback(async id => {
+        return deleteItem(model, id, setIsLoading, getDebts)
             .catch(() => { })
-            .finally(() => setIsLoading(false))
-    }, [debts, setDebts, toastInfo])
+    }, [deleteItem, setIsLoading, getDebts])
 
 
     return {

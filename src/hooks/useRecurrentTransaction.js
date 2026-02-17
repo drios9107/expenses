@@ -1,36 +1,31 @@
 import { messages } from "@/utils/messages";
 import { useCallback, useState } from "react";
 import { useToast } from "./useToast";
-import axios from "axios";
 import useTransaction from "./useTransaction";
-import { useDashboard, useDashboardContext, useList } from ".";
+import { useDashboardContext, useList } from ".";
 import axiosInstance from "@/utils/AxiosInterceptor";
 import GetStorage from "@/utils/GetStorage";
 import moment from "moment";
 import { useRouter } from "next/navigation";
+import useCrud from "./useCrud";
+
+const model = 'recurrent-transactions'
 
 const useRecurrentTransaction = () => {
-    const { recurrentTransactions, setRecurrentTransactions, setCategories, setSubCategories } = useList();
+    const { setRecurrentTransactions, setCategories, setSubCategories } = useList();
+    const { getAll, createItem, updateItem, deleteItem } = useCrud();
+
     const { getTransactions } = useTransaction();
     const { setInStorage } = GetStorage();
     const { setBalance, setBalanceMLC, setBalanceUSD, setBalanceUSDT } = useDashboardContext();
-    const { getDashboard } = useDashboard()
     const router = useRouter();
 
     const { toastInfo } = useToast();
     const [isLoading, setIsLoading] = useState(false);
 
-    const getRecurrentTransactions = useCallback(() => {
-        setIsLoading(true);
-        axiosInstance.get(`/recurrent-transactions`)
-            .then(({ data }) => setRecurrentTransactions(data?.data ?? []))
-            .catch(() => { })
-            .finally(() => setIsLoading(false))
-    }, [setRecurrentTransactions])
-
     const runTransactions = useCallback(async () => {
         setIsLoading(true);
-        return axiosInstance.get(`/recurrent-transactions/runRecurrence`)
+        return axiosInstance.get(`/${model}/runRecurrence`)
             .then(({ data }) => {
                 getTransactions();
                 if (data?.balance)
@@ -51,54 +46,40 @@ const useRecurrentTransaction = () => {
             .finally(() => setIsLoading(false))
     }, [getTransactions, router, setBalance, setBalanceMLC, setBalanceUSD, setBalanceUSDT, setInStorage, toastInfo])
 
-    const createRecurrentTransaction = useCallback(async preparedData => {
-        setIsLoading(true);
-        return axiosInstance.post(`/recurrent-transactions`, preparedData)
-            .then(({ data }) => {
-                setRecurrentTransactions([...recurrentTransactions, data?.data])
-                toastInfo(messages.saved);
-                if (preparedData?.newCategory)
-                    setCategories(previous => [...previous, preparedData?.newCategory]);
-                if (preparedData?.newSubCategory)
-                    setSubCategories(previous => [...previous, { ...preparedData?.newSubCategory, category: preparedData?.newCategory?._id }]);
+    const updateCategoryAndSubcategory = useCallback((preparedData) => {
+        if (preparedData?.newCategory)
+            setCategories(previous => [...previous, preparedData?.newCategory]);
+        if (preparedData?.newSubCategory)
+            setSubCategories(previous => [...previous, { ...preparedData?.newSubCategory, category: preparedData?.newCategory?._id }]);
+    }, [setCategories, setSubCategories])
 
-                return true;
+    const getRecurrentTransactions = useCallback(async () => {
+        await getAll(model, setRecurrentTransactions, setIsLoading)
+            .catch(() => { })
+    }, [getAll, setRecurrentTransactions, setIsLoading])
+
+    const createRecurrentTransaction = useCallback(async preparedData => {
+        return createItem(model, preparedData, setIsLoading, getRecurrentTransactions)
+            .then(res => {
+                updateCategoryAndSubcategory(preparedData)
+                return true
             })
             .catch(() => { })
-            .finally(() => setIsLoading(false))
-    }, [setRecurrentTransactions, recurrentTransactions, toastInfo, setCategories, setSubCategories])
+    }, [createItem, getRecurrentTransactions, updateCategoryAndSubcategory])
 
     const updateRecurrentTransaction = useCallback(async preparedData => {
-        setIsLoading(true);
-        return axiosInstance.put(`/recurrent-transactions/${preparedData?._id}`, preparedData)
-            .then(({ data }) => {
-                const index = recurrentTransactions.findIndex(i => i._id === preparedData?._id)
-                const result = [...recurrentTransactions];
-                result[index] = data?.data;
-                setRecurrentTransactions(result);
-                toastInfo(messages.saved);
-                if (preparedData?.newCategory)
-                    setCategories(previous => [...previous, preparedData?.newCategory]);
-                if (preparedData?.newSubCategory)
-                    setSubCategories(previous => [...previous, { ...preparedData?.newSubCategory, category: preparedData?.newCategory?._id }]);
-
-                return true;
+        return updateItem(model, preparedData, setIsLoading, getRecurrentTransactions)
+            .then(res => {
+                updateCategoryAndSubcategory(preparedData)
+                return true
             })
             .catch(() => { })
-            .finally(() => setIsLoading(false))
-    }, [recurrentTransactions, setCategories, setRecurrentTransactions, setSubCategories, toastInfo])
+    }, [updateItem, getRecurrentTransactions, updateCategoryAndSubcategory])
 
-    const deleteRecurrentTransaction = useCallback(id => {
-        setIsLoading(true);
-        axiosInstance.delete(`/recurrent-transactions/${id}`)
-            .then(({ data }) => {
-                setRecurrentTransactions(recurrentTransactions.filter(i => i?._id !== id))
-                toastInfo(messages.deleted);
-            })
+    const deleteRecurrentTransaction = useCallback(async id => {
+        return deleteItem(model, id, setIsLoading, getRecurrentTransactions)
             .catch(() => { })
-            .finally(() => setIsLoading(false))
-    }, [setRecurrentTransactions, recurrentTransactions, toastInfo])
-
+    }, [deleteItem, setIsLoading, getRecurrentTransactions])
 
     return {
         isLoading,

@@ -1,60 +1,34 @@
-import { messages } from "@/utils/messages";
 import { useCallback, useState } from "react";
-import { useToast } from "./useToast";
 import { useList } from ".";
-import axiosInstance from "@/utils/AxiosInterceptor";
+import useCrud from "./useCrud";
+
+const model = 'users';
 
 const useUser = () => {
-    const { users, setUsers } = useList();
+    const { setUsers } = useList();
+    const { getAll, createItem, updateItem, deleteItem } = useCrud();
 
-    const { toastInfo } = useToast();
     const [isLoading, setIsLoading] = useState(false);
 
-    const getUsers = useCallback(() => {
-        setIsLoading(true);
-        axiosInstance.get(`/users`)
-            .then(({ data }) => setUsers(data?.data ?? []))
+    const getUsers = useCallback(async () => {
+        await getAll(model, setUsers, setIsLoading)
             .catch(() => { })
-            .finally(() => setIsLoading(false))
-    }, [setUsers])
+    }, [getAll, setUsers, setIsLoading])
 
     const createUser = useCallback(async preparedData => {
-        setIsLoading(true);
-        return axiosInstance.post(`/users`, preparedData)
-            .then(({ data }) => {
-                setUsers([...users, data?.data])
-                toastInfo(messages.saved);
-                return true
-            })
+        return createItem(model, preparedData, setIsLoading, getUsers)
             .catch(() => { })
-            .finally(() => setIsLoading(false))
-    }, [users, setUsers, toastInfo])
+    }, [createItem, setIsLoading, getUsers])
 
     const updateUser = useCallback(async preparedData => {
-        setIsLoading(true);
-        return axiosInstance.put(`/users/${preparedData?._id}`, preparedData)
-            .then(({ data }) => {
-                const index = users.findIndex(i => i._id === preparedData?._id)
-                const result = [...users];
-                result[index] = data?.data;
-                setUsers(result);
-                toastInfo(messages.saved);
-                return true
-            })
+        return updateItem(model, preparedData, setIsLoading, getUsers)
             .catch(() => { })
-            .finally(() => setIsLoading(false))
-    }, [users, setUsers, toastInfo])
+    }, [updateItem, setIsLoading, getUsers])
 
-    const deleteUser = useCallback(id => {
-        setIsLoading(true);
-        axiosInstance.delete(`/users/${id}`)
-            .then(({ data }) => {
-                setUsers(users.filter(i => i?._id !== id))
-                toastInfo(messages.deleted);
-            })
+    const deleteUser = useCallback(async id => {
+        return deleteItem(model, id, setIsLoading, getUsers)
             .catch(() => { })
-            .finally(() => setIsLoading(false))
-    }, [users, setUsers, toastInfo])
+    }, [deleteItem, setIsLoading, getUsers])
 
 
     return {
