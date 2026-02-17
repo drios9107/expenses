@@ -45,8 +45,8 @@ const LanguageSelector = ({ options = {} }) => {
         state={lng}
         setState={onChange}
         list={languageList}
+        renderedList={renderedList}
         options={{
-            renderedList,
             sx: styles.selector,
             renderValue: v => <Flag code={getLanguage(v)?.code} height={20} width={25} />,
             ...options
