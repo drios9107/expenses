@@ -12,7 +12,7 @@ const DeleteModal = ({ title, text, onClose = () => { }, onClick = () => { }, ma
         <Typography component="span" sx={{ mb: 2 }}>{text ?? t('defaultDeleteText')}</Typography>
         <Box sx={styles.actionsContainer}>
             <Button variant='outlined' onClick={onClose}>{t('cancel')}</Button>
-            <Button variant='contained' onClick={onClick}>{t('confirm')}</Button>
+            <Button variant='contained' onClick={onClick} autoFocus>{t('confirm')}</Button>
         </Box>
     </SimpleModal>
 };
