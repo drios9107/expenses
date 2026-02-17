@@ -38,7 +38,7 @@ const defaultValues = {
 const Form = ({ item, onClose = () => { } }) => {
     const params = useParams();
     const { t } = useTranslation(params?.lng ?? 'en', ['common', 'transactions'])
-    const { isLoading, updateDefaultTransactionValues, createDefaultTransactionValues } = useDefaultTransactionValue();
+    const { isLoading, updateDefaultTransactionValue, createDefaultTransactionValue } = useDefaultTransactionValue();
     const { isLoading: isLoadingCategory, getCategories } = useCategory();
     const { isLoading: isLoadingSubCategory, getSubCategories } = useSubCategory();
     const { categories, subCategories } = useList();
@@ -81,12 +81,12 @@ const Form = ({ item, onClose = () => { } }) => {
         preparedData['subCategory'] = data?.subCategory?._id;
 
         let response = item ?
-            await updateDefaultTransactionValues(preparedData) :
-            await createDefaultTransactionValues(preparedData);
+            await updateDefaultTransactionValue(preparedData) :
+            await createDefaultTransactionValue(preparedData);
 
         if (response)
             onClose();
-    }, [createDefaultTransactionValues, item, onClose, updateDefaultTransactionValues])
+    }, [createDefaultTransactionValue, item, onClose, updateDefaultTransactionValue])
 
     const modalIsLoading = useMemo(() => isLoading || isLoadingCategory || isLoadingSubCategory, [isLoading, isLoadingCategory, isLoadingSubCategory])
 

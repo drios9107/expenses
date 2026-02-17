@@ -24,17 +24,17 @@ const useDefaultTransactionValue = () => {
             .catch(() => { })
     }, [getAll, setDefaultTransactionValues, setIsLoading])
 
-    const createDefaultTransactionValues = useCallback(async preparedData => {
+    const createDefaultTransactionValue = useCallback(async preparedData => {
         return createItem(model, preparedData, setIsLoading, getDefaultTransactionValues)
             .catch(() => { })
     }, [createItem, setIsLoading, getDefaultTransactionValues])
 
-    const updateDefaultTransactionValues = useCallback(async preparedData => {
+    const updateDefaultTransactionValue = useCallback(async preparedData => {
         return updateItem(model, preparedData, setIsLoading, getDefaultTransactionValues)
             .catch(() => { })
     }, [updateItem, setIsLoading, getDefaultTransactionValues])
 
-    const deleteDefaultTransactionValues = useCallback(async id => {
+    const deleteDefaultTransactionValue = useCallback(async id => {
         return deleteItem(model, id, setIsLoading, getDefaultTransactionValues)
             .catch(() => { })
     }, [deleteItem, setIsLoading, getDefaultTransactionValues])
@@ -44,9 +44,9 @@ const useDefaultTransactionValue = () => {
         isLoading,
         setIsLoading,
         getDefaultTransactionValues,
-        createDefaultTransactionValues,
-        updateDefaultTransactionValues,
-        deleteDefaultTransactionValues,
+        createDefaultTransactionValue,
+        updateDefaultTransactionValue,
+        deleteDefaultTransactionValue,
         getDefaultTransactionValuesByCategoryAndSubCategory
     }
 }
