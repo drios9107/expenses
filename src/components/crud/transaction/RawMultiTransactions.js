@@ -58,7 +58,7 @@ const RawMultiTransactions = ({ onClose = () => { } }) => {
                 date: date.valueOf(),
                 category,
                 subcategory,
-                amount,
+                amount: parseFloat(amount),
                 description,
                 type: 'cup',
                 isExpense: true,
