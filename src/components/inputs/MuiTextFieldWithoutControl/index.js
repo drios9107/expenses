@@ -8,7 +8,6 @@ const MuiTextfieldWithoutControl = ({ fieldName, state, setState = () => { }, er
             onChange={v => setState(v?.target?.value)}
             size='small'
             rows={options?.multiline ? options?.rows ?? 3 : 1}
-            maxRows={Infinity}
             slotProps={{
                 input: {
                     endAdornment: options?.endAdornment ? <InputAdornment position="end">{options?.endAdornment}</InputAdornment> : null,

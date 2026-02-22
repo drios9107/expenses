@@ -7,7 +7,7 @@ const model = 'transactions'
 
 const useTransaction = () => {
     const { setTransactions, setCurrentMonthTransactions, setCategories, setSubCategories } = useList();
-    const { getAll, createItem, updateItem, deleteItem } = useCrud();
+    const { getAll, createItem, updateItem, deleteItem, createManyItems } = useCrud();
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -70,6 +70,10 @@ const useTransaction = () => {
             .catch(() => { })
     }, [deleteItem, setIsLoading, getTransactions])
 
+    const createManyTransactions = useCallback(async preparedData => {
+        return createManyItems(model, preparedData, setIsLoading, getTransactions)
+            .catch(() => { })
+    }, [createManyItems, getTransactions])
 
     return {
         isLoading,
@@ -80,7 +84,8 @@ const useTransaction = () => {
         getTransactionsByCategoryAndSubCategory,
         createTransaction,
         updateTransaction,
-        deleteTransaction
+        deleteTransaction,
+        createManyTransactions
     }
 }
 

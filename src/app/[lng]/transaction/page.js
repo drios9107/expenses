@@ -6,7 +6,7 @@ import ColumnHeader from "@/components/ColumnHeader";
 import ActionColumn from "@/components/ActionColumn";
 import Loader from "@/components/Loader";
 import Details from "@/components/crud/transaction/Details";
-import { Add, Check, DoNotDisturb } from "@mui/icons-material";
+import { Add, Check, DataSaverOn, DoNotDisturb } from "@mui/icons-material";
 import Form from "@/components/crud/transaction/Form";
 import DeleteModal from "@/components/DeleteModal";
 import moment from "moment";
@@ -16,8 +16,11 @@ import { useFormat } from "@/hooks/useFormat";
 import { useTranslation } from "@/hooks/useTranslation";
 import DataListAdvancedSearch from "@/components/DataListAdvancedSearch";
 import TypographyIconCell from "@/components/TypographyIconCell";
+import RawMultiTransactions from "@/components/crud/transaction/RawMultiTransactions";
+import { useSession } from "next-auth/react";
 
 const Transaction = ({ params }) => {
+    const [openRawMultiTransaction, setOpenRawMultiTransaction] = useState(false);
     const [open, setOpen] = useState(false);
     const [itemToDelete, setItemToDelete] = useState();
     const [itemToUpdate, setItemToUpdate] = useState();
@@ -27,6 +30,7 @@ const Transaction = ({ params }) => {
     const { currencyFormat } = useFormat();
     const { transactions, setTransactions } = useList();
     const { t } = useTranslation(params?.lng ?? 'en', 'transactions')
+    const { data: session } = useSession()
 
     const onDelete = useCallback(() => {
         deleteTransaction(itemToDelete?._id);
@@ -110,13 +114,16 @@ const Transaction = ({ params }) => {
             <IconButton onClick={() => setOpen(true)}>
                 <Add sx={styles.icon} />
             </IconButton>
+            {session?.user?.role === 'Admin' && <IconButton onClick={() => setOpenRawMultiTransaction(true)}>
+                <DataSaverOn sx={styles.icon} />
+            </IconButton>}
         </Tooltip>,
         renderCell: ({ row }) => <ActionColumn iconColor={getLineColor(row)}
             onDetails={() => setItemToView(row)}
             onUpdate={() => { setItemToUpdate(row), setOpen(true) }}
             onDelete={() => setItemToDelete(row)}
         />
-    }], [currencyFormat, getType, t])
+    }], [currencyFormat, getType, session?.user?.role, t])
 
     return (
         <>
@@ -127,6 +134,7 @@ const Transaction = ({ params }) => {
                 setRows={setTransactions}
             />
             {open && <Form item={itemToUpdate} onClose={() => { setOpen(false); setItemToUpdate() }} />}
+            {openRawMultiTransaction && <RawMultiTransactions onClose={() => setOpenRawMultiTransaction(false)} />}
             {itemToView && <Details item={itemToView} onClose={() => setItemToView()} />}
             {itemToDelete && <DeleteModal onClose={() => setItemToDelete()} onClick={onDelete} />}
             {isLoading && <Loader isLoading />}
