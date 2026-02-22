@@ -15,5 +15,8 @@
     "changeStatusText": "Está seguro de que desea cambiar el estado?",
     "transactionList": "Lista de Transacciones",
     "recurrentTransactionList": "Lista de Transacciones Recurrentes",
-    "defaultTransactionValueList": "Valores de Transacciones por Defecto"
+    "defaultTransactionValueList": "Valores de Transacciones por Defecto",
+    "missing_data_in_line": "Faltan datos en la línea:",
+    "invalid_date_in_line": "La fecha no es correcta en la línea:",
+    "invalid_amount_in_line": "La cantidad no es correcta en la línea:"
 }

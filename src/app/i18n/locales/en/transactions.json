@@ -15,5 +15,8 @@
     "changeStatusText": "Are you sure you want to change the status?",
     "transactionList": "Transaction list",
     "recurrentTransactionList": "Recurrent Transaction list",
-    "defaultTransactionValueList": "Transaction Value list"
+    "defaultTransactionValueList": "Transaction Value list",
+    "missing_data_in_line": "Missing data in line:",
+    "invalid_date_in_line": "Invalid date in line:",
+    "invalid_amount_in_line": "Invalid amount in line:"
 }
