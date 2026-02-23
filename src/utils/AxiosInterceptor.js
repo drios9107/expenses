@@ -22,6 +22,11 @@ axiosInstance.interceptors.response.use(response => response, error => {
         if (data?.code === 'no-error-needed')
             return;
 
+        if (['category_not_found_in_line', 'subcategory_not_found_in_line'].includes(data?.code)) {
+            toast.error(`${messages[data.code]} ${data.index}`);
+            return;
+        }
+
         toast.error(messages[data?.code ?? 'default']);
 
         // switch (status) {

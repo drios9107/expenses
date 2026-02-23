@@ -12,6 +12,8 @@ const messages = {
     'finishedRecurrence': "The recurrent transactions has been updated successfully",
     'emailSent': "Email was sent successfully",
     'convertedCurrency': "Currency was converted successfully",
+    'subcategory_not_found_in_line': "The subcategory wasn't found in line:",
+    'category_not_found_in_line': "The category wasn't found in line:",
 }
 
 
