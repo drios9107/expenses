@@ -47,7 +47,7 @@ const RawMultiTransactions = ({ onClose = () => { } }) => {
 
             const [stringDate, category, subcategory, amount, description] = dataArray
 
-            const date = moment(stringDate, 'YYYY/MM/DD', true)
+            const date = moment(stringDate.trim(), 'YYYY/MM/DD', true)
             if (!date.isValid())
                 return { error: `${t('transactions:invalid_date_in_line')} ${index + 1}` }
 
@@ -56,10 +56,10 @@ const RawMultiTransactions = ({ onClose = () => { } }) => {
 
             return {
                 date: date.valueOf(),
-                category,
-                subcategory,
+                category: category.trim(),
+                subcategory: subcategory.trim(),
                 amount: parseFloat(amount),
-                description,
+                description: description.trim(),
                 type: 'cup',
                 isExpense: true,
                 isRecurrent: false
@@ -67,10 +67,12 @@ const RawMultiTransactions = ({ onClose = () => { } }) => {
         })
 
         const errorExists = result.find(i => i?.error)
-        if (errorExists)
+        if (errorExists) {
             toastError(errorExists.error)
+            return;
+        }
 
-        const response = await createManyTransactions(allData);
+        const response = await createManyTransactions(result);
 
         if (response)
             onClose()
