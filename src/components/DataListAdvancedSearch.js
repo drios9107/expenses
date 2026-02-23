@@ -25,10 +25,8 @@ const DataListAdvancedSearch = ({ rows = [], setRows = () => { }, model = 'trans
             ...filters,
             ...params
         }
-        console.log('***params', payload)
         const response = await advancedSearch(model, payload);
         if (response) {
-            console.log('***response', response)
             if (response?.data)
                 setRows(response?.data)
             if (response?.nextPageToken || response?.previousPageToken)
@@ -39,7 +37,6 @@ const DataListAdvancedSearch = ({ rows = [], setRows = () => { }, model = 'trans
     }, [advancedSearch, filters, model, pageSize, searchTermDebounced, setRows, sortDirection, sortField])
 
     const onPaginationModelChange = useCallback(async (model) => {
-        console.log('***new pagination model', model)
         const payload = {};
         if (model?.pageSize !== pageSize) {
             setPageSize(model.pageSize);
@@ -85,7 +82,7 @@ const DataListAdvancedSearch = ({ rows = [], setRows = () => { }, model = 'trans
         onSortModelChange={onSortModelChange}
         paginationModel={{ page, pageSize }}
         onPaginationModelChange={onPaginationModelChange}
-        rowCount={rowCount ?? rows?.length}
+        rowCount={rowCount}
         slots={{
             toolbar: props => <DatalistToolbar
                 {...props}
