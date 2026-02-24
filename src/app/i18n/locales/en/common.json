@@ -12,6 +12,8 @@
     "smallMenu": "Contract",
     "smallMenu2": "Contract Menu",
     "convertCurrency": "Convert Currency",
+    "backup": "Bakup DB",
+    "restore": "Restore DB",
     "date": "Date",
     "fromType": "From Type",
     "toType": "To Type",

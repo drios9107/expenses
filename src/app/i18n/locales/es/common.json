@@ -12,6 +12,8 @@
     "smallMenu": "Contraer",
     "smallMenu2": "Contraer Menú",
     "convertCurrency": "Convertir Moneda",
+    "backup": "Guardar BD",
+    "restore": "Restaurar BD",
     "date": "Fecha",
     "fromType": "De",
     "toType": "A",
