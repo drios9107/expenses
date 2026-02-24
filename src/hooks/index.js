@@ -1,6 +1,7 @@
 import { DashboardContext } from "@/contexts/DashboardContext";
 import { useContext } from "react";
 import useSearch from "./useSearch";
+import useDbBackup from "./useDbBackup";
 import useCategory from "./useCategory";
 import useSubCategory from "./useSubCategory";
 import useRecurrentTransaction from "./useRecurrentTransaction";
@@ -28,6 +29,7 @@ export {
     useDashboardContext,
     useList,
     useSearch,
+    useDbBackup,
     useMessages,
     useCurrencies,
     useUser,
