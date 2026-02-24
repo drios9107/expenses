@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import MenuLink from '../MenuLink'
 import {
     ArrowCircleRightOutlined,
+    BackupOutlined,
     CategoryOutlined,
     CurrencyExchange,
     PaymentsOutlined,
@@ -15,6 +16,7 @@ import { useSession } from 'next-auth/react';
 import ContractMenuAction from '../ContractMenuAction';
 import MenuAction from '../MenuAction';
 import ConversionCurrency from '../ConversionCurrency';
+import { useDbBackup } from '@/hooks';
 
 
 const Menu = () => {
@@ -24,6 +26,7 @@ const Menu = () => {
     const [collapsed, setCollapsed] = useState(false);
     const [openConvertCurrencyForm, setOpenConvertCurrencyForm] = useState(false);
     const { data: session } = useSession()
+    const { saveDb } = useDbBackup()
 
     useEffect(() => {
         if (isMobile)
@@ -116,6 +119,14 @@ const Menu = () => {
             >
                 <ArrowCircleRightOutlined sx={styles.iconMenu} />
             </MenuLink>
+
+            <MenuAction
+                onClick={saveDb}
+                collapsed={collapsed}
+                title={t('backup')}
+            >
+                <BackupOutlined sx={styles.iconMenu} />
+            </MenuAction>
 
             {/* <MenuLink
                 href={`/${lng}/current-month`}
