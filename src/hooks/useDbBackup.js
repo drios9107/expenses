@@ -21,7 +21,6 @@ const useDbBackup = () => {
 			.then(response => {
 				const data = response.data
 				const contentType = response.headers.getContentType()
-				console.log('***data', data, contentType)
 				if (contentType.includes('application/json')) {
 					if (data && data.code && data.file && data.size)
 						toastInfo(`${t(data.code)} (${data.file} ${data.size})`)
