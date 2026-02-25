@@ -43,5 +43,7 @@
     "singOut": "Sign out",
     "save": "Save",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "backup_completed": "Backup completed successfully but the file is too large to be downloaded",
+    "backup_failed": "Unable to create database backup"
 }

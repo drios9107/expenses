@@ -43,5 +43,8 @@
     "singOut": "Cerrar sesión",
     "save": "Guardar",
     "yes": "Sí",
-    "no": "No"
+    "no": "No",
+    "backup_completed": "La salva fue completada satisfactoriamente pero el archivo es demasiado grande para ser descargado",
+    "backup_failed": "No se pudo crear la copia de seguridad"
+
 }
