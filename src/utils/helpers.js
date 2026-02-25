@@ -1,79 +1,76 @@
-import { keyframes } from "@emotion/react";
+import { keyframes } from '@emotion/react'
+import moment from 'moment'
+
+const getFileName = () => {
+	const timestamp = moment().format('YYYY-MM-DD_HH-mm-ss')
+	const name = `expensesDB_${timestamp}`
+
+	return `${name}.zip`
+}
 
 const getLineColor = (row, normalColor = 'textSecondary') => {
-    if (row?.isExpense)
-        return ((row?.amount > 1000 && row?.type === 'cup') ||
-            (row?.amount > 100 && row?.type === 'mlc')) ? 'error' : normalColor
+	if (row?.isExpense)
+		return (row?.amount > 1000 && row?.type === 'cup') || (row?.amount > 100 && row?.type === 'mlc')
+			? 'error'
+			: normalColor
 
-    return 'success'
-};
+	return 'success'
+}
 
-const getDebtLineColor = (row) => {
-    return row?.isCompleted ? 'success' : 'error'
-};
+const getDebtLineColor = row => {
+	return row?.isCompleted ? 'success' : 'error'
+}
 
 const getPersonFullName = row => {
-    let fullname = row?.name;
-    if (row?.lastname)
-        fullname += ` ${row?.lastname}`
+	let fullname = row?.name
+	if (row?.lastname) fullname += ` ${row?.lastname}`
 
-    return fullname?.trim();
+	return fullname?.trim()
 }
 
 const typeList = [
-    { _id: 'cup', name: 'CUP' },
-    { _id: 'mlc', name: 'MLC' },
-    { _id: 'usd', name: 'USD' },
-    { _id: 'usdt', name: 'USDT' }
+	{ _id: 'cup', name: 'CUP' },
+	{ _id: 'mlc', name: 'MLC' },
+	{ _id: 'usd', name: 'USD' },
+	{ _id: 'usdt', name: 'USDT' }
 ]
 
 const profileInformation = {
-    name: 'David Rios Peña',
-    email: 'drios9107@gmail.com',
-    emailLink: 'mailto:drios9107@gmail.com',
-    whatsapp: 'https://wa.me/+5354056199',
-    phone: '+53 54056199',
-    linkedin: 'https://www.linkedin.com/in/david-rios-9492001b2/',
+	name: 'David Rios Peña',
+	email: 'drios9107@gmail.com',
+	emailLink: 'mailto:drios9107@gmail.com',
+	whatsapp: 'https://wa.me/+5354056199',
+	phone: '+53 54056199',
+	linkedin: 'https://www.linkedin.com/in/david-rios-9492001b2/'
 }
 
-const publicRoutes = [
-    '/',
-    '/contact',
-    '/login',
-]
-const policyRoutes = [
-    '/privacy',
-    '/cookies',
-    '/terms'
-]
+const publicRoutes = ['/', '/contact', '/login']
+const policyRoutes = ['/privacy', '/cookies', '/terms']
 
-const adminRoutes = [
-    '/user',
-    '/role'
-]
+const adminRoutes = ['/user', '/role']
 
-const completeAdminRoutes = adminRoutes.map(i => [`/en${i}`, `/es${i}`, i]).flat();
+const completeAdminRoutes = adminRoutes.map(i => [`/en${i}`, `/es${i}`, i]).flat()
 
-let combinedPublicRoutes = [...publicRoutes, ...policyRoutes].map(i => [`/en${i}`, `/es${i}`, i]);
-let policyRoutesWithLanguage = policyRoutes.map(i => [`/en${i}`, `/es${i}`, i]).flat();
-combinedPublicRoutes.push(['/en', '/es']);
-combinedPublicRoutes = combinedPublicRoutes.flat();
+let combinedPublicRoutes = [...publicRoutes, ...policyRoutes].map(i => [`/en${i}`, `/es${i}`, i])
+let policyRoutesWithLanguage = policyRoutes.map(i => [`/en${i}`, `/es${i}`, i]).flat()
+combinedPublicRoutes.push(['/en', '/es'])
+combinedPublicRoutes = combinedPublicRoutes.flat()
 
 const fadeInStyles = (initialScale = 0.95, delay = 1) => ({
-    opacity: 0,
-    transform: `scale(${initialScale})`,
-    animation: `fadeIn ${delay}s ease-out forwards`,
+	opacity: 0,
+	transform: `scale(${initialScale})`,
+	animation: `fadeIn ${delay}s ease-out forwards`,
 
-    '@keyframes fadeIn': {
-        from: {
-            opacity: 0,
-            transform: `scale(${initialScale})`
-        },
-        to: {
-            opacity: 1,
-            transform: 'scale(1)'
-        }
-    }
+	'@keyframes fadeIn': {
+		from: {
+			opacity: 0,
+			transform: `scale(${initialScale})`
+		},
+		to: {
+			opacity: 1,
+			transform: 'scale(1)'
+		}
+	}
 })
 
 const riseAnimation = keyframes`
@@ -85,6 +82,20 @@ const riseAnimation = keyframes`
     opacity: 1;
     transform: translateY(0);
   }
-`;
+`
 
-export { getDebtLineColor, getPersonFullName, typeList, getLineColor, publicRoutes, policyRoutes, policyRoutesWithLanguage, combinedPublicRoutes, fadeInStyles, riseAnimation, profileInformation, completeAdminRoutes }
+export {
+	getFileName,
+	getDebtLineColor,
+	getPersonFullName,
+	typeList,
+	getLineColor,
+	publicRoutes,
+	policyRoutes,
+	policyRoutesWithLanguage,
+	combinedPublicRoutes,
+	fadeInStyles,
+	riseAnimation,
+	profileInformation,
+	completeAdminRoutes
+}
