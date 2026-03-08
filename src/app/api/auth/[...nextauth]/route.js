@@ -35,15 +35,10 @@ export const authOptions = {
 	},
 	callbacks: {
 		async signIn({ user, account }) {
-			const isMyGithubAccount = user?.email === 'david.rios@alphalabs.uy' && account?.provider === 'github'
-			const isMyGoogleAccount = user?.email === 'drio9107@gmail.com' && account?.provider === 'google'
+			// const isMyGoogleAccount = user?.email === 'drio9107@gmail.com' && account?.provider === 'google'
 			const isLoggedWithCredentials = !user?.error && account?.provider === 'credentials'
 
-			if (
-				//(isMyGithubAccount || isMyGoogleAccount) &&
-				account.provider === 'github' ||
-				account.provider === 'google'
-			) {
+			if (account.provider === 'github' || account.provider === 'google') {
 				const payload = {
 					user: { email: user.email },
 					provider: account.provider,
@@ -62,7 +57,7 @@ export const authOptions = {
 					})
 			}
 
-			return isMyGoogleAccount || isMyGithubAccount || isLoggedWithCredentials
+			return isLoggedWithCredentials
 		},
 		async jwt({ token, user }) {
 			if (user) {
