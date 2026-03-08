@@ -145,11 +145,13 @@ const Transaction = ({ params }) => {
 						<IconButton onClick={() => setOpen(true)}>
 							<Add sx={styles.icon} />
 						</IconButton>
-						{session?.user?.role === 'Admin' && (
-							<IconButton onClick={() => setOpenRawMultiTransaction(true)}>
-								<DataSaverOn sx={styles.icon} />
-							</IconButton>
-						)}
+						{session?.user?.role === 'Admin' &&
+							process.env.NEXT_MODE ===
+								'dev'(
+									<IconButton onClick={() => setOpenRawMultiTransaction(true)}>
+										<DataSaverOn sx={styles.icon} />
+									</IconButton>
+								)}
 					</Tooltip>
 				),
 				renderCell: ({ row }) => (
