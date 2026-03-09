@@ -48,7 +48,10 @@ export const authOptions = {
 				return axios
 					.post(`${process.env.NEXT_PUBLIC_BACKEND}/auth/verifyOauthAccessToken`, payload)
 					.then(({ data }) => {
+						user._id = data._id
+						user.role = data.role
 						user.token = data.token
+
 						return true
 					})
 					.catch(error => {
@@ -60,10 +63,8 @@ export const authOptions = {
 			return isLoggedWithCredentials
 		},
 		async jwt({ token, user }) {
-			if (user) {
-				//user received from backend
-				token = { accessToken: user?.token, _id: user?._id, email: user?.email, role: user?.role }
-			}
+			if (user) token = { accessToken: user?.token, _id: user?._id, email: user?.email, role: user?.role }
+
 			return token
 		},
 		async session({ session, token }) {
@@ -72,7 +73,7 @@ export const authOptions = {
 				user: {
 					_id: token?._id,
 					email: token?.email,
-					role: token.role,
+					role: token?.role,
 					exp: token?.exp,
 					token: token?.accessToken
 				}
