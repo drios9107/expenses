@@ -45,6 +45,6 @@
     "yes": "Sí",
     "no": "No",
     "backup_completed": "La salva fue completada satisfactoriamente pero el archivo es demasiado grande para ser descargado",
-    "backup_failed": "No se pudo crear la copia de seguridad"
-
+    "backup_failed": "No se pudo crear la copia de seguridad",
+    "hello": "Hola"
 }

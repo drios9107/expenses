@@ -45,5 +45,6 @@
     "yes": "Yes",
     "no": "No",
     "backup_completed": "Backup completed successfully but the file is too large to be downloaded",
-    "backup_failed": "Unable to create database backup"
+    "backup_failed": "Unable to create database backup",
+    "hello": "Hello"
 }
