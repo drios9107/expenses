@@ -6,6 +6,7 @@ import { useParams, useRouter } from 'next/navigation'
 import { useEffect, useMemo } from 'react'
 import Link from 'next/link'
 import { useSession } from 'next-auth/react'
+import LanguageSelector from './LanguageSelector'
 
 export default function LandingLayout({ children }) {
 	const { status } = useSession()
@@ -33,6 +34,7 @@ export default function LandingLayout({ children }) {
 					</Box>
 
 					<Box sx={styles.rightMenu}>
+						<LanguageSelector controllerExtraclasses={{ width: 'fit-content' }} />
 						{status === 'authenticated' ? (
 							<Link href={`/${lng}/dashboard`} style={styles.link}>
 								{t('dashboard')}
@@ -104,7 +106,7 @@ const styles = {
 		justifyContent: 'center',
 		alignItems: 'center',
 		gap: '100px',
-		backgroundImage: `url(${banner.src})`,
+		backgroundImage: `linear-gradient(to top, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.0), rgba(255, 255, 255, 0.0), rgba(255, 255, 255, 0.0), rgba(255, 255, 255, 0.0)), url(${banner.src})`,
 		backgroundSize: 'cover',
 		width: '100%',
 		py: '50px'
