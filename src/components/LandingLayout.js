@@ -59,9 +59,17 @@ export default function LandingLayout({ children }) {
 					</Typography>
 				</Box>
 
-				{status !== 'authenticated' && (
+				{status !== 'authenticated' ? (
 					<Button variant="contained" onClick={() => router.push(`/${params?.lng}/login`)} sx={styles.button}>
 						{t('loginNow')}
+					</Button>
+				) : (
+					<Button
+						variant="contained"
+						onClick={() => router.push(`/${params?.lng}/dashboard`)}
+						sx={styles.button}
+					>
+						{t('get_started')}
 					</Button>
 				)}
 			</Box>
