@@ -88,11 +88,12 @@ const RecurrentTransaction = ({ params }) => {
 				valueGetter: (uid, row) => moment(row?.date).format('YYYY-MM-DD')
 			},
 			{
+				flex: 1,
 				minWidth: 100,
 				field: 'amount',
 				sortable: true,
 				renderHeader: () => <ColumnHeader title={t('amount')} />,
-				renderCell: ({ row }) => <Typography variant="body1">{currencyFormat(row?.amount)}</Typography>,
+				renderCell: ({ row }) => <Typography variant="body1">$ {currencyFormat(row?.amount ?? 0)}</Typography>,
 				valueGetter: (uid, row) => row?.amount
 			},
 			{
