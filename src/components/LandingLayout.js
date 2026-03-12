@@ -28,7 +28,7 @@ export default function LandingLayout({ children }) {
 			<Box sx={styles.banner}>
 				<Box sx={styles.menu}>
 					<Box sx={styles.leftMenu}>
-						<Link href={`/${lng}/`} style={styles.link}>
+						<Link href={`/${lng}/`} className={'landing-page-link'} style={styles.link}>
 							Expenses
 						</Link>
 					</Box>
@@ -36,16 +36,16 @@ export default function LandingLayout({ children }) {
 					<Box sx={styles.rightMenu}>
 						<LanguageSelector controllerExtraclasses={{ width: 'fit-content' }} />
 						{status === 'authenticated' ? (
-							<Link href={`/${lng}/dashboard`} style={styles.link}>
+							<Link href={`/${lng}/dashboard`} className={'landing-page-link'} style={styles.link}>
 								{t('dashboard')}
 							</Link>
 						) : (
-							<Link href={`/${lng}/login`} style={styles.link}>
+							<Link href={`/${lng}/login`} className={'landing-page-link'} style={styles.link}>
 								{t('login')}
 							</Link>
 						)}
 
-						<Link href={`/${lng}/contact`} style={styles.link}>
+						<Link href={`/${lng}/contact`} className={'landing-page-link'} style={styles.link}>
 							{t('contactMe')}
 						</Link>
 					</Box>
@@ -149,7 +149,6 @@ const styles = {
 		gap: '5px',
 		alignItems: 'center',
 		color: '#fff',
-		cursor: 'pointer',
-		'&:hover': { opacity: 0.7 }
+		cursor: 'pointer'
 	}
 }

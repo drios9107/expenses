@@ -46,3 +46,7 @@ a {
 .download-icon:hover {
   opacity: 0.7;
 }
+
+.landing-page-link:hover {
+  opacity: 0.7;
+}
