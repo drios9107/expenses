@@ -3,6 +3,8 @@
         "email": "Email",
         "password": "Password",
         "login": "Login",
-        "back": "Go back"
+        "back": "Go back",
+        "login_error": "Login error:",
+        "try_vpn": "Please try again using a VPN."
     }
 }

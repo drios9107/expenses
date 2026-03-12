@@ -3,6 +3,8 @@
         "email": "Correo",
         "password": "Contraseña",
         "login": "Iniciar Sesión",
-        "back": "Ir atrás"
+        "back": "Ir atrás",
+        "login_error": "Error en la autenticación:",
+        "try_vpn": "Por favor intente usando una VPN."
     }
 }
