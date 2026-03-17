@@ -65,7 +65,8 @@ const RawMultiTransactions = ({ onClose = () => {} }) => {
 						options={{
 							label: t('transactions:description'),
 							multiline: true,
-							onBlur: e => setAllData(e?.target?.value)
+							onBlur: e => setAllData(e?.target?.value),
+							helperText: t('transactions:multitransaction_helper')
 						}}
 					/>
 				</Box>
