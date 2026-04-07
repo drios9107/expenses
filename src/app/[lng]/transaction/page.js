@@ -25,12 +25,12 @@ const Transaction = ({ params }) => {
 	const [itemToDelete, setItemToDelete] = useState()
 	const [itemToUpdate, setItemToUpdate] = useState()
 	const [itemToView, setItemToView] = useState()
-
 	const { isLoading, deleteTransaction } = useTransaction()
 	const { currencyFormat } = useFormat()
 	const { transactions, setTransactions } = useList()
 	const { t } = useTranslation(params?.lng ?? 'en', 'transactions')
 	const { data: session } = useSession()
+	console.log('***session', { role: session.user.role, mode: process.env.NEXT_MODE, url: process.env.NEXTAUTH_URL })
 
 	const onDelete = useCallback(() => {
 		deleteTransaction(itemToDelete?._id)
@@ -145,7 +145,7 @@ const Transaction = ({ params }) => {
 						<IconButton onClick={() => setOpen(true)}>
 							<Add sx={styles.icon} />
 						</IconButton>
-						{session?.user?.role === 'Admin' && process.env.NEXT_MODE === 'dev' && (
+						{session?.user?.role === 'Admin' && process.env.NEXT_PUBLIC_MODE === 'dev' && (
 							<IconButton onClick={() => setOpenRawMultiTransaction(true)}>
 								<DataSaverOn sx={styles.icon} />
 							</IconButton>
