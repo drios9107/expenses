@@ -25,17 +25,18 @@ const Transaction = ({ params }) => {
 	const [itemToDelete, setItemToDelete] = useState()
 	const [itemToUpdate, setItemToUpdate] = useState()
 	const [itemToView, setItemToView] = useState()
+	const [refreshKey, setRefreshKey] = useState(0)
 	const { isLoading, deleteTransaction } = useTransaction()
 	const { currencyFormat } = useFormat()
 	const { transactions, setTransactions } = useList()
 	const { t } = useTranslation(params?.lng ?? 'en', 'transactions')
 	const { data: session } = useSession()
-	console.log('***session', { role: session.user.role, mode: process.env.NEXT_MODE, url: process.env.NEXTAUTH_URL })
 
-	const onDelete = useCallback(() => {
-		deleteTransaction(itemToDelete?._id)
+	const onDelete = useCallback(async () => {
+		await deleteTransaction(itemToDelete?._id)
 		setItemToDelete()
-	}, [deleteTransaction, itemToDelete?._id])
+		setRefreshKey(prev => prev + 1)
+	}, [deleteTransaction, itemToDelete?._id, setRefreshKey])
 
 	const getType = useCallback(row => {
 		return typeList.find(i => i._id === row?.type)?.name
@@ -175,6 +176,7 @@ const Transaction = ({ params }) => {
 				columns={columns}
 				rows={transactions}
 				setRows={setTransactions}
+				refreshKey={refreshKey}
 			/>
 			{open && (
 				<Form
@@ -182,6 +184,7 @@ const Transaction = ({ params }) => {
 					onClose={() => {
 						setOpen(false)
 						setItemToUpdate()
+						setRefreshKey(prev => prev + 1)
 					}}
 				/>
 			)}
