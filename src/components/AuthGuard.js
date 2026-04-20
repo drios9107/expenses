@@ -3,14 +3,7 @@ import { useSession } from 'next-auth/react'
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useMemo, useRef } from 'react'
 import FallbackLoader from './FallbackLoader'
-import {
-	combinedPublicRoutes,
-	completeAdminRoutes,
-	policyRoutes,
-	policyRoutesWithLanguage,
-	publicRoutes
-} from '@/utils/helpers'
-import { setAuthToken } from '@/utils/AxiosInterceptor'
+import { combinedPublicRoutes, completeAdminRoutes, policyRoutesWithLanguage, publicRoutes } from '@/utils/helpers'
 import { useToast } from '@/hooks/useToast'
 import { useTranslation } from '@/hooks/useTranslation'
 
@@ -74,10 +67,6 @@ export default function AuthGuard({ children, params }) {
 		searchParams,
 		status
 	])
-
-	useEffect(() => {
-		if (session?.user?.token) setAuthToken(session.user.token)
-	}, [session?.user?.token])
 
 	if (status === 'loading') return <FallbackLoader />
 

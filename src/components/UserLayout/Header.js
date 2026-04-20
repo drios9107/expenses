@@ -5,7 +5,6 @@ import Balance from '../Balance'
 import { Home, Logout, Policy } from '@mui/icons-material'
 import { signOut } from 'next-auth/react'
 import { useLayoutStyles } from '@/hooks/useLayoutStyles'
-import { setAuthToken } from '@/utils/AxiosInterceptor'
 import { useParams } from 'next/navigation'
 import { useTranslation } from '@/hooks/useTranslation'
 import LanguageSelector from '../LanguageSelector'
@@ -18,7 +17,6 @@ const Header = () => {
 
 	const handleSignOut = useCallback(() => {
 		signOut()
-		setAuthToken(null)
 	}, [])
 
 	const getHomeLink = useMemo(() => {
