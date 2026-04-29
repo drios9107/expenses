@@ -6,6 +6,8 @@ import Header from './Header';
 import Footer from './Footer';
 import Body from './Body';
 import GuestLayout from './GuestLayout';
+import Header2 from './Header2';
+import Footer2 from './Footer2';
 
 
 const Layout = ({ children }) => {
@@ -18,11 +20,11 @@ const Layout = ({ children }) => {
         </GuestLayout>
 
     return <Box sx={[styles.container, conditionalContainerStyles]}>
-        <Header />
+        <Header2 />
         <Body>
             {children}
         </Body>
-        <Footer />
+        <Footer2 />
     </Box>
 }
 

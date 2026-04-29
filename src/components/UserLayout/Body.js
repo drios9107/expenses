@@ -1,12 +1,13 @@
 import { Box } from '@mui/material';
 import Menu from './Menu';
 import { useLayoutStyles } from '@/hooks/useLayoutStyles'
+import Menu2 from './Menu2';
 
 const Body = ({ children }) => {
     const { conditionalMiddleSectionStyles } = useLayoutStyles()
 
     return <Box sx={[styles.middleSection, conditionalMiddleSectionStyles]}>
-        <Menu />
+        <Menu2 />
         <Box sx={styles.bodySection}>
             {children}
         </Box>

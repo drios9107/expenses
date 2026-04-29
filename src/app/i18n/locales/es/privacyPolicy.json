@@ -1,5 +1,33 @@
 {
-    "title": "Política de Cookies",
-    "text": "Este sitio web utiliza cookies esenciales para su funcionamiento, como la gestión de sesiones de usuario.",
+    "title": "Política de Privacidad",
+    "lastUpdated": "Última actualización: 29 de abril de 2026",
+    "informationWeCollect": {
+        "title": "Información que Recopilamos",
+        "text": "Recopilamos la información de cuenta y uso necesaria para ofrecer la aplicación Expenses. Esto puede incluir datos de perfil, registros financieros que creas en la app y datos técnicos necesarios para autenticación y acceso seguro."
+    },
+    "howWeUseInformation": {
+        "title": "Cómo Usamos la Información",
+        "text": "Usamos tu información para operar funciones principales como paneles, transacciones, balances, operaciones recurrentes y reportes. También usamos datos técnicos limitados para mantener la estabilidad del servicio y mejorar la experiencia de uso."
+    },
+    "legalBasis": {
+        "title": "Base Legal",
+        "text": "El tratamiento de datos se basa en la prestación del servicio, el interés legítimo de proteger la plataforma y tu consentimiento cuando aplique. Solo procesamos datos relevantes para estos fines."
+    },
+    "dataRetention": {
+        "title": "Conservación de Datos",
+        "text": "Conservamos tus datos mientras tu cuenta esté activa o cuando sea necesario para cumplir obligaciones legales, resolver disputas y hacer cumplir acuerdos. Puedes solicitar la eliminación de la cuenta según la normativa aplicable."
+    },
+    "security": {
+        "title": "Seguridad",
+        "text": "Aplicamos medidas técnicas y organizativas razonables para proteger tu información, incluyendo controles de acceso autenticado y prácticas seguras de manejo de datos. Ningún sistema es totalmente libre de riesgos, pero mejoramos continuamente las medidas de protección."
+    },
+    "yourRights": {
+        "title": "Tus Derechos",
+        "text": "Según tu jurisdicción, puedes tener derecho a acceder, corregir, eliminar o limitar el uso de tus datos, y a solicitar una copia de tu información personal. Contáctanos para enviar cualquier solicitud relacionada con privacidad."
+    },
+    "contact": {
+        "title": "Contacto",
+        "text": "Si tienes preguntas sobre esta política o sobre tus datos, contacta al administrador de esta instancia de Expenses."
+    },
     "button": "Volver atrás"
 }
