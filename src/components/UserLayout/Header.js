@@ -24,7 +24,7 @@ const Header = () => {
 		const title = t('home')
 
 		return (
-			<Link href={`/${lng}/dashboard`} className="landing-page-link" style={styles.link}>
+			<Link href={`/${lng}/`} className="landing-page-link" style={styles.link}>
 				{isMobile ? (
 					<Tooltip title={title}>{icon}</Tooltip>
 				) : (
@@ -55,16 +55,16 @@ const Header = () => {
 
 	return (
 		<Paper sx={[styles.topSection, conditionalTopSectionStyles]}>
-			<Box sx={[{ display: 'flex', flexDirection: 'row', gap: '10px' }]}>
+			<Box sx={styles.leftSection}>
 				{getHomeLink}
 				{getPrivacyLink}
 			</Box>
 			<Box sx={styles.rightSection}>
 				<LanguageSelector />
 				<Balance />
-				<Box sx={[{ cursor: 'pointer', display: 'flex', alignItems: 'center' }]}>
+				<Box sx={styles.signOutWrap}>
 					<Tooltip title={t('singOut')}>
-						<Logout sx={[styles.opacity, styles.iconMenu]} onClick={handleSignOut} />
+						<Logout sx={styles.iconMenu} onClick={handleSignOut} />
 					</Tooltip>
 				</Box>
 			</Box>
@@ -76,14 +76,47 @@ export default Header
 
 const styles = {
 	topSection: {
-		backgroundColor: '#fff',
 		minHeight: '60px',
 		display: 'flex',
 		justifyContent: 'space-between',
+		alignItems: 'center',
+		background: 'linear-gradient(180deg, #ffffff 0%, #f5f8ff 100%)',
+		border: '1px solid #d6e2ff',
+		boxShadow: '0 10px 22px rgba(20, 47, 79, 0.08)'
+	},
+	iconMenu: {
+		color: '#3f5f9b',
+		height: '20px',
+		width: '20px',
+		cursor: 'pointer'
+	},
+	link: {
+		display: 'flex',
+		flexDirection: 'row',
+		gap: '6px',
+		alignItems: 'center',
+		color: '#2c4671',
+		fontWeight: 500,
+		padding: '6px 10px',
+		borderRadius: '10px',
+		transition: 'all 0.2s ease'
+	},
+	leftSection: {
+		display: 'flex',
+		flexDirection: 'row',
+		gap: '10px',
 		alignItems: 'center'
 	},
-	opacity: { '& :hover': { opacity: 0.7 } },
-	iconMenu: { color: '#00000099', height: '20px', width: '20px' },
-	link: { display: 'flex', flexDirection: 'row', gap: '5px', alignItems: 'center' },
-	rightSection: { display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }
+	rightSection: {
+		display: 'flex',
+		justifyContent: 'center',
+		alignItems: 'center',
+		gap: '10px'
+	},
+	signOutWrap: {
+		cursor: 'pointer',
+		display: 'flex',
+		alignItems: 'center',
+		'&:hover': { opacity: 0.75 }
+	}
 }
