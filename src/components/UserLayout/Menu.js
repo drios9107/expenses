@@ -108,7 +108,7 @@ export default Menu
 
 const styles = {
 	menu: {
-		background: 'linear-gradient(180deg, #ffffff 0%, #f5f8ff 100%)',
+		background: 'linear-gradient(180deg, #f7fbff 0%, #eef4ff 100%)',
 		borderRadius: '18px',
 		border: '1px solid #d6e2ff',
 		minWidth: '250px',
