@@ -5,6 +5,11 @@
         "login": "Login",
         "back": "Go back",
         "login_error": "Login error:",
-        "try_vpn": "Please try again using a VPN."
+        "try_vpn": "Please try again using a VPN.",
+        "welcomeBack": "Welcome back",
+        "loginDescription": "Log in to access your expense dashboard",
+        "noAccount": "Need an account?",
+        "signUp": "Sign up",
+        "orContinueWith": "Continue with"
     }
 }

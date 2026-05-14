@@ -5,6 +5,11 @@
         "login": "Iniciar Sesión",
         "back": "Ir atrás",
         "login_error": "Error en la autenticación:",
-        "try_vpn": "Por favor intente usando una VPN."
+        "try_vpn": "Por favor intente usando una VPN.",
+        "welcomeBack": "Bienvenido de vuelta",
+        "loginDescription": "Inicia sesión para acceder a tu panel de gastos",
+        "noAccount": "¿Necesitas una cuenta?",
+        "signUp": "Regístrate",
+        "orContinueWith": "Continuar con"
     }
 }
