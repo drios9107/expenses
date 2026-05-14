@@ -60,17 +60,17 @@ export default function LandingLayout({ children }) {
 				</Box>
 
 				{status !== 'authenticated' ? (
-					<Button variant="contained" onClick={() => router.push(`/${params?.lng}/login`)} sx={styles.button}>
-						{t('loginNow')}
-					</Button>
+					<Link href={`/${params?.lng}/login`} style={styles.linkButton}>
+						<Button variant="contained" sx={styles.button}>
+							{t('loginNow')}
+						</Button>
+					</Link>
 				) : (
-					<Button
-						variant="contained"
-						onClick={() => router.push(`/${params?.lng}/dashboard`)}
-						sx={styles.button}
-					>
-						{t('get_started')}
-					</Button>
+					<Link href={`/${params?.lng}/dashboard`} style={styles.linkButton}>
+						<Button variant="contained" sx={styles.button}>
+							{t('get_started')}
+						</Button>
+					</Link>
 				)}
 			</Box>
 
@@ -150,5 +150,8 @@ const styles = {
 		alignItems: 'center',
 		color: '#fff',
 		cursor: 'pointer'
+	},
+	linkButton: {
+		textDecoration: 'none'
 	}
 }
