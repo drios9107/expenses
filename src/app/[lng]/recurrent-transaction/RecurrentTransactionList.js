@@ -17,6 +17,7 @@ import { useFormat } from '@/hooks/useFormat'
 import { useTranslation } from '@/hooks/useTranslation'
 import { typeList } from '@/utils/helpers'
 import { useToast } from '@/hooks/useToast'
+import ActionHeader from '@/components/ActionHeader'
 
 const RecurrentTransaction = ({ initialItems = [], params, error }) => {
 	const { t } = useTranslation(params?.lng ?? 'en', 'transactions')
@@ -124,13 +125,7 @@ const RecurrentTransaction = ({ initialItems = [], params, error }) => {
 				sortable: false,
 				disableColumnMenu: true,
 				headerAlign: 'center',
-				renderHeader: () => (
-					<Tooltip title={t('create')}>
-						<IconButton onClick={() => setOpen(true)}>
-							<Add color="#7e7e7e" sx={{ height: '20px', width: '20px' }} />
-						</IconButton>
-					</Tooltip>
-				),
+				renderHeader: () => <ActionHeader onClick={() => setOpen(true)} />,
 				renderCell: ({ row }) => (
 					<ActionColumn
 						onDetails={() => setItemToView(row)}

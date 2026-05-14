@@ -84,7 +84,14 @@ const riseAnimation = keyframes`
   }
 `
 
+const iconCellStyles = {
+	height: '20px',
+	width: '20px',
+	color: '#2c4671'
+}
+
 export {
+	iconCellStyles,
 	getFileName,
 	getDebtLineColor,
 	getPersonFullName,

@@ -17,6 +17,7 @@ import { typeList, getDebtLineColor, getPersonFullName } from '@/utils/helpers'
 import { useFormat } from '@/hooks/useFormat'
 import TypographyIconCell from '@/components/TypographyIconCell'
 import { useToast } from '@/hooks/useToast'
+import ActionHeader from '@/components/ActionHeader'
 
 const Debts = ({ initialItems = [], params, error }) => {
 	const { t } = useTranslation(params?.lng ?? 'en', 'debt')
@@ -151,13 +152,7 @@ const Debts = ({ initialItems = [], params, error }) => {
 				sortable: false,
 				disableColumnMenu: true,
 				headerAlign: 'center',
-				renderHeader: () => (
-					<Tooltip title={t('create')}>
-						<IconButton onClick={() => setOpen(true)}>
-							<Add color="#7e7e7e" sx={{ height: '20px', width: '20px' }} />
-						</IconButton>
-					</Tooltip>
-				),
+				renderHeader: () => <ActionHeader onClick={() => setOpen(true)} />,
 				renderCell: ({ row }) => (
 					<ActionColumn
 						iconColor={getDebtLineColor(row)}

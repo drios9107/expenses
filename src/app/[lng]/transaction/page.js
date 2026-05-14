@@ -11,7 +11,7 @@ import Form from '@/components/crud/transaction/Form'
 import DeleteModal from '@/components/DeleteModal'
 import moment from 'moment'
 import { useList, useTransaction } from '@/hooks'
-import { getLineColor, typeList } from '@/utils/helpers'
+import { getLineColor, iconCellStyles, typeList } from '@/utils/helpers'
 import { useFormat } from '@/hooks/useFormat'
 import { useTranslation } from '@/hooks/useTranslation'
 import DataListAdvancedSearch from '@/components/DataListAdvancedSearch'
@@ -144,11 +144,11 @@ const Transaction = ({ params }) => {
 				renderHeader: () => (
 					<Tooltip title={t('create')}>
 						<IconButton onClick={() => setOpen(true)}>
-							<Add sx={styles.icon} />
+							<Add sx={iconCellStyles} />
 						</IconButton>
 						{session?.user?.role === 'Admin' && process.env.NEXT_PUBLIC_MODE === 'dev' && (
 							<IconButton onClick={() => setOpenRawMultiTransaction(true)}>
-								<DataSaverOn sx={styles.icon} />
+								<DataSaverOn sx={iconCellStyles} />
 							</IconButton>
 						)}
 					</Tooltip>
