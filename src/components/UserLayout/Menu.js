@@ -61,11 +61,19 @@ const Menu = () => {
 				<CurrencyUsd sx={styles.iconMenu} />
 			</MenuAction2>
 
-			<Divider sx={[styles.divider, collapsed ? { width: '100%' } : {}]} />
-
 			<MenuLink2 href={`/${lng}/person`} title={t('persons')} collapsed={collapsed}>
 				<Human sx={styles.iconMenu} />
 			</MenuLink2>
+
+			<MenuLink2
+				href={`/${lng}/default-transaction-value`}
+				title={t('defaultTransactionValue')}
+				collapsed={collapsed}
+			>
+				<ArrowCircleRightOutlined sx={styles.iconMenu} />
+			</MenuLink2>
+
+			<Divider sx={[styles.divider, collapsed ? { width: '100%' } : {}]} />
 
 			{session?.user?.role === 'Admin' && (
 				<>
@@ -76,20 +84,12 @@ const Menu = () => {
 					<MenuLink2 href={`/${lng}/role`} title={t('roles')} collapsed={collapsed}>
 						<SecurityOutlined sx={styles.iconMenu} />
 					</MenuLink2>
+
+					<MenuAction2 onClick={saveDb} collapsed={collapsed} title={t('backup')}>
+						<BackupOutlined sx={styles.iconMenu} />
+					</MenuAction2>
 				</>
 			)}
-
-			<MenuLink2
-				href={`/${lng}/default-transaction-value`}
-				title={t('defaultTransactionValue')}
-				collapsed={collapsed}
-			>
-				<ArrowCircleRightOutlined sx={styles.iconMenu} />
-			</MenuLink2>
-
-			<MenuAction2 onClick={saveDb} collapsed={collapsed} title={t('backup')}>
-				<BackupOutlined sx={styles.iconMenu} />
-			</MenuAction2>
 
 			{!isMobile && (
 				<ContractMenuAction2
