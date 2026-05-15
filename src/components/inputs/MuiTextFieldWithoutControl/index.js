@@ -19,6 +19,7 @@ const MuiTextfieldWithoutControl = ({ fieldName, state, setState = () => {}, err
 						) : null
 					}
 				}}
+				sx={{ backgroundColor: '#fff', ...(options.sx ?? {}) }}
 				{...options}
 			/>
 			<ShowFieldErrors errors={errors} fieldName={fieldName} />
