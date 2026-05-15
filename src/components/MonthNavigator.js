@@ -57,7 +57,7 @@ const styles = {
 		userSelect: 'none',
 		color: '#1f3154',
 		fontWeight: 500,
-		minWidth: '170px',
-		textAlign: 'center'
+		textAlign: 'center',
+		wordWrap: 'break-word'
 	}
 }

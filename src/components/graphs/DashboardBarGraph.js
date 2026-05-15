@@ -100,7 +100,7 @@ const DashboardBarGraph = ({ currentMonth, currentYear }) => {
 
 	if (subCategoryValues.length === 0)
 		return (
-			<Typography variant="subtitle2" sx={{ userSelect: 'none' }}>
+			<Typography variant="subtitle2" sx={{ userSelect: 'none', width: '100%', textAlign: 'center' }}>
 				{t('noData')}
 			</Typography>
 		)
