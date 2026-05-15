@@ -87,7 +87,7 @@ export default function LandingLayout({ children }) {
 					<Link href={`/terms`} variant="body2" underline="hover">
 						{t('termsOfService')}
 					</Link>
-					<Link href={`/cookies`} variant="body2" underline="hover">
+					<Link href={`/cookie`} variant="body2" underline="hover">
 						{t('cookiePolicy')}
 					</Link>
 				</Box>

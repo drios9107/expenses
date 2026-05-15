@@ -1,33 +1,58 @@
 {
     "title": "Privacy Policy",
-    "lastUpdated": "Last updated: April 29, 2026",
+    "lastUpdated": "Last updated: May 15, 2026",
+    "companyInfo": {
+        "name": "[Your Company Name]",
+        "address": "[Your Full Address]",
+        "email": "privacy@[yourdomain].com"
+    },
     "informationWeCollect": {
         "title": "Information We Collect",
-        "text": "We collect account and usage information required to provide the Expenses application. This can include profile details, financial records you create in the app, and technical data needed for authentication and secure access."
+        "text": "We collect account information you voluntarily provide: email address and name. For credentials login, we collect your email and password. For OAuth login (Google/GitHub), we collect the email and name associated with your provider account. We also collect financial records you create in the app, such as transactions, categories, and receipts. We do not collect IP addresses, device information, or location data."
     },
     "howWeUseInformation": {
         "title": "How We Use Information",
-        "text": "We use your information to operate core features such as dashboards, transactions, balances, recurring operations, and reports. We also use limited technical data to maintain service reliability and improve user experience."
+        "text": "We use your information to authenticate your identity, provide core features (dashboards, transactions, balances, reports), maintain security, improve the app, and comply with legal obligations."
     },
-    "legalBasis": {
-        "title": "Legal Basis",
-        "text": "Data processing is based on service delivery, legitimate interest in protecting the platform, and your consent when applicable. We only process data that is relevant for these purposes."
+    "thirdPartyServices": {
+        "title": "Third-Party Services",
+        "text": "We use the following third-party services: [MongoDB, Vercel/AWS for hosting, Google Provider, GitHub Provider]. These services may process your data according to their own privacy policies. OAuth providers (Google, GitHub) share only the information you have authorized."
+    },
+    "cookies": {
+        "title": "Cookies",
+        "text": "We use essential cookies for authentication and session management. These cookies are required for you to log in and use the app. No tracking or analytics cookies are used unless you explicitly enable them. You can manage cookies in your browser settings, but disabling essential cookies will prevent you from logging in."
+    },
+    "dataSharing": {
+        "title": "Data Sharing",
+        "text": "We do not sell your personal data. We share data only with: (1) service providers who help us operate the app (hosting, database), (2) OAuth providers (Google, GitHub) only when you choose to log in with them, and (3) legal authorities if required by law."
     },
     "dataRetention": {
         "title": "Data Retention",
-        "text": "We retain your data while your account is active or as needed to comply with legal obligations, resolve disputes, and enforce agreements. You can request account deletion according to applicable regulations."
+        "text": "We retain your account data while your account is active. You may request account deletion at any time. Some data may be retained longer to comply with legal obligations, resolve disputes, or enforce agreements."
     },
     "security": {
         "title": "Security",
-        "text": "We apply reasonable technical and organizational safeguards to protect your information, including authenticated access controls and secure data handling practices. No system is fully risk-free, but we continuously improve protection measures."
+        "text": "We use encrypted connections (HTTPS), secure authentication via NextAuth.js, and access controls to protect your data. Passwords are hashed and stored securely by your authentication provider. However, no system is 100% secure."
     },
     "yourRights": {
         "title": "Your Rights",
-        "text": "Depending on your jurisdiction, you may have the right to access, correct, delete, or restrict use of your data, and to request a copy of your personal information. Contact us to submit any privacy-related request."
+        "text": "Depending on your location (GDPR/CCPA), you may have the right to access, correct, delete, or export your data. You may also withdraw consent for data processing where applicable."
+    },
+    "internationalTransfers": {
+        "title": "International Data Transfers",
+        "text": "Your data may be stored on servers located outside your country. We use standard contractual clauses or equivalent safeguards to ensure adequate protection when transferring data internationally."
+    },
+    "childrensPrivacy": {
+        "title": "Children's Privacy",
+        "text": "Our service is not intended for children under 13. We do not knowingly collect personal information from children under 13. If you believe a child has provided us with personal data, please contact us to request deletion."
+    },
+    "changesToPolicy": {
+        "title": "Changes to This Policy",
+        "text": "We will notify users of material changes to this policy via email or an in-app notice. Continued use of the app after changes means acceptance of the updated policy."
     },
     "contact": {
-        "title": "Contact",
-        "text": "If you have questions about this policy or your data, please contact the administrator of this Expenses instance."
+        "title": "Contact Us",
+        "text": "For privacy questions or requests: drios9107@gmail.com."
     },
     "button": "Go back"
 }

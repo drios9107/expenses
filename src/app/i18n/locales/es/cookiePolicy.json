@@ -1,0 +1,33 @@
+{
+    "title": "Política de Cookies",
+    "lastUpdated": "Última actualización: 15 de mayo de 2026",
+    "whatAreCookies": {
+        "title": "Qué Son las Cookies",
+        "text": "Las cookies son pequeños archivos de texto que los sitios web colocan en tu dispositivo (computadora, teléfono o tableta) cuando los visitas. Ayudan a los sitios web a recordar tus acciones y preferencias a lo largo del tiempo, como mantenerte conectado."
+    },
+    "cookiesWeUse": {
+        "title": "Cookies que Usamos",
+        "text": "Usamos solo cookies esenciales necesarias para que la aplicación funcione correctamente. Estas cookies son necesarias para la autenticación, seguridad y operaciones básicas. No utilizamos cookies de rastreo, análisis o publicidad."
+    },
+    "essentialCookies": {
+        "title": "Cookies Esenciales",
+        "text": "Nuestro sistema de autenticación (NextAuth.js) establece cookies de sesión para mantenerte conectado mientras navegas entre páginas. Estas cookies son temporales y se eliminan cuando cierras el navegador o cierras sesión. Sin estas cookies, no puedes iniciar sesión ni usar la aplicación."
+    },
+    "thirdPartyCookies": {
+        "title": "Cookies de Terceros",
+        "text": "No utilizamos cookies de terceros para rastreo o análisis. Si inicias sesión usando Google o GitHub, esos proveedores pueden establecer sus propias cookies según sus respectivas políticas. No controlamos esas cookies."
+    },
+    "managingCookies": {
+        "title": "Gestión de Cookies",
+        "text": "Puedes controlar y eliminar cookies a través de la configuración de tu navegador. La mayoría de los navegadores permiten bloquear todas las cookies, pero bloquear las cookies esenciales te impedirá iniciar sesión y usar nuestra aplicación. Las instrucciones para gestionar cookies se encuentran en la documentación de ayuda de tu navegador."
+    },
+    "changesToPolicy": {
+        "title": "Cambios a esta Política",
+        "text": "Podemos actualizar esta Política de Cookies de vez en cuando. Cualquier cambio se publicará en esta página con una fecha de revisión actualizada. El uso continuado de la aplicación constituye la aceptación de cualquier cambio."
+    },
+    "contact": {
+        "title": "Contáctanos",
+        "text": "Si tienes preguntas sobre nuestro uso de cookies, contáctanos en drios9107@gmail.com."
+    },
+    "button": "Volver"
+}

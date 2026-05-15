@@ -1,0 +1,33 @@
+{
+    "title": "Cookie Policy",
+    "lastUpdated": "Last updated: May 15, 2026",
+    "whatAreCookies": {
+        "title": "What Are Cookies",
+        "text": "Cookies are small text files that websites place on your device (computer, phone, or tablet) when you visit. They help websites remember your actions and preferences over time, such as keeping you logged in."
+    },
+    "cookiesWeUse": {
+        "title": "Cookies We Use",
+        "text": "We use only essential cookies required for the app to function properly. These cookies are necessary for authentication, security, and basic operations. We do not use tracking, analytics, or advertising cookies."
+    },
+    "essentialCookies": {
+        "title": "Essential Cookies",
+        "text": "Our authentication system (NextAuth.js) sets session cookies to keep you logged in as you navigate between pages. These cookies are temporary and are removed when you close your browser or log out. Without these cookies, you cannot log in or use the app."
+    },
+    "thirdPartyCookies": {
+        "title": "Third-Party Cookies",
+        "text": "We do not use third-party cookies for tracking or analytics. If you log in using Google or GitHub, those providers may set their own cookies according to their respective policies. We do not control those cookies."
+    },
+    "managingCookies": {
+        "title": "Managing Cookies",
+        "text": "You can control and delete cookies through your browser settings. Most browsers allow you to block all cookies, but blocking essential cookies will prevent you from logging in and using our app. Instructions for managing cookies can be found in your browser's help documentation."
+    },
+    "changesToPolicy": {
+        "title": "Changes to This Policy",
+        "text": "We may update this Cookie Policy from time to time. Any changes will be posted on this page with an updated revision date. Continued use of the app constitutes acceptance of any changes."
+    },
+    "contact": {
+        "title": "Contact Us",
+        "text": "If you have questions about our use of cookies, please contact us at drios9107@gmail.com."
+    },
+    "button": "Go back"
+}

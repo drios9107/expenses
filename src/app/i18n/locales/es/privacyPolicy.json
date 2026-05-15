@@ -1,33 +1,58 @@
 {
     "title": "Política de Privacidad",
-    "lastUpdated": "Última actualización: 29 de abril de 2026",
+    "lastUpdated": "Última actualización: 15 de mayo de 2026",
+    "companyInfo": {
+        "name": "[Nombre de tu empresa]",
+        "address": "[Tu dirección completa]",
+        "email": "privacidad@[tudominio].com"
+    },
     "informationWeCollect": {
         "title": "Información que Recopilamos",
-        "text": "Recopilamos la información de cuenta y uso necesaria para ofrecer la aplicación Expenses. Esto puede incluir datos de perfil, registros financieros que creas en la app y datos técnicos necesarios para autenticación y acceso seguro."
+        "text": "Recopilamos información de la cuenta que proporcionas voluntariamente: dirección de correo electrónico y nombre. Para inicio de sesión con credenciales, recopilamos tu correo electrónico y contraseña. Para inicio de sesión con OAuth (Google/GitHub), recopilamos el correo electrónico y el nombre asociados a tu cuenta del proveedor. También recopilamos los registros financieros que creas en la aplicación, como transacciones, categorías y recibos. No recopilamos direcciones IP, información del dispositivo ni datos de ubicación."
     },
     "howWeUseInformation": {
         "title": "Cómo Usamos la Información",
-        "text": "Usamos tu información para operar funciones principales como paneles, transacciones, balances, operaciones recurrentes y reportes. También usamos datos técnicos limitados para mantener la estabilidad del servicio y mejorar la experiencia de uso."
+        "text": "Usamos tu información para autenticar tu identidad, proporcionar funciones principales (paneles, transacciones, saldos, informes), mantener la seguridad, mejorar la aplicación y cumplir con obligaciones legales."
     },
-    "legalBasis": {
-        "title": "Base Legal",
-        "text": "El tratamiento de datos se basa en la prestación del servicio, el interés legítimo de proteger la plataforma y tu consentimiento cuando aplique. Solo procesamos datos relevantes para estos fines."
+    "thirdPartyServices": {
+        "title": "Servicios de Terceros",
+        "text": "Utilizamos los siguientes servicios de terceros: [MongoDB, Vercel/AWS para alojamiento, proveedor de Google, proveedor de GitHub]. Estos servicios pueden procesar tus datos según sus propias políticas de privacidad. Los proveedores OAuth (Google, GitHub) comparten solo la información que has autorizado."
+    },
+    "cookies": {
+        "title": "Cookies",
+        "text": "Usamos cookies esenciales para la autenticación y gestión de sesiones. Estas cookies son necesarias para que puedas iniciar sesión y usar la aplicación. No se utilizan cookies de rastreo o análisis a menos que las actives explícitamente. Puedes gestionar las cookies en la configuración de tu navegador, pero deshabilitar las cookies esenciales impedirá que inicies sesión."
+    },
+    "dataSharing": {
+        "title": "Compartición de Datos",
+        "text": "No vendemos tus datos personales. Compartimos datos solo con: (1) proveedores de servicios que nos ayudan a operar la aplicación (alojamiento, base de datos), (2) proveedores OAuth (Google, GitHub) solo cuando eliges iniciar sesión con ellos, y (3) autoridades legales si lo requiere la ley."
     },
     "dataRetention": {
-        "title": "Conservación de Datos",
-        "text": "Conservamos tus datos mientras tu cuenta esté activa o cuando sea necesario para cumplir obligaciones legales, resolver disputas y hacer cumplir acuerdos. Puedes solicitar la eliminación de la cuenta según la normativa aplicable."
+        "title": "Retención de Datos",
+        "text": "Conservamos los datos de tu cuenta mientras tu cuenta esté activa. Puedes solicitar la eliminación de la cuenta en cualquier momento. Algunos datos pueden conservarse por más tiempo para cumplir con obligaciones legales, resolver disputas o hacer cumplir acuerdos."
     },
     "security": {
         "title": "Seguridad",
-        "text": "Aplicamos medidas técnicas y organizativas razonables para proteger tu información, incluyendo controles de acceso autenticado y prácticas seguras de manejo de datos. Ningún sistema es totalmente libre de riesgos, pero mejoramos continuamente las medidas de protección."
+        "text": "Utilizamos conexiones cifradas (HTTPS), autenticación segura mediante NextAuth.js y controles de acceso para proteger tus datos. Las contraseñas se almacenan de forma segura mediante hash por tu proveedor de autenticación. Sin embargo, ningún sistema es 100% seguro."
     },
     "yourRights": {
         "title": "Tus Derechos",
-        "text": "Según tu jurisdicción, puedes tener derecho a acceder, corregir, eliminar o limitar el uso de tus datos, y a solicitar una copia de tu información personal. Contáctanos para enviar cualquier solicitud relacionada con privacidad."
+        "text": "Dependiendo de tu ubicación (GDPR/CCPA), puedes tener derecho a acceder, corregir, eliminar o exportar tus datos. También puedes retirar el consentimiento para el procesamiento de datos cuando corresponda."
+    },
+    "internationalTransfers": {
+        "title": "Transferencias Internacionales de Datos",
+        "text": "Tus datos pueden ser almacenados en servidores ubicados fuera de tu país. Utilizamos cláusulas contractuales estándar o salvaguardas equivalentes para garantizar una protección adecuada al transferir datos internacionalmente."
+    },
+    "childrensPrivacy": {
+        "title": "Privacidad de los Menores",
+        "text": "Nuestro servicio no está destinado a menores de 13 años. No recopilamos conscientemente información personal de menores de 13 años. Si crees que un menor nos ha proporcionado datos personales, contáctanos para solicitar su eliminación."
+    },
+    "changesToPolicy": {
+        "title": "Cambios a esta Política",
+        "text": "Notificaremos a los usuarios sobre cambios importantes a esta política por correo electrónico o mediante un aviso en la aplicación. El uso continuado de la aplicación después de los cambios implica la aceptación de la política actualizada."
     },
     "contact": {
-        "title": "Contacto",
-        "text": "Si tienes preguntas sobre esta política o sobre tus datos, contacta al administrador de esta instancia de Expenses."
+        "title": "Contáctanos",
+        "text": "Para preguntas o solicitudes de privacidad: drios9107@gmail.com."
     },
-    "button": "Volver atrás"
+    "button": "Volver"
 }

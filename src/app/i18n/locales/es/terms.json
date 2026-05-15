@@ -1,0 +1,53 @@
+{
+    "title": "Términos de Servicio",
+    "lastUpdated": "Última actualización: 15 de mayo de 2026",
+    "acceptance": {
+        "title": "Aceptación de los Términos",
+        "text": "Al acceder o usar esta aplicación, aceptas quedar vinculado por estos Términos de Servicio. Si no estás de acuerdo con alguna parte de estos términos, no podrás acceder ni usar la aplicación."
+    },
+    "description": {
+        "title": "Descripción del Servicio",
+        "text": "Esta aplicación proporciona herramientas de seguimiento de gastos, que incluyen gestión de transacciones, almacenamiento de recibos, seguimiento de cambios de moneda e informes financieros. El servicio se proporciona 'tal cual' para uso personal o comercial."
+    },
+    "userAccounts": {
+        "title": "Cuentas de Usuario",
+        "text": "Eres responsable de mantener la confidencialidad de las credenciales de tu cuenta. Eres totalmente responsable de todas las actividades que ocurran bajo tu cuenta. Debes notificarnos inmediatamente cualquier acceso no autorizado a tu cuenta."
+    },
+    "userResponsibilities": {
+        "title": "Responsabilidades del Usuario",
+        "text": "Aceptas proporcionar información precisa y completa al crear tu cuenta. Eres responsable de todos los datos financieros que ingreses en la aplicación. Debes verificar la precisión de cualquier cálculo o informe generado por la aplicación."
+    },
+    "prohibitedActivities": {
+        "title": "Actividades Prohibidas",
+        "text": "No puedes: (1) usar la aplicación para cualquier propósito ilegal, (2) intentar obtener acceso no autorizado a nuestros sistemas, (3) cargar código malicioso o virus, (4) realizar ingeniería inversa o copiar cualquier parte de la aplicación, (5) compartir las credenciales de tu cuenta con otros, o (6) usar la aplicación para almacenar información financiera fraudulenta o falsa."
+    },
+    "intellectualProperty": {
+        "title": "Propiedad Intelectual",
+        "text": "La aplicación, su código, diseño, logotipos y contenido son de nuestra propiedad y están protegidos por las leyes de derechos de autor. No puedes copiar, modificar, distribuir o crear trabajos derivados sin nuestro permiso explícito."
+    },
+    "limitationOfLiability": {
+        "title": "Limitación de Responsabilidad",
+        "text": "En la máxima medida permitida por la ley, no somos responsables por daños indirectos, incidentales o consecuentes que surjan del uso de la aplicación. Esto incluye pérdida de datos, errores de cálculo financiero o interrupciones del servicio. Nuestra responsabilidad total no excederá el monto que pagaste por usar el servicio (si corresponde)."
+    },
+    "disclaimer": {
+        "title": "Renuncia de Garantías",
+        "text": "La aplicación se proporciona 'tal cual' sin garantías de ningún tipo. No garantizamos que el servicio sea ininterrumpido, libre de errores o seguro. No somos responsables de las decisiones financieras que tomes basadas en los datos de la aplicación. Siempre debes verificar la información financiera crítica de forma independiente."
+    },
+    "termination": {
+        "title": "Terminación",
+        "text": "Podemos terminar o suspender tu cuenta inmediatamente sin previo aviso si violas estos Términos. Puedes eliminar tu cuenta en cualquier momento. Al finalizar, tu derecho a usar el servicio cesa inmediatamente."
+    },
+    "governingLaw": {
+        "title": "Ley Aplicable",
+        "text": "Estos Términos se rigen por las leyes de la República de Cuba. Cualquier controversia que surja de estos Términos se resolverá mediante arbitraje vinculante en La Habana, Cuba, conforme a las normas de arbitraje cubanas."
+    },
+    "changes": {
+        "title": "Cambios a los Términos",
+        "text": "Nos reservamos el derecho de modificar estos Términos en cualquier momento. Notificaremos a los usuarios sobre cambios importantes por correo electrónico o mediante un aviso en la aplicación. El uso continuado de la aplicación después de los cambios constituye la aceptación de los nuevos Términos."
+    },
+    "contact": {
+        "title": "Contáctanos",
+        "text": "Si tienes alguna pregunta sobre estos Términos, contáctanos en drios9107@gmail.com."
+    },
+    "button": "Volver"
+}

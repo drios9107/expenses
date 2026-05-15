@@ -3,20 +3,16 @@ import { useTranslation } from '@/hooks/useTranslation'
 import { Box, Button, Divider, Paper, Typography } from '@mui/material'
 import { useRouter } from 'next/navigation'
 
-const PrivacyPolicy = ({ params }) => {
-	const { t } = useTranslation(params?.lng ?? 'en', 'privacyPolicy')
+const CookiePolicy = ({ params }) => {
+	const { t } = useTranslation(params?.lng ?? 'en', 'cookiePolicy')
 	const { back } = useRouter()
+
 	const sections = [
-		'informationWeCollect',
-		'howWeUseInformation',
-		'thirdPartyServices',
-		'cookies',
-		'dataSharing',
-		'dataRetention',
-		'security',
-		'yourRights',
-		'internationalTransfers',
-		'childrensPrivacy',
+		'whatAreCookies',
+		'cookiesWeUse',
+		'essentialCookies',
+		'thirdPartyCookies',
+		'managingCookies',
 		'changesToPolicy',
 		'contact'
 	]
@@ -32,16 +28,18 @@ const PrivacyPolicy = ({ params }) => {
 				</Typography>
 			</Box>
 			<Divider />
-			{sections.map(section => (
-				<Box key={section} sx={styles.section}>
-					<Typography variant="subtitle1" sx={styles.sectionTitle}>
-						{t(`${section}.title`)}
-					</Typography>
-					<Typography variant="body2" sx={styles.sectionText}>
-						{t(`${section}.text`)}
-					</Typography>
-				</Box>
-			))}
+			<Box sx={styles.sectionsContainer}>
+				{sections.map(section => (
+					<Box key={section} sx={styles.section}>
+						<Typography variant="subtitle1" sx={styles.sectionTitle}>
+							{t(`${section}.title`)}
+						</Typography>
+						<Typography variant="body2" sx={styles.sectionText}>
+							{t(`${section}.text`)}
+						</Typography>
+					</Box>
+				))}
+			</Box>
 			<Button variant="contained" onClick={() => back()} size="small">
 				{t('button')}
 			</Button>
@@ -49,7 +47,7 @@ const PrivacyPolicy = ({ params }) => {
 	)
 }
 
-export default PrivacyPolicy
+export default CookiePolicy
 
 const styles = {
 	container: {
@@ -60,7 +58,9 @@ const styles = {
 		boxShadow: '2px 2px 10px #4D4D4D33',
 		borderRadius: '16px',
 		gap: '14px',
-		p: { xs: '16px', sm: '24px' }
+		p: { xs: '16px', sm: '24px' },
+		maxHeight: { xs: 'calc(100vh - 32px)', sm: 'none' },
+		overflow: 'auto'
 	},
 	header: {
 		display: 'flex',
@@ -72,6 +72,11 @@ const styles = {
 	},
 	updatedAt: {
 		color: '#6b7280'
+	},
+	sectionsContainer: {
+		display: 'flex',
+		flexDirection: 'column',
+		gap: '16px'
 	},
 	section: {
 		display: 'flex',

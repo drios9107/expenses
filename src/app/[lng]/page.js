@@ -137,10 +137,10 @@ export default function Home({ params }) {
 					<Link href={`/${lng}/privacy`} variant="body2" underline="hover">
 						{t('privacyPolicy')}
 					</Link>
-					<Link href={`/terms`} variant="body2" underline="hover">
+					<Link href={`/${lng}/terms`} variant="body2" underline="hover">
 						{t('termsOfService')}
 					</Link>
-					<Link href={`/cookies`} variant="body2" underline="hover">
+					<Link href={`/${lng}/cookies`} variant="body2" underline="hover">
 						{t('cookiePolicy')}
 					</Link>
 				</Box>
