@@ -33,7 +33,7 @@ export default function Dashboard({ params }) {
 
 	return (
 		<Box sx={styles.pageContainer}>
-			<Box sx={styles.header}>{/* <Typography sx={styles.kicker}>Dashboard</Typography> */}</Box>
+			<Box sx={styles.header}></Box>
 
 			<Box sx={{ display: 'flex', flexDirection: 'column', gap: isMobile ? '12px' : '20px' }}>
 				<TopSection
