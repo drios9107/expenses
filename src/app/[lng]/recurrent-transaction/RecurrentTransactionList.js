@@ -19,8 +19,8 @@ import { typeList } from '@/utils/helpers'
 import { useToast } from '@/hooks/useToast'
 import ActionHeader from '@/components/ActionHeader'
 
-const RecurrentTransaction = ({ initialItems = [], params, error }) => {
-	const { t } = useTranslation(params?.lng ?? 'en', 'transactions')
+const RecurrentTransaction = ({ initialItems = [], lng, error }) => {
+	const { t } = useTranslation(lng ?? 'en', 'transactions')
 	const [open, setOpen] = useState(false)
 	const [itemToDelete, setItemToDelete] = useState()
 	const [itemToToogleActivation, setItemToToogleActivation] = useState()

@@ -16,8 +16,8 @@ import moment from 'moment'
 import { useToast } from '@/hooks/useToast'
 import ActionHeader from '@/components/ActionHeader'
 
-const Users = ({ initialItems = [], params, error }) => {
-	const { t } = useTranslation(params?.lng ?? 'en', 'user')
+const Users = ({ initialItems = [], lng, error }) => {
+	const { t } = useTranslation(lng ?? 'en', 'user')
 	const [open, setOpen] = useState(false)
 	const [itemToDelete, setItemToDelete] = useState()
 	const [itemToUpdate, setItemToUpdate] = useState()

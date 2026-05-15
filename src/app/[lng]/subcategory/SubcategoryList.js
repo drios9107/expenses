@@ -16,8 +16,8 @@ import { useToast } from '@/hooks/useToast'
 import { iconCellStyles } from '@/utils/helpers'
 import ActionHeader from '@/components/ActionHeader'
 
-const Subcategory = ({ initialItems = [], params, error }) => {
-	const { t } = useTranslation(params?.lng ?? 'en', 'subCategory')
+const Subcategory = ({ initialItems = [], lng, error }) => {
+	const { t } = useTranslation(lng ?? 'en', 'subCategory')
 	const [open, setOpen] = useState(false)
 	const [itemToDelete, setItemToDelete] = useState()
 	const [itemToUpdate, setItemToUpdate] = useState()

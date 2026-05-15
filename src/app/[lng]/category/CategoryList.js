@@ -1,13 +1,12 @@
 'use client'
 // ** React Imports
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { IconButton, Tooltip, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 import ColumnHeader from '@/components/ColumnHeader'
 import ActionColumn from '@/components/ActionColumn'
 import Loader from '@/components/Loader'
 import DataList from '@/components/DataList'
 import Details from '@/components/crud/category/Details'
-import { Add } from '@mui/icons-material'
 import Form from '@/components/crud/category/Form'
 import DeleteModal from '@/components/DeleteModal'
 import { useCategory, useList } from '@/hooks'
@@ -15,8 +14,8 @@ import { useTranslation } from '@/hooks/useTranslation'
 import { useToast } from '@/hooks/useToast'
 import ActionHeader from '@/components/ActionHeader'
 
-const Category = ({ initialItems = [], params, error }) => {
-	const { t } = useTranslation(params?.lng ?? 'en', 'category')
+const Category = ({ initialItems = [], lng, error }) => {
+	const { t } = useTranslation(lng ?? 'en', 'category')
 
 	const [open, setOpen] = useState(false)
 	const [itemToDelete, setItemToDelete] = useState()

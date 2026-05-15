@@ -19,8 +19,8 @@ import TypographyIconCell from '@/components/TypographyIconCell'
 import { useToast } from '@/hooks/useToast'
 import ActionHeader from '@/components/ActionHeader'
 
-const Debts = ({ initialItems = [], params, error }) => {
-	const { t } = useTranslation(params?.lng ?? 'en', 'debt')
+const Debts = ({ initialItems = [], lng, error }) => {
+	const { t } = useTranslation(lng ?? 'en', 'debt')
 	const [open, setOpen] = useState(false)
 	const [itemToDelete, setItemToDelete] = useState()
 	const [itemToUpdate, setItemToUpdate] = useState()

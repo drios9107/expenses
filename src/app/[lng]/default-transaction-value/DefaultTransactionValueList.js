@@ -15,7 +15,8 @@ import { useTranslation } from '@/hooks/useTranslation'
 import DataList from '@/components/DataList'
 import { useToast } from '@/hooks/useToast'
 
-const DefaultTransactionValue = ({ initialItems = [], params, error }) => {
+const DefaultTransactionValue = ({ initialItems = [], lng, error }) => {
+	const { t } = useTranslation(lng ?? 'en', 'transactions')
 	const [open, setOpen] = useState(false)
 	const [itemToDelete, setItemToDelete] = useState()
 	const [itemToUpdate, setItemToUpdate] = useState()
@@ -24,7 +25,6 @@ const DefaultTransactionValue = ({ initialItems = [], params, error }) => {
 	const { isLoading, deleteDefaultTransactionValue } = useDefaultTransactionValue()
 	const { currencyFormat } = useFormat()
 	const { defaultTransactionValues, setDefaultTransactionValues } = useList()
-	const { t } = useTranslation(params?.lng ?? 'en', 'transactions')
 	const { toastError } = useToast()
 
 	useEffect(() => {
