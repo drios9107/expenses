@@ -7,6 +7,7 @@ import TopSection from '@/components/TopSection'
 import DebtSection from '@/components/DebtSection'
 import GraphSection from '@/components/GraphSection'
 import DailyExpenseSection from '@/components/DailyExpenseSection'
+import { useMemo } from 'react'
 
 export default function Dashboard({ params }) {
 	const { t } = useTranslation(params?.lng, 'dashboard')
@@ -25,6 +26,8 @@ export default function Dashboard({ params }) {
 	} = useDashboard(true)
 	const { days } = useDashboardContext()
 	const isMobile = useMediaQuery('@media (max-width:500px)')
+
+	const hasDays = useMemo(() => Object.keys(days)?.length > 0, [days])
 
 	if (isLoading) return <DashboardSkeleton />
 
@@ -49,7 +52,9 @@ export default function Dashboard({ params }) {
 					currentMonth={currentMonth}
 					currentYear={currentYear}
 				/>
-				<DailyExpenseSection days={days} getDashboard={() => getDashboard({ currentMonth, currentYear })} />
+				{hasDays && (
+					<DailyExpenseSection days={days} getDashboard={() => getDashboard({ currentMonth, currentYear })} />
+				)}
 			</Box>
 		</Box>
 	)
