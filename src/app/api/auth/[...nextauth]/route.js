@@ -21,7 +21,7 @@ export const authOptions = {
 					const { data } = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND}/auth/login`, credentials)
 					return data
 				} catch (error) {
-					throw new Error(error?.response?.data?.code)
+					return { error: error?.response?.data?.code }
 				}
 			}
 		})
@@ -35,7 +35,8 @@ export const authOptions = {
 	},
 	callbacks: {
 		async signIn({ user, account }) {
-			// const isMyGoogleAccount = user?.email === 'drio9107@gmail.com' && account?.provider === 'google'
+			if (user?.error) throw new Error(user.error)
+
 			const isLoggedWithCredentials = !user?.error && account?.provider === 'credentials'
 
 			if (account.provider === 'github' || account.provider === 'google') {
