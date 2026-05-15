@@ -10,17 +10,11 @@ import { SessionProvider } from 'next-auth/react'
 import CookieConsentBanner from './CookieConsentBanner'
 import AuthGuard from './AuthGuard'
 import InDevelopmentBadge from './InDevelopmentBadge'
-import { usePathname } from 'next/navigation'
-import { useMemo } from 'react'
 
 const App = ({ children }) => {
-	const pathname = usePathname()
-
-	const isOnlyTop = useMemo(() => ['/', '/en', '/es'].includes(pathname), [pathname])
-
 	return (
 		<SessionProvider>
-			<InDevelopmentBadge isOnlyTop={!isOnlyTop} />
+			<InDevelopmentBadge isOnlyTop />
 			<AuthGuard>
 				<LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={es}>
 					<DashboardProvider>

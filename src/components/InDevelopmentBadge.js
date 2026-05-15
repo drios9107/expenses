@@ -4,10 +4,10 @@ import { Chip } from '@mui/material'
 const InDevelopmentBadge = ({ isOnlyTop = false }) => {
 	return (
 		<Chip
-			sx={isOnlyTop ? styles.isOnlyTop : styles.chip}
+			sx={[isOnlyTop ? styles.isOnlyTop : styles.chip, { userSelect: 'none', zIndex: 1 }]}
 			label="In Development"
 			color="error"
-			variant="outlined"
+			variant="filled"
 			icon={<Error fontSize="small" />}
 		/>
 	)
