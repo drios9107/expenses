@@ -17,7 +17,12 @@ const MuiDatePickerWithoutControl = ({
 				onChange={setState}
 				inputFormat="dd/MM/y"
 				allowSameDateSelection
-				slotProps={{ textField: { size: 'small' } }}
+				slotProps={{
+					textField: { size: 'small' },
+					actionBar: {
+						actions: ['clear']
+					}
+				}}
 				sx={{ backgroundColor: '#fff', ...(options.sx ?? {}) }}
 				{...options}
 			/>

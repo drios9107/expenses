@@ -15,7 +15,12 @@ const MuiDatePicker = ({ rules = {}, fieldName, control, errors, options, formEx
 						{...field}
 						inputFormat="dd/MM/y"
 						allowSameDateSelection
-						slotProps={{ textField: { size: 'small' } }}
+						slotProps={{
+							textField: { size: 'small' },
+							actionBar: {
+								actions: ['clear']
+							}
+						}}
 						sx={{ backgroundColor: '#fff', ...(options.sx ?? {}) }}
 						{...options}
 					/>
