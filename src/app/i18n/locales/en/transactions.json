@@ -19,5 +19,5 @@
     "missing_data_in_line": "Missing data in line:",
     "invalid_date_in_line": "Invalid date in line:",
     "invalid_amount_in_line": "Invalid amount in line:",
-    "multitransaction_helper": "This input should contain a formatted string like this: dateString|category|subcategory|amount|description*"
+    "multitransaction_helper": "This input should contain a formatted string like this: YYYY/MM/DD|category|subcategory|amount|description*"
 }

@@ -19,5 +19,5 @@
     "missing_data_in_line": "Faltan datos en la línea:",
     "invalid_date_in_line": "La fecha no es correcta en la línea:",
     "invalid_amount_in_line": "La cantidad no es correcta en la línea:",
-    "multitransaction_helper": "Este input debe tener un string formateado de esta forma: dateString|category|subcategory|amount|description*"
+    "multitransaction_helper": "Este input debe tener un string formateado de esta forma: YYYY/MM/DD|category|subcategory|amount|description*"
 }
