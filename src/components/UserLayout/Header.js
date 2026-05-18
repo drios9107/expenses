@@ -1,13 +1,13 @@
 import { Box, Paper, Tooltip, useMediaQuery } from '@mui/material'
-import Link from 'next/link'
-import { useCallback, useMemo } from 'react'
+import { useCallback } from 'react'
 import Balance from '../Balance'
-import { Home, Logout, Policy } from '@mui/icons-material'
+import { Dashboard, Home, Logout, Policy } from '@mui/icons-material'
 import { signOut } from 'next-auth/react'
 import { useLayoutStyles } from '@/hooks/useLayoutStyles'
 import { useParams } from 'next/navigation'
 import { useTranslation } from '@/hooks/useTranslation'
 import LanguageSelector from '../LanguageSelector'
+import HeaderLink from '../HeaderLink'
 
 const Header = () => {
 	const { conditionalTopSectionStyles } = useLayoutStyles()
@@ -19,45 +19,18 @@ const Header = () => {
 		signOut()
 	}, [])
 
-	const getHomeLink = useMemo(() => {
-		const icon = <Home sx={styles.iconMenu} />
-		const title = t('home')
-
-		return (
-			<Link href={`/${lng}/`} className="landing-page-link" style={styles.link}>
-				{isMobile ? (
-					<Tooltip title={title}>{icon}</Tooltip>
-				) : (
-					<>
-						{icon} {title}
-					</>
-				)}
-			</Link>
-		)
-	}, [isMobile, lng, t])
-
-	const getPrivacyLink = useMemo(() => {
-		const icon = <Policy sx={styles.iconMenu} />
-		const title = t('privacyPolicy')
-
-		return (
-			<Link href={`/${lng}/privacy`} className="landing-page-link" style={styles.link}>
-				{isMobile ? (
-					<Tooltip title={title}>{icon}</Tooltip>
-				) : (
-					<>
-						{icon} {title}
-					</>
-				)}
-			</Link>
-		)
-	}, [isMobile, lng, t])
-
 	return (
 		<Paper sx={[styles.topSection, conditionalTopSectionStyles]}>
 			<Box sx={styles.leftSection}>
-				{getHomeLink}
-				{getPrivacyLink}
+				<HeaderLink page={''} title={t('home')}>
+					<Home sx={styles.iconMenu} />
+				</HeaderLink>
+				<HeaderLink page={'dashboard'} title={'Dashboard'}>
+					<Dashboard sx={styles.icon} />
+				</HeaderLink>
+				<HeaderLink page={'privacy'} title={t('privacyPolicy')}>
+					<Policy sx={styles.icon} />
+				</HeaderLink>
 			</Box>
 			<Box sx={styles.rightSection}>
 				<LanguageSelector />
@@ -89,17 +62,6 @@ const styles = {
 		height: '20px',
 		width: '20px',
 		cursor: 'pointer'
-	},
-	link: {
-		display: 'flex',
-		flexDirection: 'row',
-		gap: '6px',
-		alignItems: 'center',
-		color: '#2c4671',
-		fontWeight: 500,
-		padding: '6px 10px',
-		borderRadius: '10px',
-		transition: 'all 0.2s ease'
 	},
 	leftSection: {
 		display: 'flex',
