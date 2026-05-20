@@ -49,6 +49,7 @@ const styles = {
 		display: 'flex',
 		flexDirection: 'column',
 		justifyContent: 'center',
+		alignItems: 'center',
 		boxShadow: '0 8px 22px rgba(20, 47, 79, 0.09)'
 	},
 	graphTitle: {
