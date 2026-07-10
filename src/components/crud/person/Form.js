@@ -23,7 +23,7 @@ const schema = yup.object().shape({
     }).nullable(),
 });
 
-const defaultValues = { name: "", lastname: "", user: "" }
+const defaultValues = { name: "", lastname: "", user: null }
 
 const Form = ({ item, onClose = () => { } }) => {
     const params = useParams();
