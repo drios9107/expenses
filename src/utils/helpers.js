@@ -29,6 +29,7 @@ const getPersonFullName = row => {
 }
 
 const typeList = [
+	{ _id: 'brl', name: 'BRL' },
 	{ _id: 'cup', name: 'CUP' },
 	{ _id: 'mlc', name: 'MLC' },
 	{ _id: 'usd', name: 'USD' },
