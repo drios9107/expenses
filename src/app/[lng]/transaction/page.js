@@ -146,7 +146,7 @@ const Transaction = ({ params }) => {
 						<IconButton onClick={() => setOpen(true)}>
 							<Add sx={iconCellStyles} />
 						</IconButton>
-						{session?.user?.role === 'Admin' && process.env.NEXT_PUBLIC_MODE === 'dev' && (
+						{((session?.user?.role === 'Admin' && process.env.NEXT_PUBLIC_MODE === 'dev') || true) && (
 							<IconButton onClick={() => setOpenRawMultiTransaction(true)}>
 								<DataSaverOn sx={iconCellStyles} />
 							</IconButton>

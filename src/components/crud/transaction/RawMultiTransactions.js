@@ -37,7 +37,7 @@ const RawMultiTransactions = ({ onClose = () => {} }) => {
 					subcategory: subcategory.trim(),
 					amount: parseFloat(amount),
 					description: description.trim(),
-					type: 'cup',
+					type: 'brl',
 					isExpense: true,
 					isRecurrent: false
 				}

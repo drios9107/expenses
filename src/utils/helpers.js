@@ -10,7 +10,7 @@ const getFileName = () => {
 
 const getLineColor = (row, normalColor = 'textSecondary') => {
 	if (row?.isExpense)
-		return (row?.amount > 1000 && row?.type === 'cup') || (row?.amount > 100 && row?.type === 'mlc')
+		return (row?.amount > 1000 && row?.type === 'brl') || (row?.amount > 100 && row?.type === 'usd')
 			? 'error'
 			: normalColor
 
